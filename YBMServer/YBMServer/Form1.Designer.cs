@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbxLog = new System.Windows.Forms.ListBox();
             this.staticTitle = new System.Windows.Forms.Label();
             this.staticServerStatus = new System.Windows.Forms.Label();
             this.lblPowerStatus = new System.Windows.Forms.Label();
@@ -58,16 +57,9 @@
             this.staticServerName = new System.Windows.Forms.Label();
             this.lblServerName = new System.Windows.Forms.Label();
             this.lbxIP = new System.Windows.Forms.ListBox();
+            this.lvwLog = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lbxLog
-            // 
-            this.lbxLog.FormattingEnabled = true;
-            this.lbxLog.Location = new System.Drawing.Point(12, 178);
-            this.lbxLog.Name = "lbxLog";
-            this.lbxLog.Size = new System.Drawing.Size(478, 368);
-            this.lbxLog.TabIndex = 0;
             // 
             // staticTitle
             // 
@@ -307,11 +299,22 @@
             this.lbxIP.Size = new System.Drawing.Size(211, 56);
             this.lbxIP.TabIndex = 16;
             // 
+            // lvwLog
+            // 
+            this.lvwLog.Location = new System.Drawing.Point(12, 178);
+            this.lvwLog.MultiSelect = false;
+            this.lvwLog.Name = "lvwLog";
+            this.lvwLog.OwnerDraw = true;
+            this.lvwLog.Size = new System.Drawing.Size(478, 368);
+            this.lvwLog.TabIndex = 17;
+            this.lvwLog.UseCompatibleStateImageBehavior = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(502, 558);
+            this.Controls.Add(this.lvwLog);
             this.Controls.Add(this.lbxIP);
             this.Controls.Add(this.lblServerName);
             this.Controls.Add(this.staticServerName);
@@ -326,7 +329,6 @@
             this.Controls.Add(this.lblPowerStatus);
             this.Controls.Add(this.staticServerStatus);
             this.Controls.Add(this.staticTitle);
-            this.Controls.Add(this.lbxLog);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -341,7 +343,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox lbxLog;
         private System.Windows.Forms.Label staticTitle;
         private System.Windows.Forms.Label staticServerStatus;
         private System.Windows.Forms.Label lblPowerStatus;
@@ -371,6 +372,7 @@
         private System.Windows.Forms.Label staticServerName;
         private System.Windows.Forms.Label lblServerName;
         private System.Windows.Forms.ListBox lbxIP;
+        private System.Windows.Forms.ListView lvwLog;
     }
 }
 

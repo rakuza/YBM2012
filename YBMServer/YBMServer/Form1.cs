@@ -24,14 +24,16 @@ namespace YBMServer
 
         private void Form1_Load(object sender, EventArgs e)
         {
+           // lbxLog.Items.Add("Interface Started");
             lblPowerStatus.Text = "Offline";
             lblPowerStatus.BackColor = Color.LightCoral;
-
             lblUserCount.Text = "n/a";
             lblPort.Text = "n/a";
+           // lbxLog.Items.Add("Obtaining server IP addresses");
             lbxIP.Items.AddRange( Dns.GetHostEntry(Dns.GetHostName()).AddressList);
+           // lbxLog.Items.Add("Obtaining server name");
             lblServerName.Text = Dns.GetHostName();
-            lbxLog.Items.Add("Interface Started");
+           // lbxLog.Items.Add("Initialisation complete");
         }
     }
 }
