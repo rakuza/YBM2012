@@ -1,6 +1,6 @@
 ﻿namespace YBMServer
 {
-    partial class Form1
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.staticTitle = new System.Windows.Forms.Label();
             this.staticServerStatus = new System.Windows.Forms.Label();
             this.lblPowerStatus = new System.Windows.Forms.Label();
@@ -41,24 +42,21 @@
             this.lblPort = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.userManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.yearBookManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listActiveProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.addUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.staticServerName = new System.Windows.Forms.Label();
             this.lblServerName = new System.Windows.Forms.Label();
             this.lbxIP = new System.Windows.Forms.ListBox();
-            this.lvwLog = new System.Windows.Forms.ListView();
+            this.lbxLog = new System.Windows.Forms.ListBox();
+            this.testBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.testBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // staticTitle
@@ -83,7 +81,7 @@
             // lblPowerStatus
             // 
             this.lblPowerStatus.AutoSize = true;
-            this.lblPowerStatus.BackColor = System.Drawing.Color.LightGreen;
+            this.lblPowerStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(150)))));
             this.lblPowerStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblPowerStatus.Location = new System.Drawing.Point(98, 62);
             this.lblPowerStatus.Name = "lblPowerStatus";
@@ -168,8 +166,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.userManagementToolStripMenuItem,
-            this.yearBookManagementToolStripMenuItem});
+            this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(502, 24);
@@ -179,8 +176,6 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.preferencesToolStripMenuItem,
-            this.toolStripSeparator2,
             this.startServerToolStripMenuItem,
             this.stopServerToolStripMenuItem,
             this.toolStripSeparator1,
@@ -188,18 +183,6 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // preferencesToolStripMenuItem
-            // 
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.preferencesToolStripMenuItem.Text = "Preferences";
-            // 
-            // quitToolStripMenuItem
-            // 
-            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.quitToolStripMenuItem.Text = "Exit";
             // 
             // startServerToolStripMenuItem
             // 
@@ -213,65 +196,45 @@
             this.stopServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.stopServerToolStripMenuItem.Text = "Stop Server";
             // 
-            // userManagementToolStripMenuItem
-            // 
-            this.userManagementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addUserToolStripMenuItem,
-            this.editUserToolStripMenuItem,
-            this.removeUserToolStripMenuItem});
-            this.userManagementToolStripMenuItem.Name = "userManagementToolStripMenuItem";
-            this.userManagementToolStripMenuItem.Size = new System.Drawing.Size(116, 20);
-            this.userManagementToolStripMenuItem.Text = "User Management";
-            // 
-            // yearBookManagementToolStripMenuItem
-            // 
-            this.yearBookManagementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editProjectToolStripMenuItem,
-            this.removeProjectToolStripMenuItem});
-            this.yearBookManagementToolStripMenuItem.Name = "yearBookManagementToolStripMenuItem";
-            this.yearBookManagementToolStripMenuItem.Size = new System.Drawing.Size(143, 20);
-            this.yearBookManagementToolStripMenuItem.Text = "YearBook Management";
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
+            // quitToolStripMenuItem
+            // 
+            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.quitToolStripMenuItem.Text = "Exit";
+            this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+            // 
+            // menuToolStripMenuItem
+            // 
+            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listActiveProjectsToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.preferencesToolStripMenuItem});
+            this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
+            this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.menuToolStripMenuItem.Text = "Menu";
+            // 
+            // listActiveProjectsToolStripMenuItem
+            // 
+            this.listActiveProjectsToolStripMenuItem.Name = "listActiveProjectsToolStripMenuItem";
+            this.listActiveProjectsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.listActiveProjectsToolStripMenuItem.Text = "List Active Projects";
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(170, 6);
             // 
-            // addUserToolStripMenuItem
+            // preferencesToolStripMenuItem
             // 
-            this.addUserToolStripMenuItem.Name = "addUserToolStripMenuItem";
-            this.addUserToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.addUserToolStripMenuItem.Text = "Add User";
-            // 
-            // editUserToolStripMenuItem
-            // 
-            this.editUserToolStripMenuItem.Name = "editUserToolStripMenuItem";
-            this.editUserToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.editUserToolStripMenuItem.Text = "Edit User";
-            // 
-            // removeUserToolStripMenuItem
-            // 
-            this.removeUserToolStripMenuItem.Name = "removeUserToolStripMenuItem";
-            this.removeUserToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.removeUserToolStripMenuItem.Text = "Remove User";
-            // 
-            // editProjectToolStripMenuItem
-            // 
-            this.editProjectToolStripMenuItem.Name = "editProjectToolStripMenuItem";
-            this.editProjectToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.editProjectToolStripMenuItem.Text = "Fix Project";
-            this.editProjectToolStripMenuItem.Click += new System.EventHandler(this.editProjectToolStripMenuItem_Click);
-            // 
-            // removeProjectToolStripMenuItem
-            // 
-            this.removeProjectToolStripMenuItem.Name = "removeProjectToolStripMenuItem";
-            this.removeProjectToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.removeProjectToolStripMenuItem.Text = "Remove Project";
+            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.preferencesToolStripMenuItem.Text = "Preferences";
+            this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
             // staticServerName
             // 
@@ -299,22 +262,22 @@
             this.lbxIP.Size = new System.Drawing.Size(211, 56);
             this.lbxIP.TabIndex = 16;
             // 
-            // lvwLog
+            // lbxLog
             // 
-            this.lvwLog.Location = new System.Drawing.Point(12, 178);
-            this.lvwLog.MultiSelect = false;
-            this.lvwLog.Name = "lvwLog";
-            this.lvwLog.OwnerDraw = true;
-            this.lvwLog.Size = new System.Drawing.Size(478, 368);
-            this.lvwLog.TabIndex = 17;
-            this.lvwLog.UseCompatibleStateImageBehavior = false;
+            this.lbxLog.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.lbxLog.FormattingEnabled = true;
+            this.lbxLog.Location = new System.Drawing.Point(13, 179);
+            this.lbxLog.Name = "lbxLog";
+            this.lbxLog.Size = new System.Drawing.Size(477, 375);
+            this.lbxLog.TabIndex = 17;
+            this.lbxLog.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbxLog_DrawItem);
             // 
-            // Form1
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(502, 558);
-            this.Controls.Add(this.lvwLog);
+            this.Controls.Add(this.lbxLog);
             this.Controls.Add(this.lbxIP);
             this.Controls.Add(this.lblServerName);
             this.Controls.Add(this.staticServerName);
@@ -331,11 +294,12 @@
             this.Controls.Add(this.staticTitle);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "Main";
+            this.Text = "Year Book Maker Server Stats";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.testBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,23 +320,19 @@
         private System.Windows.Forms.Label lblPort;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem startServerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopServerToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem userManagementToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addUserToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editUserToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeUserToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem yearBookManagementToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editProjectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeProjectToolStripMenuItem;
         private System.Windows.Forms.Label staticServerName;
         private System.Windows.Forms.Label lblServerName;
         private System.Windows.Forms.ListBox lbxIP;
-        private System.Windows.Forms.ListView lvwLog;
+        private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listActiveProjectsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
+        private System.Windows.Forms.BindingSource testBindingSource;
+        private System.Windows.Forms.ListBox lbxLog;
     }
 }
 
