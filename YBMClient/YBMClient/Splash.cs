@@ -9,11 +9,16 @@ using System.Windows.Forms;
 
 namespace YBMClient
 {
-    public partial class Form1 : Form
+    public partial class Splash : Form
     {
-        public Form1()
+        public Splash()
         {
             InitializeComponent();
+        }
+
+        private void Splash_Load(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

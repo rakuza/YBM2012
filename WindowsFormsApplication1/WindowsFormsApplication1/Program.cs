@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace YBMClient
+namespace WindowsFormsApplication1
 {
     static class Program
     {
@@ -15,7 +15,8 @@ namespace YBMClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            new Form1().ShowDialog();
+            Application.Run(new Form2());
         }
     }
 }
