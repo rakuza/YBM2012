@@ -1,15 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:s="clr-namespace:YBMForms.UIL.AdornerLib">
+                    xmlns:s="clr-namespace:YBMForms.UIL.AdornerLib"
+                    >
     
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="UIL/AdornerLib/Resources/SizeChrome.xaml"/>
-        <ResourceDictionary Source="UIL/AdornerLib/Resources/ResizeRotateChrome.xaml"/>
+        <ResourceDictionary Source="SizeChrome.xaml"/>
+        <ResourceDictionary Source="ResizeRotateChrome.xaml"/>
+        <ResourceDictionary Source="MoveThumb.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <ControlTemplate x:Key="MoveThumbTemplate"  TargetType="{x:Type s:MoveThumb}">
-        <Rectangle Fill="Transparent"/>
-    </ControlTemplate>
 
     <Style x:Key="DesignerItemStyle" TargetType="ContentControl">
         <Setter Property="MinHeight" Value="50"/>

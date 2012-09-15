@@ -58,6 +58,7 @@
     <Compile Include="UIL\AdornerLib\ResizeRotateAdorner.cs" />
     <Compile Include="UIL\AdornerLib\ResizeRotateChrome.cs" />
     <Compile Include="UIL\AdornerLib\ResizeThumb.cs" />
+    <Compile Include="UIL\AdornerLib\RotateThumb.cs" />
     <Compile Include="UIL\AdornerLib\SizeAdorner.cs" />
     <Compile Include="UIL\AdornerLib\SizeChrome.cs" />
     <Page Include="MainWindow.xaml">
