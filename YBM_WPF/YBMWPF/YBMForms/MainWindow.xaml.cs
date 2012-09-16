@@ -65,5 +65,63 @@ namespace YBMForms
 
         }
 
+        private void SpawnControl(object sender, RoutedEventArgs e)
+        {
+            Control c = sender as Control;
+
+            switch (c.Name)
+            {
+                case"_SpawnTextBox":
+                    CreateTextBox();
+                    break;
+
+                case "_SpawnRect":
+                    CreateRect();
+                    break;
+
+                default:
+                    break;
+                    
+
+            }
+        }
+
+        private void CreateTextBox()
+        {
+            ContentControl cc = new ContentControl();
+            RichTextBox rtb = new RichTextBox();
+
+            rtb.IsHitTestVisible = true;
+            cc.Content = rtb;
+            cc.Style = (Style)FindResource("DesignerItemStyle");
+            cc.Width = 300;
+            cc.Height = 300;
+            cc.Padding = new Thickness(3);
+            cc.MouseDoubleClick += new MouseButtonEventHandler(DoubleClickSelect);
+            cc.ClipToBounds = true;
+            DesignerCanvas.Children.Add(cc);
+            Canvas.SetLeft(cc, 0);
+            Canvas.SetTop(cc, 0);
+        }
+
+        private void CreateRect()
+        {
+            ContentControl cc = new ContentControl();
+            Rectangle r = new Rectangle();
+            r.IsHitTestVisible = true;
+            r.Fill = Brushes.LightCoral;
+            r.RenderSize = new Size(100, 100);
+            cc.Content = r;
+            cc.Style = (Style)FindResource("DesignerItemStyle");
+            cc.Width = 300;
+            cc.Height = 300;
+            cc.Padding = new Thickness(3);
+            cc.MouseDoubleClick += new MouseButtonEventHandler(DoubleClickSelect);
+            cc.ClipToBounds = true;
+            DesignerCanvas.Children.Add(cc);
+            Canvas.SetLeft(cc, 0);
+            Canvas.SetTop(cc, 0);
+        }
+
     }
 }
