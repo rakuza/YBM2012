@@ -76,12 +76,12 @@
                             <Rectangle SnapsToDevicePixels="True"
                          StrokeThickness="1"
                          Margin="1"
-                         Stroke="White"/>
+                         Stroke="LightGray"/>
                             <Line StrokeThickness="1" X1="0" Y1="0" X2="0" Y2="20"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     Margin="0,-19,0,0"
-                    Stroke="White"/>
+                    Stroke="LightGray"/>
                             <Ellipse Style="{StaticResource ThumbCorner}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-1,-20,0,0"/>
                             <Ellipse Style="{StaticResource ThumbCorner}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Ellipse Style="{StaticResource ThumbCorner}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
