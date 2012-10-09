@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using Microsoft.Win32;
 using System.IO;
+using YBMForms.DLL.IOL;
 
 namespace YBMForms
 {
@@ -142,11 +143,13 @@ namespace YBMForms
                 ContentControl cc = new ContentControl();
                 Image picture = new Image();
                 picture.IsHitTestVisible = true;
-                picture.Source = new BitmapImage(new Uri(OFD.FileName));
+                MemImage image = new MemImage(new Uri(OFD.FileName));
+                picture.Source = image.Image;
+                picture.Stretch = Stretch.Fill;
                 cc.Content = picture;
                 cc.Style = (Style)FindResource("DesignerItemStyle");
-                cc.Width = picture.RenderSize.Width;
-                cc.Height = picture.RenderSize.Height;
+                cc.Width = image.Image.PixelWidth;
+                cc.Height = image.Image.PixelHeight;
                 cc.Padding = new Thickness(3);
                 cc.MouseDoubleClick += new MouseButtonEventHandler(DoubleClickSelect);
                 cc.ClipToBounds = true;
@@ -177,6 +180,20 @@ namespace YBMForms
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            PageSaver ps = new PageSaver();
+            ps.Page = DesignerCanvas;
+            ps.SavePage();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            PrintDialog pd = new PrintDialog();
+            if (pd.ShowDialog() == true)
+            { pd.PrintVisual(DesignerCanvas,"my canvas"); }
         }
 
 

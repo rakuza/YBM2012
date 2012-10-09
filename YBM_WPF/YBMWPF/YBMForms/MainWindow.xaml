@@ -40,9 +40,9 @@
             <Button Content="UnderLine"/>
             <Button Content="Font"/>
             <Label Content="Image Things"/>
-            <Button Content="Edit"/>
+            <Button Content="Edit" Click="Button_Click_3"/>
             <Label Content="OtherFunctions"/>
-            <Button Content="Save"/>
+            <Button Content="Save" Click="Button_Click_2"/>
             <Button Content="Load"/>
 
         </StackPanel>
@@ -70,9 +70,9 @@
             <Canvas x:Name="DesignerCanvas"
             ClipToBounds="True"
             SnapsToDevicePixels="True"
-                    Background="Red"
-                    Width="100"
-                    Height="100"
+                    Background="White"
+                    Width="1000"
+                    Height="1000"
                 >
         
         <ContentControl
@@ -85,7 +85,8 @@
             MouseDoubleClick="DoubleClickSelect"
             ClipToBounds="True">
                 <RichTextBox IsHitTestVisible="True"
-                         Name="_test">
+                         Name="_test"
+                             SpellCheck.IsEnabled="True">
                     <FlowDocument>
                     <Paragraph>
                         test
