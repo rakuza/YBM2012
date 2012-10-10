@@ -9,6 +9,18 @@ namespace YBMForms.DLL.IOL
 {
     class PageElement
     {
+
+        public PageElement()
+        {
+            height = 0;
+            width = 0;
+            child = new ChildElement();
+            type = "";
+            left = 0;
+            top = 0;
+
+        }
+
         private double height;
 
         public double Height
@@ -58,11 +70,58 @@ namespace YBMForms.DLL.IOL
 
         internal class ChildElement
         {
-            public string brush;
-            public Size size;
-            public string fill;
-            public byte[] image;
+            public ChildElement()
+            {
+                brush = "";
+                width = 0;
+                height = 0;
+                fill = "";
+                image = "";
+                document = "";
+            }
 
+            private string brush;
+
+            public string Brush
+            {
+                get { return brush; }
+                set { brush = value; }
+            }
+            private double width;
+
+            public double Width
+            {
+                get { return width; }
+                set { width = value; }
+            }
+            private double height;
+
+            public double Height
+            {
+                get { return height; }
+                set { height = value; }
+            }
+            private string fill;
+
+            public string Fill
+            {
+                get { return fill; }
+                set { fill = value; }
+            }
+            private string image;
+
+            public string Image
+            {
+                get { return image; }
+                set { image = value; }
+            }
+            private string document;
+
+            public string Document
+            {
+                get { return document; }
+                set { document = value; }
+            }
         }
 
     }
