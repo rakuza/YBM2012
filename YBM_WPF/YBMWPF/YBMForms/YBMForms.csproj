@@ -56,6 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="DLL\IOL\MemImage.cs" />
     <Compile Include="DLL\IOL\PageElement.cs" />
+    <Compile Include="DLL\IOL\PageLoader.cs" />
     <Compile Include="DLL\IOL\PageSaver.cs" />
     <Compile Include="PaperSizes.cs" />
     <Compile Include="UIL\AdornerLib\DesignerItemDecorator.cs" />

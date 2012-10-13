@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Shapes;
 using System.IO;
 using System.IO.Compression;
 using System.Windows.Documents;
@@ -51,6 +52,7 @@ namespace YBMForms.DLL.IOL
                     MemoryStream ME = new MemoryStream();
                     content.Save(ME, DataFormats.Rtf);
                     StreamReader sr = new StreamReader(ME);
+                    ME.Position = 0;
                     PE.Child.Document = sr.ReadToEnd();
                     sr.Close();
                     ME.Dispose();
@@ -65,32 +67,23 @@ namespace YBMForms.DLL.IOL
                     MemoryStream ME = new MemoryStream();
                     png.Save(ME);
                     StreamReader sr = new StreamReader(ME);
+                    ME.Position = 0;
                     PE.Child.Image = sr.ReadToEnd();
                     sr.Close();
                     ME.Dispose();
                 }
+                else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle" )
+                {
+                    Shape s = cc.Content as Shape;
+                    PE.Child.Brush = s.Fill.ToString();
+                }
                 elements.Add(PE);
             }
 
-            //FlowDocument content = new FlowDocument();
-
-            //foreach(UIElement child in page.Children)
-            //{
-            //    ContentControl cc = child as ContentControl;
-            //    PageElement PE = new PageElement();
-            //    if (PE.Type == "System.Windows.Controls.RichTextBox")
-            //    {
-            //        RichTextBox rtb = cc.Content as RichTextBox;
-            //        content = rtb.Document;
-            //    }
-            //}
-            //StreamWriter sw = new StreamWriter("durp.txt", false);
-            //TextRange document = new TextRange(content.ContentStart, content.ContentEnd);
-
-            //document.Save(sw.BaseStream, DataFormats.Rtf);
+            PrintPage(elements);
         }
 
-        public void PrintPage()
+        public void PrintPage(List<PageElement> elements)
         {
             StreamWriter sw = new StreamWriter("durp.txt", false);
 
@@ -98,18 +91,31 @@ namespace YBMForms.DLL.IOL
             sw.WriteLine("page:0");
             //print node count
             sw.WriteLine("node:" + elements.Count);
-            foreach (PageElement pe in elements)
+            foreach (PageElement PE in elements)
             {
                 sw.WriteLine("cc:");
-                sw.WriteLine(" width:");
-                sw.WriteLine(" height:");
-                sw.WriteLine(" top:");
-                sw.WriteLine(" left:");
+                sw.WriteLine(" width:"+PE.Width);
+                sw.WriteLine(" height:"+PE.Height);
+                sw.WriteLine(" top:"+PE.Top);
+                sw.WriteLine(" left:"+PE.Left);
                 sw.WriteLine(" child:");
-                sw.WriteLine("  type:");
-
-
+                sw.WriteLine("  type:"+PE.Type);
+                if (PE.Type == "System.Windows.Controls.RichTextBox")
+                {
+                    sw.WriteLine("  rtf:" + PE.Child.Document);
+                }
+                else if (PE.Type == "System.Windows.Controls.Image")
+                {
+                    sw.WriteLine("  dat:" + PE.Child.Image.Count()+6);
+                    sw.WriteLine("  img:" + PE.Child.Image);
+                    sw.WriteLine("  fill:" + PE.Child.Fill);
+                }
+                else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle")
+                {
+                    sw.WriteLine("  brush:" + PE.Child.Brush);
+                }
             }
+            sw.Close();
         }
             
 

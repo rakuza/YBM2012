@@ -73,8 +73,6 @@ namespace YBMForms.DLL.IOL
             public ChildElement()
             {
                 brush = "";
-                width = 0;
-                height = 0;
                 fill = "";
                 image = "";
                 document = "";
@@ -86,20 +84,6 @@ namespace YBMForms.DLL.IOL
             {
                 get { return brush; }
                 set { brush = value; }
-            }
-            private double width;
-
-            public double Width
-            {
-                get { return width; }
-                set { width = value; }
-            }
-            private double height;
-
-            public double Height
-            {
-                get { return height; }
-                set { height = value; }
             }
             private string fill;
 

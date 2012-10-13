@@ -27,13 +27,15 @@ namespace YBMForms
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         private ContentControl lastContentControl;
         private UIElement LastUIElement;
 
+        
 
-        private void DoubleClickSelect(object sender, MouseButtonEventArgs e)
+        public void DoubleClickSelect(object sender, MouseButtonEventArgs e)
         {
 
             ContentControl cc = sender as ContentControl;
@@ -120,7 +122,6 @@ namespace YBMForms
             Rectangle r = new Rectangle();
             r.IsHitTestVisible = true;
             r.Fill = Brushes.LightCoral;
-            r.RenderSize = new Size(100, 100);
             cc.Content = r;
             cc.Style = (Style)FindResource("DesignerItemStyle");
             cc.Width = 300;
@@ -194,6 +195,12 @@ namespace YBMForms
             PrintDialog pd = new PrintDialog();
             if (pd.ShowDialog() == true)
             { pd.PrintVisual(DesignerCanvas,"my canvas"); }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            PageLoader pl = new PageLoader(DesignerCanvas, this);
+            pl.ReadPage("durp.txt");
         }
 
 
