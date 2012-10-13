@@ -50,15 +50,26 @@ namespace YBMForms.DLL.IOL
             string buffer = "";
             StreamReader sr = new StreamReader(fileLocation);
             sr.ReadLine();//grabs the page number, irrelevent for now
+            PageElement PE = new PageElement(); ;
             nodes = Convert.ToInt32(GetNum(sr.ReadLine())); 
             nodes *= 8;
             while (nodes != 0)
             {
-                PageElement PE = new PageElement();
+                
                 buffer = sr.ReadLine();
-                string action = GetParam(buffer);
+                if (buffer != null)
+                {
+                    string action = GetParam(buffer);
+                
+                
                 switch (action)
                 {
+
+                    case "cc":
+                        if(!PE.Equals(new PageElement()))
+                            readControls.Add(PE);
+                        PE = new PageElement();
+                        break;
 
                     case "width":
                         PE.Width = GetNum(buffer);
@@ -102,16 +113,18 @@ namespace YBMForms.DLL.IOL
                         int block = Convert.ToInt32(GetNum(buffer));
                         char[] temp = new char[block];
                         sr.ReadBlock(temp,0,block);
-                        sr.BaseStream.Position= block;
-                        PE.Child.Image = GetString(temp.ToString());
+                        //sr.BaseStream.Position= block;
+                        PE.Child.Image = GetString(qstring(temp));
                         break;
 
                     default:
                         break;
                 }
+                }
                 nodes--;
-                readControls.Add(PE);
+                
             }
+            readControls.Add(PE);
             FormPage();
 
         }
@@ -119,6 +132,7 @@ namespace YBMForms.DLL.IOL
         private void FormPage()
         {
             Canvas c = canvas as Canvas;
+            c.Children.RemoveRange(0, c.Children.Count);
             foreach (PageElement PE in readControls)
             {
                 ContentControl cc = new ContentControl();
@@ -134,20 +148,25 @@ namespace YBMForms.DLL.IOL
                 if (PE.Type == "System.Windows.Controls.RichTextBox")
                 {
                     RichTextBox rtb = new RichTextBox();
-                    MemoryStream me = new MemoryStream();
-                    rtb.Selection.Load(me,DataFormats.Rtf);
+                    MemoryStream me = new MemoryStream(ASCIIEncoding.Default.GetBytes(PE.Child.Document));
+                    
+                    //rtb.Selection.Load(me,DataFormats.Rtf);
+                    TextRange tr = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+                    me.Position = 0;
+                    tr.Load(me, DataFormats.Rtf);
                     cc.Content = rtb;
                 }
                 else if (PE.Type == "System.Windows.Controls.Image")
                 {
                     Image i = new Image();
-                    i.Stretch = (Stretch)Enum.Parse(typeof(Stretch),PE.Child.Fill);
+                    
                     MemoryStream me = new MemoryStream(ASCIIEncoding.Default.GetBytes(PE.Child.Image));
                     BitmapImage temp = new BitmapImage();
                     temp.BeginInit();
                     temp.StreamSource = me;
                     temp.EndInit();
                     i.Source = temp;
+                    i.Stretch = (Stretch)Enum.Parse(typeof(Stretch), PE.Child.Fill);
                     cc.Content = i;
                     
                 }
@@ -163,9 +182,14 @@ namespace YBMForms.DLL.IOL
                     r.Fill = new BrushConverter().ConvertFromString(PE.Child.Brush) as SolidColorBrush;
                     cc.Content = r;
                 }
-                c.Children.Add(cc);
+
+                if (PE.Type != "")
+                {
+                    c.Children.Add(cc);
+                }
+                
             }
-            
+            c.InvalidateVisual();
         }
 
         private double GetNum(string s)
@@ -178,6 +202,11 @@ namespace YBMForms.DLL.IOL
         {
             string line = s.Substring(s.IndexOf(':')+1);
             return line;
+        }
+
+        private string qstring (char[] value)
+        {
+            return new string(value);
         }
 
         private string GetParam(string s)

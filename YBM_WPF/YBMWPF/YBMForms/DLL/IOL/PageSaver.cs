@@ -68,7 +68,7 @@ namespace YBMForms.DLL.IOL
                     png.Save(ME);
                     StreamReader sr = new StreamReader(ME);
                     ME.Position = 0;
-                    PE.Child.Image = sr.ReadToEnd();
+                    PE.Child.Image = sr.ReadToEnd() ;
                     sr.Close();
                     ME.Dispose();
                 }
@@ -86,7 +86,6 @@ namespace YBMForms.DLL.IOL
         public void PrintPage(List<PageElement> elements)
         {
             StreamWriter sw = new StreamWriter("durp.txt", false);
-
             //print page
             sw.WriteLine("page:0");
             //print node count
@@ -106,7 +105,8 @@ namespace YBMForms.DLL.IOL
                 }
                 else if (PE.Type == "System.Windows.Controls.Image")
                 {
-                    sw.WriteLine("  dat:" + PE.Child.Image.Count()+6);
+
+                    sw.WriteLine("  dat:" + PE.Child.Image.Length+6);
                     sw.WriteLine("  img:" + PE.Child.Image);
                     sw.WriteLine("  fill:" + PE.Child.Fill);
                 }
