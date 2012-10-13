@@ -149,8 +149,6 @@ namespace YBMForms.DLL.IOL
                 {
                     RichTextBox rtb = new RichTextBox();
                     MemoryStream me = new MemoryStream(ASCIIEncoding.Default.GetBytes(PE.Child.Document));
-                    
-                    //rtb.Selection.Load(me,DataFormats.Rtf);
                     TextRange tr = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
                     me.Position = 0;
                     tr.Load(me, DataFormats.Rtf);

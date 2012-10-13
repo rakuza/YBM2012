@@ -203,6 +203,21 @@ namespace YBMForms
             pl.ReadPage("durp.txt");
         }
 
+        private void Window_KeyDown_1(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Back || e.Key == Key.Delete)
+            {
+                foreach (ContentControl cc in DesignerCanvas.Children)
+                {
+                    if (Selector.GetIsSelected(cc))
+                    {
+                        DesignerCanvas.Children.Remove(cc);
+                        return;
+                    }
+                }
+            }
+        }
+
 
 
     }
