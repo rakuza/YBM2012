@@ -66,10 +66,10 @@ namespace YBMForms.DLL.IOL
                     png.Frames.Add(BitmapFrame.Create(rtb));
                     MemoryStream ME = new MemoryStream();
                     png.Save(ME);
-                    StreamReader sr = new StreamReader(ME);
+                    BinaryReader br =  new BinaryReader(ME);
                     ME.Position = 0;
-                    PE.Child.Image = sr.ReadToEnd() ;
-                    sr.Close();
+                    PE.Child.Image = br.ReadBytes((int)ME.Length);
+                    br.Close();
                     ME.Dispose();
                 }
                 else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle" )
@@ -85,7 +85,9 @@ namespace YBMForms.DLL.IOL
 
         public void PrintPage(List<PageElement> elements)
         {
-            StreamWriter sw = new StreamWriter("durp.txt", false);
+            FileStream fs = File.Open("durp.txt", FileMode.Create);
+            MemoryStream ms = new MemoryStream();
+            StreamWriter sw = new StreamWriter(ms);
             //print page
             sw.WriteLine("page:0");
             //print node count
@@ -106,16 +108,23 @@ namespace YBMForms.DLL.IOL
                 else if (PE.Type == "System.Windows.Controls.Image")
                 {
 
-                    sw.WriteLine("  dat:" + PE.Child.Image.Length+6);
-                    sw.WriteLine("  img:" + PE.Child.Image);
+                    sw.WriteLine("  img:" + PE.Child.Image.Length+6);
+                    sw.Flush();
+                    BinaryWriter br = new BinaryWriter(ms);
+                    br.Write(PE.Child.Image);
+                    br.Flush();
                     sw.WriteLine("  fill:" + PE.Child.Fill);
                 }
                 else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle")
                 {
-                    sw.WriteLine("  brush:" + PE.Child.Brush);
+                    sw.WriteLine(Environment.NewLine+"  brush:" + PE.Child.Brush);
                 }
             }
-            sw.Close();
+            sw.Flush();
+            ms.Position = 0;
+            ms.WriteTo(fs);
+            fs.Close();
+
         }
             
 

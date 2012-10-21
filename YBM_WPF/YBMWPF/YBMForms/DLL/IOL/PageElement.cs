@@ -21,6 +21,7 @@ namespace YBMForms.DLL.IOL
 
         }
 
+        
         private double height;
 
         public double Height
@@ -74,7 +75,6 @@ namespace YBMForms.DLL.IOL
             {
                 brush = "";
                 fill = "";
-                image = "";
                 document = "";
             }
 
@@ -92,9 +92,9 @@ namespace YBMForms.DLL.IOL
                 get { return fill; }
                 set { fill = value; }
             }
-            private string image;
+            private byte[] image;
 
-            public string Image
+            public byte[] Image
             {
                 get { return image; }
                 set { image = value; }

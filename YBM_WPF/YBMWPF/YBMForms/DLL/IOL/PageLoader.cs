@@ -46,17 +46,18 @@ namespace YBMForms.DLL.IOL
 
         public void ReadPage(string fileLocation)
         {
+            FileStream fs = File.Open(fileLocation,FileMode.Open);
             int nodes = 0;
             string buffer = "";
-            StreamReader sr = new StreamReader(fileLocation);
-            sr.ReadLine();//grabs the page number, irrelevent for now
+            LineReader lr = new LineReader(fs);
+            lr.ReadLine();//grabs the page number, irrelevent for now
             PageElement PE = new PageElement(); ;
-            nodes = Convert.ToInt32(GetNum(sr.ReadLine())); 
+            nodes = Convert.ToInt32(GetNum(lr.ReadLine())); 
             nodes *= 8;
             while (nodes != 0)
             {
                 
-                buffer = sr.ReadLine();
+                buffer = lr.ReadLine();
                 if (buffer != null)
                 {
                     string action = GetParam(buffer);
@@ -103,18 +104,19 @@ namespace YBMForms.DLL.IOL
 
                     case "rtf":
                         PE.Child.Document = GetString(buffer);
-                        while (sr.Peek() == '{' || sr.Peek() == '}')
+                        while (lr.Peek() == '{' || lr.Peek() == '}')
                         {
-                            PE.Child.Document += sr.ReadLine();
+                            PE.Child.Document += lr.ReadLine();
                         }
                         break;
 
-                    case "dat":
+                    case "img":
                         int block = Convert.ToInt32(GetNum(buffer));
-                        char[] temp = new char[block];
-                        sr.ReadBlock(temp,0,block);
+                        BinaryReader br = new BinaryReader(fs);
+                        PE.Child.Image = br.ReadBytes((int)GetNum(buffer));
+                        fs.Position += block;
                         //sr.BaseStream.Position= block;
-                        PE.Child.Image = GetString(qstring(temp));
+                        //PE.Child.Image = GetString(qstring(temp));
                         break;
 
                     default:
@@ -158,7 +160,7 @@ namespace YBMForms.DLL.IOL
                 {
                     Image i = new Image();
                     
-                    MemoryStream me = new MemoryStream(ASCIIEncoding.Default.GetBytes(PE.Child.Image));
+                    MemoryStream me = new MemoryStream(PE.Child.Image);
                     BitmapImage temp = new BitmapImage();
                     temp.BeginInit();
                     temp.StreamSource = me;
