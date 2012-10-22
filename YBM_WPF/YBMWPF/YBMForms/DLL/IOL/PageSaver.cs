@@ -44,6 +44,7 @@ namespace YBMForms.DLL.IOL
                 PE.Height = cc.Height;
                 PE.Left = Canvas.GetLeft(cc);
                 PE.Top = Canvas.GetTop(cc);
+                PE.Zindex = Canvas.GetZIndex(cc);
                 PE.Type = cc.Content.GetType().ToString();
                 if (PE.Type == "System.Windows.Controls.RichTextBox")
                 {
@@ -59,18 +60,41 @@ namespace YBMForms.DLL.IOL
                 }
                 else if (PE.Type == "System.Windows.Controls.Image")
                 {
+                    
                     Image i = cc.Content as Image;
                     PE.Child.Fill = i.Stretch.ToString();
-                    RenderTargetBitmap rtb = new RenderTargetBitmap((int)i.ActualWidth, (int)i.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+
+                    //shit is going wrong in here i bet
                     PngBitmapEncoder png = new PngBitmapEncoder();
-                    png.Frames.Add(BitmapFrame.Create(rtb));
                     MemoryStream ME = new MemoryStream();
+                    var imagesource = i.Source as BitmapImage;
+                    png.Frames.Add(BitmapFrame.Create(imagesource));
                     png.Save(ME);
-                    BinaryReader br =  new BinaryReader(ME);
-                    ME.Position = 0;
-                    PE.Child.Image = br.ReadBytes((int)ME.Length);
-                    br.Close();
-                    ME.Dispose();
+                    ME.Flush();
+                    var stream = ME;
+                    byte[] img = new byte[stream.Length];
+                    stream.Position = 0;
+                    stream.Read(img,0,img.Length);
+                    PE.Child.Image = img;
+                    //RenderTargetBitmap rtb = new RenderTargetBitmap((int)i.ActualWidth, (int)i.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                    
+                    //png.Frames.Add(BitmapFrame.Create(rtb));
+
+                    //MemoryStream ME = new MemoryStream();
+
+                    //png.Save(ME);
+                    //Stream s = File.Open("hurp.png", FileMode.Create);
+                    //ME.Flush();
+                    //ME.CopyTo(s);
+                    //s.Flush();
+                    //s.Close();
+                    ////mabe here?
+                    //BinaryReader br =  new BinaryReader(ME);
+
+                    //ME.Position = 0;
+                    //PE.Child.Image = br.ReadBytes((int)ME.Length);
+                    //br.Close();
+                    //ME.Dispose();
                 }
                 else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle" )
                 {
@@ -83,44 +107,50 @@ namespace YBMForms.DLL.IOL
             PrintPage(elements);
         }
 
+
+        /// <summary>
+        /// A Method for saving the actual page to the file
+        /// 
+        /// p.s. the image saving/loading from this point works fine
+        /// </summary>
+        /// <param name="elements">All the components of the page</param>
         public void PrintPage(List<PageElement> elements)
         {
             FileStream fs = File.Open("durp.txt", FileMode.Create);
             MemoryStream ms = new MemoryStream();
-            StreamWriter sw = new StreamWriter(ms);
             //print page
-            sw.WriteLine("page:0");
+            fs.Write(UnicodeEncoding.Unicode.GetBytes("page:0" + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount("page:0" + "\r\n"));
             //print node count
-            sw.WriteLine("node:" + elements.Count);
+            fs.Write(UnicodeEncoding.Unicode.GetBytes("node:" + elements.Count + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount("node:" + elements.Count + "\r\n"));
             foreach (PageElement PE in elements)
             {
-                sw.WriteLine("cc:");
-                sw.WriteLine(" width:"+PE.Width);
-                sw.WriteLine(" height:"+PE.Height);
-                sw.WriteLine(" top:"+PE.Top);
-                sw.WriteLine(" left:"+PE.Left);
-                sw.WriteLine(" child:");
-                sw.WriteLine("  type:"+PE.Type);
+                fs.Write(UnicodeEncoding.Unicode.GetBytes("cc:" + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("cc:" + "\r\n"));
+                fs.Write(UnicodeEncoding.Unicode.GetBytes(" width:" + PE.Width + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount(" width:" + PE.Width + "\r\n"));
+                fs.Write(UnicodeEncoding.Unicode.GetBytes(" height:" + PE.Height + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount(" height:" + PE.Height + "\r\n"));
+                fs.Write(UnicodeEncoding.Unicode.GetBytes(" top:" + PE.Top + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount(" top:" + PE.Top + "\r\n"));
+                fs.Write(UnicodeEncoding.Unicode.GetBytes(" left:" + PE.Left + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount(" left:" + PE.Left + "\r\n"));
+                fs.Write(UnicodeEncoding.Unicode.GetBytes(" zindex:" + PE.Zindex + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" zindex:" + PE.Zindex + "\r\n"));
+                fs.Write(UnicodeEncoding.Unicode.GetBytes(" child:" + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount(" child:" + "\r\n"));
+                fs.Write(UnicodeEncoding.Unicode.GetBytes("  type:" + PE.Type + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount("  type:" + PE.Type + "\r\n"));
                 if (PE.Type == "System.Windows.Controls.RichTextBox")
                 {
-                    sw.WriteLine("  rtf:" + PE.Child.Document);
+                    fs.Write(UnicodeEncoding.Unicode.GetBytes("  rtf:" + PE.Child.Document + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount("  rtf:" + PE.Child.Document + "\r\n"));
                 }
                 else if (PE.Type == "System.Windows.Controls.Image")
                 {
 
-                    sw.WriteLine("  img:" + PE.Child.Image.Length+6);
-                    sw.Flush();
-                    BinaryWriter br = new BinaryWriter(ms);
-                    br.Write(PE.Child.Image);
-                    br.Flush();
-                    sw.WriteLine("  fill:" + PE.Child.Fill);
+                    fs.Write(UnicodeEncoding.Unicode.GetBytes("  img:" + PE.Child.Image.Length + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount("  img:" + PE.Child.Image.Length + "\r\n"));
+
+
+                    fs.Write(PE.Child.Image,0,PE.Child.Image.Length);
+                    fs.Write(UnicodeEncoding.Unicode.GetBytes("\r\n" + "  fill:" + PE.Child.Fill + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("\r\n" + "  fill:" + PE.Child.Fill + "\r\n"));
+                    
                 }
                 else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle")
                 {
-                    sw.WriteLine(Environment.NewLine+"  brush:" + PE.Child.Brush);
+                    fs.Write(UnicodeEncoding.Unicode.GetBytes("  brush:" + PE.Child.Brush + "\r\n"),0,UnicodeEncoding.Unicode.GetByteCount("  brush:" + PE.Child.Brush + "\r\n"));
                 }
             }
-            sw.Flush();
             ms.Position = 0;
             ms.WriteTo(fs);
             fs.Close();

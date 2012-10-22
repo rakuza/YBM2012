@@ -95,6 +95,11 @@ namespace YBMForms
             pl.ReadPage("durp.txt");
         }
 
+        private void Button_Clic(object sender, RoutedEventArgs e)
+        {
+            GC.Collect();
+        }
+
 
 
 

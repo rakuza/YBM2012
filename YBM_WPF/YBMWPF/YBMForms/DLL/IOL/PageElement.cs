@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
-
+using System.IO;
 namespace YBMForms.DLL.IOL
 {
     class PageElement
@@ -18,6 +18,7 @@ namespace YBMForms.DLL.IOL
             type = "";
             left = 0;
             top = 0;
+            zindex = 0;
 
         }
 
@@ -69,6 +70,17 @@ namespace YBMForms.DLL.IOL
             set { top = value; }
         }
 
+        private int zindex;
+
+        public int Zindex
+        {
+            get { return zindex; }
+            set { zindex = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal class ChildElement
         {
             public ChildElement()
@@ -96,7 +108,7 @@ namespace YBMForms.DLL.IOL
 
             public byte[] Image
             {
-                get { return image; }
+                get {  return image; }
                 set { image = value; }
             }
             private string document;

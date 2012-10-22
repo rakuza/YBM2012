@@ -46,6 +46,7 @@
             <Label Content="OtherFunctions"/>
             <Button Content="Save" Click="Button_Click_2"/>
             <Button Content="Load" Click="Button_Click_4"/>
+            <Button Content="Button" Click="Button_Clic"/>
 
         </StackPanel>
 

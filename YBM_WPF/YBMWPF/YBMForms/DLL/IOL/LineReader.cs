@@ -6,44 +6,47 @@ using System.IO;
 
 namespace YBMForms.DLL.IOL
 {
-    public class LineReader : IDisposable
+    public class LineReader
     {
-        private Stream stream;
-        private BinaryReader reader;
+        private BinaryReader br;
 
-        public LineReader(Stream stream) { reader = new BinaryReader(stream); }
+      
+
+        public LineReader(Stream stream) { br = new BinaryReader(stream,Encoding.Unicode); }
+
 
         public string ReadLine()
         {
-            StringBuilder result = new StringBuilder();
-            char lastChar = reader.ReadChar();
-            // an EndOfStreamException here would propogate to the caller
 
-            try
-            {
-                char newChar = reader.ReadChar();
-                if (lastChar == '\r' && newChar == '\n')
-                    return result.ToString();
+                StringBuilder sb = new StringBuilder();
+                char last = ' ';
+                if (br.PeekChar() < 0)
+                    return string.Empty;
+                char buffer = br.ReadChar();
+                sb.Append(buffer);
+                int i = br.PeekChar();
+                while (!(i < 0))
+                {
+                    last = buffer;
 
-                result.Append(lastChar);
-                lastChar = newChar;
-                throw new EndOfStreamException();
-            }
-            catch (EndOfStreamException)
-            {
-                result.Append(lastChar);
-                return result.ToString();
-            }
+                    buffer = br.ReadChar();
+                    sb.Append(buffer);
+                    if (buffer == '\n' && last == '\r')
+                    {
+                        break;
+                    }
+
+                }
+                sb.Replace("\r\n", "");
+
+                return sb.ToString();
+
         }
 
         public char Peek()
         {
-            return (char)reader.PeekChar();
+            return (char)br.PeekChar();
         }
 
-        public void Dispose()
-        {
-            reader.Close();
-        }
     }
 }

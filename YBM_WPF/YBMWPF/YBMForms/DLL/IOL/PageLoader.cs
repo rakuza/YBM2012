@@ -52,13 +52,14 @@ namespace YBMForms.DLL.IOL
             LineReader lr = new LineReader(fs);
             lr.ReadLine();//grabs the page number, irrelevent for now
             PageElement PE = new PageElement(); ;
-            nodes = Convert.ToInt32(GetNum(lr.ReadLine())); 
-            nodes *= 8;
+            buffer = lr.ReadLine();
+            nodes = Convert.ToInt32(GetNum(buffer)); 
+            nodes *= 9;
             while (nodes != 0)
             {
                 
                 buffer = lr.ReadLine();
-                if (buffer != null)
+                if (buffer != null && buffer != "")
                 {
                     string action = GetParam(buffer);
                 
@@ -102,6 +103,10 @@ namespace YBMForms.DLL.IOL
                         PE.Child.Brush = GetString(buffer);
                         break;
 
+                    case "zindex":
+                        PE.Zindex = (int)GetNum(buffer);
+                        break;
+
                     case "rtf":
                         PE.Child.Document = GetString(buffer);
                         while (lr.Peek() == '{' || lr.Peek() == '}')
@@ -112,11 +117,9 @@ namespace YBMForms.DLL.IOL
 
                     case "img":
                         int block = Convert.ToInt32(GetNum(buffer));
-                        BinaryReader br = new BinaryReader(fs);
-                        PE.Child.Image = br.ReadBytes((int)GetNum(buffer));
-                        fs.Position += block;
-                        //sr.BaseStream.Position= block;
-                        //PE.Child.Image = GetString(qstring(temp));
+                        PE.Child.Image = new byte[block];
+                        fs.Read(PE.Child.Image,0,block);
+                        fs.Position += 4;
                         break;
 
                     default:
@@ -126,6 +129,9 @@ namespace YBMForms.DLL.IOL
                 nodes--;
                 
             }
+            fs.Close();
+            //ad any page elements that may remain in buffer
+
             readControls.Add(PE);
             FormPage();
 
@@ -145,6 +151,7 @@ namespace YBMForms.DLL.IOL
                 cc.ClipToBounds = true;
                 Canvas.SetLeft(cc,PE.Left);
                 Canvas.SetTop(cc, PE.Top);
+                Canvas.SetZIndex(cc, PE.Zindex);
                 cc.Height = PE.Height;
                 cc.Width = PE.Width;
                 if (PE.Type == "System.Windows.Controls.RichTextBox")
@@ -202,11 +209,6 @@ namespace YBMForms.DLL.IOL
         {
             string line = s.Substring(s.IndexOf(':')+1);
             return line;
-        }
-
-        private string qstring (char[] value)
-        {
-            return new string(value);
         }
 
         private string GetParam(string s)
