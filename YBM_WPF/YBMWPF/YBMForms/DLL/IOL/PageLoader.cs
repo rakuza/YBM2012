@@ -43,93 +43,95 @@ namespace YBMForms.DLL.IOL
 
         public void ReadPage(string fileLocation)
         {
-            FileStream fs = File.Open(fileLocation,FileMode.Open);
-            int nodes = 0;
-            string buffer = "";
-            LineReader lr = new LineReader(fs);
-            lr.ReadLine();//grabs the page number, irrelevent for now
-            PageElement PE = new PageElement(); ;
-            buffer = lr.ReadLine();
-            nodes = Convert.ToInt32(GetNum(buffer)); 
-            nodes *= 9;
-            while (nodes != 0)
+            using (FileStream fs = File.Open(fileLocation, FileMode.Open))
             {
-                
+                int nodes = 0;
+                string buffer = "";
+                LineReader lr = new LineReader(fs);
+                lr.ReadLine();//grabs the page number, irrelevent for now
+                PageElement PE = new PageElement(); ;
                 buffer = lr.ReadLine();
-                if (buffer != null && buffer != "")
-                {
-                    string action = GetParam(buffer);
-                
-                
-                switch (action)
+                nodes = Convert.ToInt32(GetNum(buffer));
+                nodes *= 9;
+                while (nodes != 0)
                 {
 
-                    case "cc":
-                        if(!PE.Equals(new PageElement()))
-                            readControls.Add(PE);
-                        PE = new PageElement();
-                        break;
+                    buffer = lr.ReadLine();
+                    if (buffer != null && buffer != "")
+                    {
+                        string action = GetParam(buffer);
 
-                    case "width":
-                        PE.Width = GetNum(buffer);
-                        break;
 
-                    case "height":
-                        PE.Height = GetNum(buffer);
-                        break;
-
-                    case "top":
-                        PE.Top = GetNum(buffer);
-                        break;
-
-                    case "left":
-                        PE.Left = GetNum(buffer);
-                        break;
-
-                    case "type":
-                        PE.Type = GetString(buffer);
-                        if (PE.Type == "System.Windows.Controls.Image")
-                            nodes++;
-                        break;
-
-                    case "fill":
-                        PE.Child.Fill = GetString(buffer);
-                        break;
-
-                    case "brush":
-                        PE.Child.Brush = GetString(buffer);
-                        break;
-
-                    case "zindex":
-                        PE.Zindex = (int)GetNum(buffer);
-                        break;
-
-                    case "rtf":
-                        PE.Child.Document = GetString(buffer);
-                        while (lr.Peek() == '{' || lr.Peek() == '}')
+                        switch (action)
                         {
-                            PE.Child.Document += lr.ReadLine();
+
+                            case "cc":
+                                if (!PE.Equals(new PageElement()))
+                                    readControls.Add(PE);
+                                PE = new PageElement();
+                                break;
+
+                            case "width":
+                                PE.Width = GetNum(buffer);
+                                break;
+
+                            case "height":
+                                PE.Height = GetNum(buffer);
+                                break;
+
+                            case "top":
+                                PE.Top = GetNum(buffer);
+                                break;
+
+                            case "left":
+                                PE.Left = GetNum(buffer);
+                                break;
+
+                            case "type":
+                                PE.Type = GetString(buffer);
+                                if (PE.Type == "System.Windows.Controls.Image")
+                                    nodes++;
+                                break;
+
+                            case "fill":
+                                PE.Child.Fill = GetString(buffer);
+                                break;
+
+                            case "brush":
+                                PE.Child.Brush = GetString(buffer);
+                                break;
+
+                            case "zindex":
+                                PE.Zindex = (int)GetNum(buffer);
+                                break;
+
+                            case "rtf":
+                                PE.Child.Document = GetString(buffer);
+                                while (lr.Peek() == '{' || lr.Peek() == '}')
+                                {
+                                    PE.Child.Document += lr.ReadLine();
+                                }
+                                break;
+
+                            case "img":
+                                int block = Convert.ToInt32(GetNum(buffer));
+                                PE.Child.Image = new byte[block];
+                                fs.Read(PE.Child.Image, 0, block);
+                                fs.Position += 4;
+                                break;
+
+                            default:
+                                break;
                         }
-                        break;
+                    }
+                    nodes--;
 
-                    case "img":
-                        int block = Convert.ToInt32(GetNum(buffer));
-                        PE.Child.Image = new byte[block];
-                        fs.Read(PE.Child.Image,0,block);
-                        fs.Position += 4;
-                        break;
-
-                    default:
-                        break;
                 }
-                }
-                nodes--;
-                
+                fs.Close();
+                //ad any page elements that may remain in buffer
+                readControls.Add(PE);
             }
-            fs.Close();
-            //ad any page elements that may remain in buffer
-
-            readControls.Add(PE);
+            
             FormPage();
 
         }
@@ -154,22 +156,30 @@ namespace YBMForms.DLL.IOL
                 if (PE.Type == "System.Windows.Controls.RichTextBox")
                 {
                     RichTextBox rtb = new RichTextBox();
-                    MemoryStream me = new MemoryStream(ASCIIEncoding.Default.GetBytes(PE.Child.Document));
-                    TextRange tr = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                    me.Position = 0;
-                    tr.Load(me, DataFormats.Rtf);
-                    cc.Content = rtb;
+                    using (MemoryStream me = new MemoryStream(ASCIIEncoding.Default.GetBytes(PE.Child.Document)))
+                    {
+                        TextRange tr = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+                        me.Position = 0;
+                        tr.Load(me, DataFormats.Rtf);
+                        cc.Content = rtb;
+                        me.Close();
+                    }
                 }
                 else if (PE.Type == "System.Windows.Controls.Image")
                 {
                     Image i = new Image();
+
+                    using (MemoryStream me = new MemoryStream(PE.Child.Image))
+                    {
+                        BitmapImage temp = new BitmapImage();
+                        
+                        temp.BeginInit();
+                        temp.CacheOption = BitmapCacheOption.OnLoad;
+                        temp.StreamSource = me;
+                        temp.EndInit();
                     
-                    MemoryStream me = new MemoryStream(PE.Child.Image);
-                    BitmapImage temp = new BitmapImage();
-                    temp.BeginInit();
-                    temp.StreamSource = me;
-                    temp.EndInit();
                     i.Source = temp;
+                    }
                     i.Stretch = (Stretch)Enum.Parse(typeof(Stretch), PE.Child.Fill);
                     cc.Content = i;
                     
