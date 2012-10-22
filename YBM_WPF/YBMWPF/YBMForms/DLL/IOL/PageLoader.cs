@@ -28,11 +28,8 @@ namespace YBMForms.DLL.IOL
             set { host = value; }
         }
 
-        public UIElement VisualParent
-        {
-            get { return canvas; }
-            set { canvas = value; }
-        }
+        public UIElement VisualParent { get; set; }
+
 
         public PageLoader(UIElement c, MainWindow h)
         {

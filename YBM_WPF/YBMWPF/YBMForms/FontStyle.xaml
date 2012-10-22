@@ -1,0 +1,22 @@
+﻿<Window x:Class="YBMForms.FontStyle"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FontStyle" Height="354" Width="539">
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Label 
+                Content="Label" 
+                Margin="295,34,0,-32" 
+                BorderBrush="Black"
+                BorderThickness="1" Height="99" Width="226"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                
+               />
+        <StackPanel HorizontalAlignment="Left" Margin="10,34,0,-223" Width="280" Background="#FFE6E6E6"/>
+
+    </Grid>
+</Window>

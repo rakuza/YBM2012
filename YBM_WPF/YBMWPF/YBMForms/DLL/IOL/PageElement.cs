@@ -7,117 +7,49 @@ using System.Windows.Media.Imaging;
 using System.IO;
 namespace YBMForms.DLL.IOL
 {
+    /// <summary>
+    /// Stores the content control and the content of the content control
+    /// </summary>
     class PageElement
     {
 
         public PageElement()
         {
-            height = 0;
-            width = 0;
-            child = new ChildElement();
-            type = "";
-            left = 0;
-            top = 0;
-            zindex = 0;
+            Height = 0;
+            Width = 0;
+            Child = new ChildElement();
+            Type = "";
+            Left = 0;
+            Top = 0;
+            Zindex = 0;
 
         }
-
-        
-        private double height;
-
-        public double Height
-        {
-            get { return height; }
-            set { height = value; }
-        }
-        private double width;
-
-        public double Width
-        {
-            get { return width; }
-            set { width = value; }
-        }
-
-        private ChildElement child;
-
-        public ChildElement Child
-        {
-            get { return child; }
-            set { child = value; }
-        }
-
-        private string type;
-
-        public string Type
-        {
-            get { return type; }
-            set { type = value; }
-        }
-
-        private double left;
-
-        public double Left
-        {
-            get { return left; }
-            set { left = value; }
-        }
-
-        private double top;
-
-        public double Top
-        {
-            get { return top; }
-            set { top = value; }
-        }
-
-        private int zindex;
-
-        public int Zindex
-        {
-            get { return zindex; }
-            set { zindex = value; }
-        }
+        //getters and setters
+        public double Height { get; set; }
+        public double Width { get; set; }
+        public ChildElement Child { get; set; }
+        public string Type { get; set; }
+        public double Left { get; set; }
+        public double Top { get; set; }
+        public int Zindex { get; set; }
 
         /// <summary>
-        /// 
+        /// The Child Element For storing the content of the content control
         /// </summary>
         internal class ChildElement
         {
             public ChildElement()
             {
-                brush = "";
-                fill = "";
-                document = "";
+                Brush = "";
+                Fill = "";
+                Document = "";
             }
+            //getters and setters
+            public string Brush { get; set; }
+            public string Fill { get; set; }
+            public byte[] Image { get; set; }
+            public string Document { get; set; }
 
-            private string brush;
-
-            public string Brush
-            {
-                get { return brush; }
-                set { brush = value; }
-            }
-            private string fill;
-
-            public string Fill
-            {
-                get { return fill; }
-                set { fill = value; }
-            }
-            private byte[] image;
-
-            public byte[] Image
-            {
-                get {  return image; }
-                set { image = value; }
-            }
-            private string document;
-
-            public string Document
-            {
-                get { return document; }
-                set { document = value; }
-            }
         }
 
     }

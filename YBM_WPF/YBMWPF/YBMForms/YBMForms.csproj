@@ -74,7 +74,13 @@
     <Compile Include="DLL\IOL\PageElement.cs" />
     <Compile Include="DLL\IOL\PageLoader.cs" />
     <Compile Include="DLL\IOL\PageSaver.cs" />
+    <Compile Include="FontStyle.xaml.cs">
+      <DependentUpon>FontStyle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PaperSizes.cs" />
+    <Compile Include="PhotoEditor.xaml.cs">
+      <DependentUpon>PhotoEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIL\AdornerLib\DesignerItemDecorator.cs" />
     <Compile Include="UIL\AdornerLib\MoveThumb.cs" />
     <Compile Include="UIL\AdornerLib\ResizeRotateAdorner.cs" />
@@ -86,6 +92,10 @@
     <Compile Include="UIL\ControlSpawner.cs" />
     <Compile Include="UIL\FontFormatFunction.cs" />
     <Compile Include="UIL\KeyFunction.cs" />
+    <Page Include="FontStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -98,6 +108,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PhotoEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UIL\AdornerLib\Resources\DesignerItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

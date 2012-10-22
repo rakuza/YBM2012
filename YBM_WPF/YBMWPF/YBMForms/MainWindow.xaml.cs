@@ -26,11 +26,15 @@ namespace YBMForms
         public MainWindow()
         {
             InitializeComponent();
+            PaperSizes.Dpi = 300;
+            DesignerCanvas.Height = PaperSizes.PixelBleedHeight;
+            DesignerCanvas.Width = PaperSizes.PixelBleedWidth;
             
         }
 
         private ContentControl lastContentControl;
         private UIElement LastUIElement;
+        
 
         
         /// <summary>

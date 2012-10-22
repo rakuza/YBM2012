@@ -68,8 +68,12 @@ namespace YBMForms
                 UIElement u = cc.Content as UIElement;
                 if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
                 {
+                    FontStyle fs = new FontStyle();
+                    fs.ShowDialog();
+                    /*
                     RichTextBox rtb = u as RichTextBox;
                     rtb.Selection.ApplyPropertyValue(RichTextBox.FontWeightProperty, "Bold");
+                     * */
                 }
             }
         }

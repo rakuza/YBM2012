@@ -62,23 +62,17 @@
                     </Grid>
                 </ListViewItem>
             </ListView>
-        </Grid>-->
-        <Canvas
-            Background="Transparent" 
-            SnapsToDevicePixels="True"
-            ClipToBounds="True"
-            DockPanel.Dock="Bottom"
-            
-            >
+        </Grid>-->     
+        <Grid
+            ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <Canvas x:Name="DesignerCanvas"
             ClipToBounds="True"
             SnapsToDevicePixels="True"
-                    Background="White"
-                    Width="1000"
-                    Height="1000"
+                    Background="Red"
                 >
-        
-        <ContentControl
+            
+                
+            <ContentControl
             Width="200"
             Height="300"
             Padding="3"
@@ -102,7 +96,6 @@
             </RichTextBox>
         </ContentControl>
         </Canvas>
-        </Canvas>
-        
+        </Grid>
     </DockPanel>
 </Window>
