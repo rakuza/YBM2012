@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using Microsoft.Win32;
 using YBMForms.DLL.IOL;
+using YBMForms.UIL.AdornerLib;
 using System.Globalization;
 
 namespace YBMForms
@@ -30,7 +31,9 @@ namespace YBMForms
         public MainWindow()
         {
             InitializeComponent();
-            zoom = 2.3M;
+
+            //note to self throw this stuff in another method
+            zoom = 1.8M;
             double temp = Math.Pow(10, (double)zoom);
             temp = temp / 100;
             tbxZoom.Text = temp.ToString("p");
@@ -39,6 +42,16 @@ namespace YBMForms
             DesignerCanvas.Width = PaperSizes.PixelBleedWidth;
             DesignerCanvasZoomBox.Height = (int)(PaperSizes.PixelBleedHeight * temp);
             DesignerCanvasZoomBox.Width = (int)(PaperSizes.PixelBleedWidth * temp);
+            borderBleed.Width = PaperSizes.PixelBleedWidth;
+            borderBleed.Height = PaperSizes.PixelBleedHeight;
+            Canvas.SetZIndex(borderBleed, 0);
+            borderUnsafe.Width = PaperSizes.PixelUnsafeWidth;
+            borderUnsafe.Height = PaperSizes.PixelUnsafeHeight;
+            Canvas.SetZIndex(borderUnsafe, 1);
+            bordersafe.Height = PaperSizes.PixelSafeHeight;
+            bordersafe.Width = PaperSizes.PixelSafeWidth;
+            Canvas.SetZIndex(borderUnsafe, 2);
+
         }
 
         private ContentControl lastContentControl;

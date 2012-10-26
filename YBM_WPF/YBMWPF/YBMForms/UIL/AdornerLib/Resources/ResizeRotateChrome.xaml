@@ -6,9 +6,9 @@
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Stroke" Value="#FFC8C8C8" />
         <Setter Property="StrokeThickness" Value=".5" />
-        <Setter Property="Width" Value="7" />
-        <Setter Property="Height" Value="7" />
-        <Setter Property="Margin" Value="-2" />
+        <Setter Property="Width" Value="24" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Margin" Value="-10" />
         <Setter Property="Fill">
             <Setter.Value>
                 <RadialGradientBrush Center="0.2, 0.2" GradientOrigin="0.2, 0.2" RadiusX="0.8" RadiusY="0.8">
@@ -24,65 +24,65 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type s:ResizeRotateChrome}">
                     <Grid>
-                        <Grid Opacity="0" Margin="-3">
-                            <s:RotateThumb Width="7"
-                             Height="7"
-                             Margin="0,-20,0,0"
+                        <Grid Opacity="0" Margin="-10">
+                            <s:RotateThumb Width="16"
+                             Height="16"
+                             Margin="0,-30,0,0"
                              Cursor="Hand"
                              VerticalAlignment="Top"
                              HorizontalAlignment="Center"/>
-                            <s:ResizeThumb Height="3"
+                            <s:ResizeThumb Height="10"
                              Cursor="SizeNS"
                              VerticalAlignment="Top"
                              HorizontalAlignment="Stretch"/>
-                            <s:ResizeThumb Width="3"
+                            <s:ResizeThumb Width="10"
                              Cursor="SizeWE"
                              VerticalAlignment="Stretch"
                              HorizontalAlignment="Left"/>
-                            <s:ResizeThumb Width="3"
+                            <s:ResizeThumb Width="10"
                              Cursor="SizeWE"
                              VerticalAlignment="Stretch"
                              HorizontalAlignment="Right"/>
-                            <s:ResizeThumb Height="3"
+                            <s:ResizeThumb Height="10"
                              Cursor="SizeNS"
                              VerticalAlignment="Bottom"
                              HorizontalAlignment="Stretch"/>
-                            <s:ResizeThumb Width="7"
-                             Height="7"
-                             Margin="-2"
+                            <s:ResizeThumb Width="24"
+                             Height="24"
+                             Margin="-10"
                              Cursor="SizeNWSE"
                              VerticalAlignment="Top"
                              HorizontalAlignment="Left"/>
-                            <s:ResizeThumb Width="7"
-                             Height="7"
-                             Margin="-2"
+                            <s:ResizeThumb Width="24"
+                             Height="24"
+                             Margin="-10"
                              Cursor="SizeNESW"
                              VerticalAlignment="Top"
                              HorizontalAlignment="Right"/>
-                            <s:ResizeThumb Width="7"
-                             Height="7"
-                             Margin="-2"
+                            <s:ResizeThumb Width="24"
+                             Height="24"
+                             Margin="-10"
                              Cursor="SizeNESW"
                              VerticalAlignment="Bottom"
                              HorizontalAlignment="Left"/>
-                            <s:ResizeThumb Width="7"
-                             Height="7"
-                             Margin="-2"
+                            <s:ResizeThumb Width="24"
+                             Height="24"
+                             Margin="-10"
                              Cursor="SizeNWSE"
                              VerticalAlignment="Bottom"
                              HorizontalAlignment="Right"/>
                         </Grid>
-                        <Grid IsHitTestVisible="False" Opacity="1" Margin="-3">
+                        <Grid IsHitTestVisible="False" Opacity="1" Margin="-10">
                             <Rectangle SnapsToDevicePixels="True"
-                         StrokeThickness="1"
+                         StrokeThickness="2"
                          Margin="1"
                          Stroke="LightGray"/>
-                            <Line StrokeThickness="1" X1="0" Y1="0" X2="0" Y2="20"
+                            <Line StrokeThickness="4" X1="0" Y1="0" X2="0" Y2="20"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     Margin="0,-19,0,0"
                     Stroke="LightGray"/>
-                            <Ellipse Style="{StaticResource ThumbCorner}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-1,-20,0,0"/>
+                            <Ellipse Style="{StaticResource ThumbCorner}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-1,-30,0,0"/>
                             <Ellipse Style="{StaticResource ThumbCorner}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <Ellipse Style="{StaticResource ThumbCorner}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                             <Ellipse Style="{StaticResource ThumbCorner}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>

@@ -6,7 +6,7 @@ using System.IO;
 
 namespace YBMForms.DLL.IOL
 {
-    public class LineReader
+    sealed class LineReader : IDisposable
     {
         private BinaryReader br;
 
@@ -46,6 +46,12 @@ namespace YBMForms.DLL.IOL
         public char Peek()
         {
             return (char)br.PeekChar();
+        }
+
+        public void Dispose()
+        {
+            br = new BinaryReader(new MemoryStream());
+            br.Dispose();
         }
 
     }

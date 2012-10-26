@@ -7,7 +7,7 @@ using System.IO;
 
 namespace YBMForms.DLL.IOL
 {
-    class MemImage
+    sealed class MemImage : IDisposable
     {
         private MemoryStream MS;
 
@@ -36,5 +36,12 @@ namespace YBMForms.DLL.IOL
         {
             return image;
         }
+
+        public void Dispose()
+        {
+            MS.Dispose();
+        }
+
+
     }
 }

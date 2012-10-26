@@ -215,11 +215,28 @@
 
     
     <Grid >
-            <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+            <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
+                <ScrollViewer.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FFACACAC" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </RadialGradientBrush>
+                </ScrollViewer.Background>
                 <Viewbox Name="DesignerCanvasZoomBox" Stretch="Fill" StretchDirection="Both" Height="1000" Width="1000">
-                        <Canvas x:Name="DesignerCanvas" ClipToBounds="True" SnapsToDevicePixels="True">
-                            
-                             <ContentControl
+                    <Canvas x:Name="DesignerCanvas" ClipToBounds="True" SnapsToDevicePixels="True" HorizontalAlignment="Center">
+                        <Canvas.Background>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Grid>
+                                        <Rectangle Name="borderBleed" StrokeThickness="2" Stroke="Red" Fill="White" />
+                                        <Rectangle Name="borderUnsafe" StrokeThickness="2" Stroke="Orange" />
+                                        <Rectangle Name="bordersafe" StrokeThickness="2" Stroke="Green" />
+                                    </Grid>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Canvas.Background>
+
+                            <ContentControl
                                 Width="200"
                                 Height="300"
                                 Padding="3"

@@ -57,7 +57,6 @@ namespace YBMForms.DLL.IOL
                     
                     ME.Position = 0;
                     PE.Child.Document = sr.ReadToEnd();
-                    sr.Close();
                     }
                 }
                 else if (PE.Type == "System.Windows.Controls.Image")
@@ -134,7 +133,6 @@ namespace YBMForms.DLL.IOL
                         fs.Write(UnicodeEncoding.Unicode.GetBytes("  brush:" + PE.Child.Brush + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  brush:" + PE.Child.Brush + "\r\n"));
                     }
                 }
-                fs.Close();
             }
         }
             

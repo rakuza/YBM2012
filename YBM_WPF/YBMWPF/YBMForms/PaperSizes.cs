@@ -117,8 +117,8 @@ namespace YBMForms
         static public int PixelBleedWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * bleedWidth)); } }
         static public int PixelUnsafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeHeight)); } }
         static public int PixelUnsafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeWidth)); } }
-        static public int PixelSafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeHeight)); } }
-        static public int PixelSafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeWidth)); } }
+        static public int PixelSafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeWidth)); } }
+        static public int PixelSafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 *safeHeight )); } }
 
 
 

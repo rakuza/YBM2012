@@ -57,7 +57,7 @@ namespace YBMForms.DLL.IOL
                 {
 
                     buffer = lr.ReadLine();
-                    if (buffer != null && buffer != "")
+                    if ( string.IsNullOrWhiteSpace(buffer))
                     {
                         string action = GetParam(buffer);
 
@@ -127,7 +127,6 @@ namespace YBMForms.DLL.IOL
                     nodes--;
 
                 }
-                fs.Close();
                 //ad any page elements that may remain in buffer
                 readControls.Add(PE);
             }
@@ -163,7 +162,6 @@ namespace YBMForms.DLL.IOL
                         me.Position = 0;
                         tr.Load(me, DataFormats.Rtf);
                         cc.Content = rtb;
-                        me.Close();
                     }
                 }
                 else if (PE.Type == "System.Windows.Controls.Image")
@@ -198,7 +196,7 @@ namespace YBMForms.DLL.IOL
                     cc.Content = r;
                 }
 
-                if (PE.Type != "")
+                if ( string.IsNullOrWhiteSpace(PE.Type))
                 {
                     c.Children.Add(cc);
                 }
