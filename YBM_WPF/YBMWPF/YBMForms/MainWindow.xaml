@@ -20,6 +20,30 @@
     
     <DockPanel>
 
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Zoom:"></Label>
+                    <TextBox Name="tbxZoom" LostFocus="tbxZoom_LostFocus_1" />
+                </StackPanel>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button ToolTip="Zoom In" Click="ZoomIn">
+                    <Button.Content>
+                        <Image Width="16" Height="16" Source="/Resources/icons/bullet_plus.png" />
+                    </Button.Content>
+                </Button>
+            </StatusBarItem>
+
+            <StatusBarItem>
+                <Button ToolTip="Zoom Out" Click="ZoomOut">
+                    <Button.Content>
+                        <Image Width="16" Height="16" Source="/Resources/icons/bullet_minus.png" />
+                    </Button.Content>
+                </Button>
+            </StatusBarItem>
+        </StatusBar>
+
         <Menu  VerticalAlignment="Top" DockPanel.Dock="Top" >
             <MenuItem Header="File">
 
@@ -185,12 +209,16 @@
             <Label Content="OtherFunctions"/>
             <Button Content="Save" Click="Button_Click_2"/>
             <Button Content="Load" Click="Button_Click_4"/>
-                </StackPanel>
-        
-        <Grid>
+        </StackPanel>
+
+
+
+    
+    <Grid >
             <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
                 <Viewbox Name="DesignerCanvasZoomBox" Stretch="Fill" StretchDirection="Both" Height="1000" Width="1000">
                         <Canvas x:Name="DesignerCanvas" ClipToBounds="True" SnapsToDevicePixels="True">
+                            
                              <ContentControl
                                 Width="200"
                                 Height="300"
@@ -219,6 +247,7 @@
                 </Viewbox>
             </ScrollViewer>
         </Grid>
-        
+
     </DockPanel>
+
 </Window>

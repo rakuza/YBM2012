@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using Microsoft.Win32;
 using YBMForms.DLL.IOL;
+using System.Globalization;
 
 namespace YBMForms
 {
@@ -23,13 +24,21 @@ namespace YBMForms
     /// </summary>
     public partial class MainWindow : Window
     {
+        private decimal zoom;
+
+
         public MainWindow()
         {
             InitializeComponent();
+            zoom = 2.3M;
+            double temp = Math.Pow(10, (double)zoom);
+            temp = temp / 100;
+            tbxZoom.Text = temp.ToString("p");
             PaperSizes.Dpi = 300;
             DesignerCanvas.Height = PaperSizes.PixelBleedHeight;
             DesignerCanvas.Width = PaperSizes.PixelBleedWidth;
-            
+            DesignerCanvasZoomBox.Height = (int)(PaperSizes.PixelBleedHeight * temp);
+            DesignerCanvasZoomBox.Width = (int)(PaperSizes.PixelBleedWidth * temp);
         }
 
         private ContentControl lastContentControl;
@@ -104,13 +113,60 @@ namespace YBMForms
             GC.Collect();
         }
 
+        private void ZoomIn(object sender, RoutedEventArgs e)
+        {
+            zoom += 0.1M;
+            double temp = Math.Pow(10,(double)zoom);
+            temp = temp / 100;
+            tbxZoom.Text = temp.ToString("p");
+            DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
+            DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
+        }
 
+        private void ZoomOut(object sender, RoutedEventArgs e)
+        {
+            zoom -= 0.1M;
+            double temp = Math.Pow(10, (double)zoom);
+            temp = temp / 100;
+            tbxZoom.Text = temp.ToString("p");
+            DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
+            DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
+        }
 
+        #region zoomchange()
+        private void ZoomChange()
+        {
+            if (tbxZoom.IsFocused)
+            {
+                string parsestring = tbxZoom.Text.Replace('%', ' ').Trim();
+                double temp = double.Parse(parsestring);
+                tbxZoom.Text = (temp/100).ToString("p");
+                temp = Math.Log10(temp);
+                
+                zoom = (decimal)temp;
+                DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
+                DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
+            }
+        }
 
+        private void ZoomChange(bool skipFocus)
+        {
+            if (skipFocus)
+            {
+                string parsestring = tbxZoom.Text.Replace('%', ' ').Trim();
+                double temp = double.Parse(parsestring);
+                tbxZoom.Text = (temp / 100).ToString("p");
+                temp = Math.Log10(temp);
+                zoom = (decimal)temp;
+                DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
+                DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
+            }
+        }
+    #endregion
 
-
-
-
-
+        private void tbxZoom_LostFocus_1(object sender, RoutedEventArgs e)
+        {
+            ZoomChange(true);
+        }
     }
 }

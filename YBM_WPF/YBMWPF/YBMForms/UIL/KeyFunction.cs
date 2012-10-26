@@ -44,6 +44,10 @@ namespace YBMForms
                         ZIndex(-1,e);
                         break;
 
+                    case Key.Enter:
+                        ZoomChange();
+                        break;
+
                     default:
                         break;
                 }
