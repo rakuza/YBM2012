@@ -19,15 +19,16 @@ namespace YBMForms
 
 
         //A4 paper sizes
-        static PaperSizes() { 
+        static PaperSizes()
+        {
             SetType(PaperSize.A4);
             dpi = 0;
-            }
+        }
 
-        public static void  SetType(PaperSize s)
+        public static void SetType(PaperSize s)
         {
             type = s;
-            switch(s)
+            switch (s)
             {
                 case PaperSize.A4:
                     bleedWidth = 216;
@@ -40,7 +41,7 @@ namespace YBMForms
 
                 case PaperSize.A3:
                     SetType(PaperSize.A4);
-                    MessageBox.Show("Paper size not impelemented","Error",MessageBoxButton.OK,MessageBoxImage.Error);
+                    MessageBox.Show("Paper size not impelemented", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     break;
 
                 default:
@@ -52,13 +53,13 @@ namespace YBMForms
         // Read/Writeible properties
         // About Page size
 
-       
+
         static private PaperSize type;
 
-        static public PaperSize Type 
+        static public PaperSize Type
         {
-            get{ return type; }
-            set{ SetType(value);}
+            get { return type; }
+            set { SetType(value); }
         }
 
         static private int safeHeight;
@@ -108,17 +109,21 @@ namespace YBMForms
         {
             get { return PaperSizes.dpi; }
             set { dpi = value; }
-        } 
+        }
 
 
         //Read Only Properties
 
-        static public int PixelBleedHeight { get {return (int)Math.Ceiling(dpi*(0.03937301*bleedHeight));}}
+        static public int PixelBleedHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * bleedHeight)); } }
         static public int PixelBleedWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * bleedWidth)); } }
         static public int PixelUnsafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeHeight)); } }
         static public int PixelUnsafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeWidth)); } }
         static public int PixelSafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeWidth)); } }
+<<<<<<< HEAD
         static public int PixelSafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 *safeHeight )); } }
+=======
+        static public int PixelSafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeHeight)); } }
+>>>>>>> Not Broken Copy
 
 
 

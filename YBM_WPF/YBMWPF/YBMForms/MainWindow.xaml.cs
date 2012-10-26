@@ -19,7 +19,7 @@ using System.Globalization;
 
 namespace YBMForms
 {
-    
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -56,9 +56,9 @@ namespace YBMForms
 
         private ContentControl lastContentControl;
         private UIElement LastUIElement;
-        
 
-        
+
+
         /// <summary>
         /// DoubleClick Event Handler
         /// </summary>
@@ -112,7 +112,7 @@ namespace YBMForms
         {
             PrintDialog pd = new PrintDialog();
             if (pd.ShowDialog() == true)
-            { pd.PrintVisual(DesignerCanvas,"my canvas"); }
+            { pd.PrintVisual(DesignerCanvas, "my canvas"); }
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
@@ -129,7 +129,11 @@ namespace YBMForms
         private void ZoomIn(object sender, RoutedEventArgs e)
         {
             zoom += 0.1M;
+<<<<<<< HEAD
             double temp = Math.Pow(10,(double)zoom);
+=======
+            double temp = Math.Pow(10, (double)zoom);
+>>>>>>> Not Broken Copy
             temp = temp / 100;
             tbxZoom.Text = temp.ToString("p");
             DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
@@ -153,9 +157,15 @@ namespace YBMForms
             {
                 string parsestring = tbxZoom.Text.Replace('%', ' ').Trim();
                 double temp = double.Parse(parsestring);
+<<<<<<< HEAD
                 tbxZoom.Text = (temp/100).ToString("p");
                 temp = Math.Log10(temp);
                 
+=======
+                tbxZoom.Text = (temp / 100).ToString("p");
+                temp = Math.Log10(temp);
+
+>>>>>>> Not Broken Copy
                 zoom = (decimal)temp;
                 DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
                 DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
@@ -175,7 +185,11 @@ namespace YBMForms
                 DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
             }
         }
+<<<<<<< HEAD
     #endregion
+=======
+        #endregion
+>>>>>>> Not Broken Copy
 
         private void tbxZoom_LostFocus_1(object sender, RoutedEventArgs e)
         {
