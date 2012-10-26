@@ -156,6 +156,7 @@ namespace YBMForms.DLL.IOL
                 if (PE.Type == "System.Windows.Controls.RichTextBox")
                 {
                     RichTextBox rtb = new RichTextBox();
+                    rtb.Background = Brushes.Transparent;
                     using (MemoryStream me = new MemoryStream(ASCIIEncoding.Default.GetBytes(PE.Child.Document)))
                     {
                         TextRange tr = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);

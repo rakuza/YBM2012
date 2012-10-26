@@ -76,8 +76,9 @@ namespace YBMForms.DLL.IOL
                         byte[] img = new byte[stream.Length];
                         stream.Position = 0;
                         stream.Read(img,0,img.Length);
+                        PE.Child.Image = img;
                     }
-                    PE.Child.Image = img;
+                    
                 }
                 else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle" )
                 {
@@ -99,6 +100,7 @@ namespace YBMForms.DLL.IOL
         /// <param name="elements">All the components of the page</param>
         public void PrintPage(List<PageElement> elements)
         {
+            
             using (FileStream fs = File.Open("durp.txt", FileMode.Create))
             {
                 fs.Write(UnicodeEncoding.Unicode.GetBytes("page:0" + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("page:0" + "\r\n"));
