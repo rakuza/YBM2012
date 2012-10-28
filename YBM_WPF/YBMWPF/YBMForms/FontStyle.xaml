@@ -1,22 +1,80 @@
 ﻿<Window x:Class="YBMForms.FontStyle"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="FontStyle" Height="354" Width="539">
-    <Grid Margin="0">
+        xmlns:c="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="FontStyle" Height="282" Width="565">
+    <Grid Margin="0,0,2,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <Label 
-                Content="Label" 
-                Margin="295,34,0,-32" 
+                Name="lblDemo" 
+                Margin="323,33,0,-30" 
                 BorderBrush="Black"
                 BorderThickness="1" Height="99" Width="226"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                 
-               />
-        <StackPanel HorizontalAlignment="Left" Margin="10,34,0,-223" Width="280" Background="#FFE6E6E6"/>
+               >
+            <TextBlock>
+                Test
+            </TextBlock>
+        </Label>
+        <Grid HorizontalAlignment="Left" Margin="10,33,0,-153" Width="285" Background="#FFE6E6E6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Column="0" Grid.Row="0" Margin="0,0,20,0">Font Size</Label>
+            <TextBox Grid.Column="1" Grid.Row="0" Name="tbxSize" TextChanged="tbxSize_TextChanged_1" VerticalAlignment="Center"></TextBox>
+            
+            <Label Grid.Column="0"  Margin="0,0,20,0" Grid.Row="1">Font</Label>
+            <ComboBox Grid.Row="1" Grid.Column="1" x:Name="Font" SelectionChanged="FontFamilyChangeHandler"
+            VerticalAlignment="Center" Height="24" IsSynchronizedWithCurrentItem="True"
+            ItemsSource="{x:Static Fonts.SystemFontFamilies}"/>
+
+            <Label Grid.Column="0" Grid.Row="2" Margin="0,0,20,0">Colour</Label>
+            <c:ColorPicker SelectedColorChanged="ColorChangedHandler" Name="color" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"></c:ColorPicker>
+            
+            <Label Grid.Column="0" Grid.Row="3" Margin="0,0,20,0">Bold</Label>
+            <CheckBox Name="chkBold" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"
+                      HorizontalAlignment="Center" Click="BasicEffectHandler"></CheckBox >
+
+            <Label Grid.Column="0" Grid.Row="4" Margin="0,0,20,0">Italic</Label>
+            <CheckBox Name="chkItalic" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" 
+                      HorizontalAlignment="Center" Click="BasicEffectHandler"></CheckBox >
+
+            <Label Grid.Column="0" Grid.Row="5" Margin="0,0,20,0">Underline</Label>
+            <CheckBox Name="chkUnderLine" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center"
+                      HorizontalAlignment="Center" Click="BasicEffectHandler"></CheckBox >
+
+
+            <Label Grid.Column="0" Grid.Row="6" Margin="0,0,20,0">StrikeThrough</Label>
+            <CheckBox Name="chkStrikeThrough" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center"
+                      HorizontalAlignment="Center" Click="BasicEffectHandler"></CheckBox >
+
+
+
+
+        </Grid>
+        <Button Content="Ok" Click="Submit" HorizontalAlignment="Left" Margin="323,198,0,-94" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Cancel" Click="Exit" HorizontalAlignment="Left" Margin="435,198,0,-69" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </Window>

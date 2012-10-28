@@ -48,8 +48,8 @@ namespace YBMForms
             borderUnsafe.Width = PaperSizes.PixelUnsafeWidth;
             borderUnsafe.Height = PaperSizes.PixelUnsafeHeight;
             Canvas.SetZIndex(borderUnsafe, 1);
-            bordersafe.Height = PaperSizes.PixelSafeHeight;
             bordersafe.Width = PaperSizes.PixelSafeWidth;
+            bordersafe.Height = PaperSizes.PixelSafeHeight;
             Canvas.SetZIndex(borderUnsafe, 2);
 
         }
@@ -121,19 +121,11 @@ namespace YBMForms
             pl.ReadPage("durp.txt");
         }
 
-        private void Button_Clic(object sender, RoutedEventArgs e)
-        {
-            GC.Collect();
-        }
 
         private void ZoomIn(object sender, RoutedEventArgs e)
         {
             zoom += 0.1M;
-<<<<<<< HEAD
             double temp = Math.Pow(10,(double)zoom);
-=======
-            double temp = Math.Pow(10, (double)zoom);
->>>>>>> Not Broken Copy
             temp = temp / 100;
             tbxZoom.Text = temp.ToString("p");
             DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
@@ -157,15 +149,11 @@ namespace YBMForms
             {
                 string parsestring = tbxZoom.Text.Replace('%', ' ').Trim();
                 double temp = double.Parse(parsestring);
-<<<<<<< HEAD
                 tbxZoom.Text = (temp/100).ToString("p");
                 temp = Math.Log10(temp);
                 
-=======
                 tbxZoom.Text = (temp / 100).ToString("p");
                 temp = Math.Log10(temp);
-
->>>>>>> Not Broken Copy
                 zoom = (decimal)temp;
                 DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
                 DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
@@ -185,11 +173,7 @@ namespace YBMForms
                 DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
             }
         }
-<<<<<<< HEAD
     #endregion
-=======
-        #endregion
->>>>>>> Not Broken Copy
 
         private void tbxZoom_LostFocus_1(object sender, RoutedEventArgs e)
         {

@@ -52,12 +52,12 @@ namespace YBMForms.DLL.IOL
                 PageElement PE = new PageElement(); ;
                 buffer = lr.ReadLine();
                 nodes = Convert.ToInt32(GetNum(buffer));
-                nodes *= 9;
+                nodes *= 13;
                 while (nodes != 0)
                 {
 
                     buffer = lr.ReadLine();
-                    if ( string.IsNullOrWhiteSpace(buffer))
+                    if ( !string.IsNullOrWhiteSpace(buffer))
                     {
                         string action = GetParam(buffer);
 
@@ -105,12 +105,31 @@ namespace YBMForms.DLL.IOL
                                 PE.Zindex = (int)GetNum(buffer);
                                 break;
 
+                            case "rotation":
+                                PE.Rotation = GetNum(buffer);
+                                break;
+
+                            case "background":
+                                PE.Child.BackgroundColor = GetString(buffer);
+                                break;
+
+                            case "borderthickness":
+                                string[] numbers = GetString(buffer).Split(',');
+                                int[] directions = new int[4];
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    directions[i] = int.Parse(numbers[i]);
+                                }
+                                PE.Child.BorderThickness = new Thickness(directions[0], directions[1], directions[2], directions[3]);
+                                break;
+
                             case "rtf":
                                 PE.Child.Document = GetString(buffer);
                                 while (lr.Peek() == '{' || lr.Peek() == '}')
                                 {
                                     PE.Child.Document += lr.ReadLine();
                                 }
+                                nodes++;
                                 break;
 
                             case "img":
@@ -141,47 +160,18 @@ namespace YBMForms.DLL.IOL
             c.Children.RemoveRange(0, c.Children.Count);
             foreach (PageElement PE in readControls)
             {
-                ContentControl cc = new ContentControl();
-                cc.IsHitTestVisible = true;
-                cc.Padding = new Thickness(3);
-                cc.MouseDoubleClick += new MouseButtonEventHandler(host.DoubleClickSelect);
-                cc.Style = (Style)host.FindResource("DesignerItemStyle");
-                cc.ClipToBounds = true;
-                Canvas.SetLeft(cc,PE.Left);
-                Canvas.SetTop(cc, PE.Top);
-                Canvas.SetZIndex(cc, PE.Zindex);
+                ContentControl cc = FormContentControl(PE);
+                
+                
                 cc.Height = PE.Height;
                 cc.Width = PE.Width;
                 if (PE.Type == "System.Windows.Controls.RichTextBox")
                 {
-                    RichTextBox rtb = new RichTextBox();
-                    rtb.Background = Brushes.Transparent;
-                    using (MemoryStream me = new MemoryStream(ASCIIEncoding.Default.GetBytes(PE.Child.Document)))
-                    {
-                        TextRange tr = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                        me.Position = 0;
-                        tr.Load(me, DataFormats.Rtf);
-                        cc.Content = rtb;
-                    }
+                    GenerateTextBox(PE, cc);
                 }
                 else if (PE.Type == "System.Windows.Controls.Image")
                 {
-                    Image i = new Image();
-
-                    using (MemoryStream me = new MemoryStream(PE.Child.Image))
-                    {
-                        BitmapImage temp = new BitmapImage();
-                        
-                        temp.BeginInit();
-                        temp.CacheOption = BitmapCacheOption.OnLoad;
-                        temp.StreamSource = me;
-                        temp.EndInit();
-                    
-                    i.Source = temp;
-                    }
-                    i.Stretch = (Stretch)Enum.Parse(typeof(Stretch), PE.Child.Fill);
-                    cc.Content = i;
-                    
+                    GenerateImage(PE, cc);
                 }
                 else if (PE.Type == "System.Windows.Shapes.Ellipse")
                 {
@@ -196,7 +186,9 @@ namespace YBMForms.DLL.IOL
                     cc.Content = r;
                 }
 
-                if ( string.IsNullOrWhiteSpace(PE.Type))
+                ((Control)cc.Content).BorderThickness = PE.Child.BorderThickness;
+
+                if ( !string.IsNullOrWhiteSpace(PE.Type))
                 {
                     c.Children.Add(cc);
                 }
@@ -205,19 +197,68 @@ namespace YBMForms.DLL.IOL
             c.InvalidateVisual();
         }
 
-        private double GetNum(string s)
+        private ContentControl FormContentControl(PageElement PE)
+        {
+            ContentControl cc = new ContentControl();
+            cc.IsHitTestVisible = true;
+            cc.Padding = new Thickness(3);
+            cc.MouseDoubleClick += new MouseButtonEventHandler(host.DoubleClickSelect);
+            cc.Style = (Style)host.FindResource("DesignerItemStyle");
+            cc.ClipToBounds = true;
+            cc.RenderTransform = new RotateTransform(PE.Rotation);
+            Canvas.SetLeft(cc, PE.Left);
+            Canvas.SetTop(cc, PE.Top);
+            Canvas.SetZIndex(cc, PE.Zindex);
+            return cc;
+        }
+
+        private static void GenerateImage(PageElement PE, ContentControl cc)
+        {
+            Image i = new Image();
+
+            using (MemoryStream me = new MemoryStream(PE.Child.Image))
+            {
+                BitmapImage temp = new BitmapImage();
+
+                temp.BeginInit();
+                temp.CacheOption = BitmapCacheOption.OnLoad;
+                temp.StreamSource = me;
+                temp.EndInit();
+
+                i.Source = temp;
+            }
+            i.Stretch = (Stretch)Enum.Parse(typeof(Stretch), PE.Child.Fill);
+            cc.Content = i;
+
+        }
+
+        private static void GenerateTextBox(PageElement PE, ContentControl cc)
+        {
+            RichTextBox rtb = new RichTextBox();
+            rtb.Background = new BrushConverter().ConvertFromString(PE.Child.BackgroundColor) as SolidColorBrush;
+            //rtb.Background = Brushes.Transparent;
+            using (MemoryStream me = new MemoryStream(ASCIIEncoding.Default.GetBytes(PE.Child.Document)))
+            {
+                TextRange tr = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+                me.Position = 0;
+                tr.Load(me, DataFormats.Rtf);
+                cc.Content = rtb;
+            }
+        }
+
+        static private double GetNum(string s)
         {
             string number = s.Substring(s.IndexOf(':')+1);
             return double.Parse(number);
         }
 
-        private string GetString(string s)
+        static private string GetString(string s)
         {
             string line = s.Substring(s.IndexOf(':')+1);
             return line;
         }
 
-        private string GetParam(string s)
+        static private string GetParam(string s)
         {
 
             string param = s.Remove(s.IndexOf(':'));

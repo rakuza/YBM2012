@@ -51,7 +51,8 @@ namespace YBMForms
                 if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
                 {
                     RichTextBox rtb = u as RichTextBox;
-                    rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty,TextDecorations.Underline);
+                    //rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty,TextDecorations.Underline);
+                    rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.OverLine);
                 }
             }
         }
@@ -68,14 +69,18 @@ namespace YBMForms
                 UIElement u = cc.Content as UIElement;
                 if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
                 {
-                    FontStyle fs = new FontStyle();
-                    fs.ShowDialog();
-                    /*
+                    
+                    
                     RichTextBox rtb = u as RichTextBox;
-                    rtb.Selection.ApplyPropertyValue(RichTextBox.FontWeightProperty, "Bold");
-                     * */
+                    FontStyle fs = new FontStyle(rtb.Selection);
+                    fs.ShowDialog();
+                    //rtb.Selection.ApplyPropertyValue(RichTextBox.FontWeightProperty, "Bold");
+                     
                 }
             }
+
+           // FontStyle fs = new FontStyle();
+           // fs.ShowDialog();
         }
 
         /// <summary>
@@ -93,6 +98,36 @@ namespace YBMForms
                     RichTextBox rtb = u as RichTextBox;
                     rtb.Selection.ApplyPropertyValue(RichTextBox.FontStyleProperty, "Italic");
                 }
+            }
+        }
+
+        private void BasicEffectHandler(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkbox = sender as CheckBox;
+            switch (checkbox.Name)
+            {
+                case "chkStrikeThrough":
+                    //do strikethrough method
+                    break;
+
+                case "chkOverline":
+                    //do overline method
+                    break;
+
+                case "chkUnderLine":
+                    //do overline method
+                    break;
+
+                case "chkBold":
+                    //do bold method
+                    break;
+
+                case "chkItalic":
+                    //do italic
+                    break;
+
+                default:
+                    break;
             }
         }
     }

@@ -40,45 +40,13 @@ namespace YBMForms.DLL.IOL
             {
                 ContentControl cc = child as ContentControl;
                 PageElement PE = new PageElement();
-                PE.Width = cc.Width;
-                PE.Height = cc.Height;
-                PE.Left = Canvas.GetLeft(cc);
-                PE.Top = Canvas.GetTop(cc);
-                PE.Zindex = Canvas.GetZIndex(cc);
-                PE.Type = cc.Content.GetType().ToString();
+                SaveContentController(cc, PE);
+                PE.Child.BorderColor = ((Control)cc.Content).BorderBrush.ToString();
+                PE.Child.BorderThickness = ((Control)cc.Content).BorderThickness;
                 if (PE.Type == "System.Windows.Controls.RichTextBox")
-                {
-                    RichTextBox rtb = cc.Content as RichTextBox;
-                    TextRange content = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                    using(MemoryStream ME = new MemoryStream())
-                    {
-                    content.Save(ME, DataFormats.Rtf);
-                    StreamReader sr = new StreamReader(ME);
-                    
-                    ME.Position = 0;
-                    PE.Child.Document = sr.ReadToEnd();
-                    }
-                }
+                    SaveTextBox(cc, PE);
                 else if (PE.Type == "System.Windows.Controls.Image")
-                {
-                    
-                    Image i = cc.Content as Image;
-                    PE.Child.Fill = i.Stretch.ToString();
-                    PngBitmapEncoder png = new PngBitmapEncoder();
-                    using (MemoryStream ME = new MemoryStream())
-                    {
-                        var imagesource = i.Source as BitmapImage;
-                        png.Frames.Add(BitmapFrame.Create(imagesource));
-                        png.Save(ME);
-                        ME.Flush();
-                        var stream = ME;
-                        byte[] img = new byte[stream.Length];
-                        stream.Position = 0;
-                        stream.Read(img,0,img.Length);
-                        PE.Child.Image = img;
-                    }
-                    
-                }
+                    SaveImage(cc, PE);
                 else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle" )
                 {
                     Shape s = cc.Content as Shape;
@@ -88,6 +56,53 @@ namespace YBMForms.DLL.IOL
             }
 
             PrintPage(elements);
+        }
+
+        private static void SaveImage(ContentControl cc, PageElement PE)
+        {
+            Image i = cc.Content as Image;
+            PE.Child.Fill = i.Stretch.ToString();
+            PngBitmapEncoder png = new PngBitmapEncoder();
+            using (MemoryStream ME = new MemoryStream())
+            {
+                var imagesource = i.Source as BitmapImage;
+                png.Frames.Add(BitmapFrame.Create(imagesource));
+                png.Save(ME);
+                ME.Flush();
+                var stream = ME;
+                byte[] img = new byte[stream.Length];
+                stream.Position = 0;
+                stream.Read(img, 0, img.Length);
+                PE.Child.Image = img;
+            }
+        }
+
+        private static void SaveTextBox(ContentControl cc, PageElement PE)
+        {
+            RichTextBox rtb = cc.Content as RichTextBox;
+            TextRange content = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            using (MemoryStream ME = new MemoryStream())
+            {
+                content.Save(ME, DataFormats.Rtf);
+                StreamReader sr = new StreamReader(ME);
+
+                ME.Position = 0;
+                PE.Child.Document = sr.ReadToEnd();
+                PE.Child.BackgroundColor = rtb.Background.ToString();
+            }
+        }
+
+        private static void SaveContentController(ContentControl cc, PageElement PE)
+        {
+            PE.Width = cc.Width;
+            PE.Height = cc.Height;
+            PE.Left = Canvas.GetLeft(cc);
+            PE.Top = Canvas.GetTop(cc);
+            PE.Zindex = Canvas.GetZIndex(cc);
+            string sc = cc.RenderTransform.GetType().ToString();
+            if (sc == new RotateTransform().GetType().ToString())
+                PE.Rotation = ((RotateTransform)cc.RenderTransform).Angle;
+            PE.Type = cc.Content.GetType().ToString();
         }
 
 
@@ -112,11 +127,17 @@ namespace YBMForms.DLL.IOL
                     fs.Write(UnicodeEncoding.Unicode.GetBytes(" top:" + PE.Top + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" top:" + PE.Top + "\r\n"));
                     fs.Write(UnicodeEncoding.Unicode.GetBytes(" left:" + PE.Left + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" left:" + PE.Left + "\r\n"));
                     fs.Write(UnicodeEncoding.Unicode.GetBytes(" zindex:" + PE.Zindex + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" zindex:" + PE.Zindex + "\r\n"));
+                    
+                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" bordercolor:" + PE.Child.BorderColor + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" bordercolor:" + PE.Child.BorderColor + "\r\n"));
+                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" borderthickness:" + PE.Child.BorderThickness + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" borderthickness:" + PE.Child.BorderThickness + "\r\n"));
+                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" rotation:" + PE.Rotation + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" rotation:" + PE.Rotation + "\r\n"));
                     fs.Write(UnicodeEncoding.Unicode.GetBytes(" child:" + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" child:" + "\r\n"));
                     fs.Write(UnicodeEncoding.Unicode.GetBytes("  type:" + PE.Type + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  type:" + PE.Type + "\r\n"));
+
                     if (PE.Type == "System.Windows.Controls.RichTextBox")
                     {
                         fs.Write(UnicodeEncoding.Unicode.GetBytes("  rtf:" + PE.Child.Document + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  rtf:" + PE.Child.Document + "\r\n"));
+                        fs.Write(UnicodeEncoding.Unicode.GetBytes(" background:" + PE.Child.BackgroundColor + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" background:" + PE.Child.BackgroundColor + "\r\n"));
                     }
                     else if (PE.Type == "System.Windows.Controls.Image")
                     {

@@ -6,13 +6,13 @@ using System.IO;
 
 namespace YBMForms.DLL.IOL
 {
-    sealed class LineReader : IDisposable
+    sealed class LineReader 
     {
         private BinaryReader br;
 
       
 
-        public LineReader(Stream stream) { br = new BinaryReader(stream,Encoding.Unicode); }
+        public LineReader(Stream stream) { br = new BinaryReader(stream, Encoding.Unicode); }
 
 
         public string ReadLine()
@@ -29,7 +29,7 @@ namespace YBMForms.DLL.IOL
                 {
                     last = buffer;
 
-                    buffer = br.ReadChar();
+                    buffer = (char)br.ReadChar();
                     sb.Append(buffer);
                     if (buffer == '\n' && last == '\r')
                     {
@@ -50,7 +50,7 @@ namespace YBMForms.DLL.IOL
 
         public void Dispose()
         {
-            br = new BinaryReader(new MemoryStream());
+            //br = new BinaryReader(new MemoryStream());
             br.Dispose();
         }
 

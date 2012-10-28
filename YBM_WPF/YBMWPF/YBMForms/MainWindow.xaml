@@ -203,8 +203,8 @@
             <Button Content="Italic" Click="Button_Click_1" Focusable="False"/>
             <Button Content="UnderLine" Click="Button_Click_6" Focusable="False"/>
             <Button Content="Font" Click="Button_Click_7" Focusable="False"/>
-            <Label Content="Image Things"/>
-            <Button Content="Edit" Click="Button_Click_3"/>
+            <Label Content="PlaceHolder4ImgEditing"/>
+            <Button Content="Print" Click="Button_Click_3"/>
             <Label Content="OtherFunctions"/>
             <Button Content="Save" Click="Button_Click_2"/>
             <Button Content="Load" Click="Button_Click_4"/>
@@ -212,13 +212,9 @@
 
 
 
-<<<<<<< HEAD
     
-    <Grid >
-=======
 
         <Grid >
->>>>>>> Not Broken Copy
             <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
                 <ScrollViewer.Background>
                     <RadialGradientBrush>
@@ -240,11 +236,10 @@
                             </VisualBrush>
                         </Canvas.Background>
 
-<<<<<<< HEAD
-                            <ContentControl
-=======
+
+
                         <ContentControl
->>>>>>> Not Broken Copy
+
                                 Width="200"
                                 Height="300"
                                 Padding="3"
@@ -258,7 +253,8 @@
                                         Name="_test"
                                     SpellCheck.IsEnabled="True"
                                     ForceCursor="True"
-                                    IsDocumentEnabled="True"   
+                                    IsDocumentEnabled="True"
+                                    BorderBrush="LightGray"
                                     >
                                 <FlowDocument>
                                     <Paragraph>
@@ -275,8 +271,7 @@
 
     </DockPanel>
 
-<<<<<<< HEAD
 </Window>
-=======
-</Window>
->>>>>>> Not Broken Copy
+
+
+

@@ -119,11 +119,8 @@ namespace YBMForms
         static public int PixelUnsafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeHeight)); } }
         static public int PixelUnsafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeWidth)); } }
         static public int PixelSafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeWidth)); } }
-<<<<<<< HEAD
-        static public int PixelSafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 *safeHeight )); } }
-=======
-        static public int PixelSafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeHeight)); } }
->>>>>>> Not Broken Copy
+        static public int PixelSafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeHeight )); } }
+
 
 
 
