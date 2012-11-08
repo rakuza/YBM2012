@@ -64,7 +64,7 @@ namespace YBMForms
         private void ColorChangedHandler(object sender, RoutedPropertyChangedEventArgs<Color> e)
         {
             TextBlock text = lblDemo.Content as TextBlock;
-            text.Foreground = new BrushConverter().ConvertFromString(e.NewValue.ToString()) as SolidColorBrush;
+            text.Foreground = new SolidColorBrush(e.NewValue);
         }
 
 
@@ -97,6 +97,7 @@ namespace YBMForms
 
         public void Exit(object sender, RoutedEventArgs e)
         {
+            
             this.Close();
         }
 

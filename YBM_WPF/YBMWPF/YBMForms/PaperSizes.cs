@@ -12,8 +12,7 @@ namespace YBMForms
     {
         public enum PaperSize
         {
-            A4,
-            A3
+            A4
         }
 
 
@@ -31,17 +30,15 @@ namespace YBMForms
             switch (s)
             {
                 case PaperSize.A4:
+                    
                     bleedWidth = 216;
                     bleedHeight = 303;
                     unsafeHeight = 297;
                     unsafeWidth = 210;
                     safeHeight = 282;
                     safeWidth = 187;
-                    break;
-
-                case PaperSize.A3:
-                    SetType(PaperSize.A4);
-                    MessageBox.Show("Paper size not impelemented", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    paperWidth = 297;
+                    paperHeight = 420;
                     break;
 
                 default:
@@ -53,6 +50,21 @@ namespace YBMForms
         // Read/Writeible properties
         // About Page size
 
+        static private int paperWidth;
+
+        static public int PaperWidth
+        {
+            get { return paperWidth; }
+            set { paperWidth = value; }
+        }
+
+        static private int paperHeight;
+
+        static public int PaperHeight
+        {
+            get { return paperHeight; }
+            set { paperHeight = value; }
+        } 
 
         static private PaperSize type;
 
@@ -119,7 +131,9 @@ namespace YBMForms
         static public int PixelUnsafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeHeight)); } }
         static public int PixelUnsafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeWidth)); } }
         static public int PixelSafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeWidth)); } }
-        static public int PixelSafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeHeight )); } }
+        static public int PixelSafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeHeight)); } }
+        static public int PixelPaperWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * paperWidth)); } }
+        static public int PixelPaperHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * paperHeight)); } }
 
 
 

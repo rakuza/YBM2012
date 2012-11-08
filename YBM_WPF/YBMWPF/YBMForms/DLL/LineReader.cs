@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace YBMForms.DLL.IOL
+namespace YBMForms.DLL
 {
-    sealed class LineReader 
+    sealed class LineReader : IDisposable
     {
         private BinaryReader br;
 
@@ -50,7 +50,6 @@ namespace YBMForms.DLL.IOL
 
         public void Dispose()
         {
-            //br = new BinaryReader(new MemoryStream());
             br.Dispose();
         }
 

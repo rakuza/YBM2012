@@ -14,7 +14,7 @@ using System.IO;
 using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace YBMForms.DLL.IOL
+namespace YBMForms.DLL
 {
      class PageLoader 
     {
@@ -186,7 +186,7 @@ namespace YBMForms.DLL.IOL
                     cc.Content = r;
                 }
 
-                ((Control)cc.Content).BorderThickness = PE.Child.BorderThickness;
+                
 
                 if ( !string.IsNullOrWhiteSpace(PE.Type))
                 {
@@ -235,6 +235,7 @@ namespace YBMForms.DLL.IOL
         private static void GenerateTextBox(PageElement PE, ContentControl cc)
         {
             RichTextBox rtb = new RichTextBox();
+            rtb.SpellCheck.IsEnabled = true;
             rtb.Background = new BrushConverter().ConvertFromString(PE.Child.BackgroundColor) as SolidColorBrush;
             //rtb.Background = Brushes.Transparent;
             using (MemoryStream me = new MemoryStream(ASCIIEncoding.Default.GetBytes(PE.Child.Document)))
@@ -244,6 +245,7 @@ namespace YBMForms.DLL.IOL
                 tr.Load(me, DataFormats.Rtf);
                 cc.Content = rtb;
             }
+            ((Control)cc.Content).BorderThickness = PE.Child.BorderThickness;
         }
 
         static private double GetNum(string s)

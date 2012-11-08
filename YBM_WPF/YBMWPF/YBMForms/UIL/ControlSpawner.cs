@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using Microsoft.Win32;
 using System.IO;
-using YBMForms.DLL.IOL;
+using YBMForms.DLL;
 
 
 namespace YBMForms
@@ -72,7 +72,7 @@ namespace YBMForms
             ContentControl cc = new ContentControl();
             Rectangle r = new Rectangle();
             r.IsHitTestVisible = true;
-            r.Fill = Brushes.LightCoral;
+            r.Fill = new SolidColorBrush(colourShape.SelectedColor);
             cc.Content = r;
             cc.Style = (Style)FindResource("DesignerItemStyle");
             cc.Width = 300;
@@ -116,7 +116,7 @@ namespace YBMForms
         {
             ContentControl cc = new ContentControl();
             Ellipse e = new Ellipse();
-            e.Fill = Brushes.Black;
+            e.Fill = new SolidColorBrush(colourShape.SelectedColor);
             cc.Content = e;
             cc.Style = (Style)FindResource("DesignerItemStyle");
             cc.Width = 300;

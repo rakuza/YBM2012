@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="YBMForms.DLL.BookSaver" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DLL\BookSaver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.DLL.LineReader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAACAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DLL\LineReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="YBMForms.DLL.MemImage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAIAAAAAAEAAAABAAAAAAAAAAQAA=</HashCode>
+      <FileName>DLL\MemImage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="YBMForms.DLL.PageElement">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="YBMForms.DLL.PageElement.ChildElement" Collapsed="true">
+        <Compartments>
+          <Compartment Name="Properties" Collapsed="true" />
+        </Compartments>
+        <TypeIdentifier>
+          <NewMemberFileName>DLL\PageElement.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAQAABAAAAIAAgAAAAEAAAAAIAAAACQAAAAAAAAA=</HashCode>
+      <FileName>DLL\PageElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.DLL.PageLoader" Collapsed="true">
+    <Position X="5.5" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAABAAAAAABAACAAAAiiAIgAggAAgAAAA=</HashCode>
+      <FileName>DLL\PageLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.DLL.PageSaver" Collapsed="true">
+    <Position X="3.75" Y="1.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAQABEAEAIAAAAAAAAAgAAAAAAAAAAAABA=</HashCode>
+      <FileName>DLL\PageSaver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.UIL.FormatRTF" Collapsed="true">
+    <Position X="3.75" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="YBMForms.UIL.FormatRTF.Labels">
+        <Compartments>
+          <Compartment Name="Methods" Collapsed="true" />
+        </Compartments>
+        <TypeIdentifier>
+          <NewMemberFileName>UIL\FormatRTF.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIL\FormatRTF.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.PaperSizes">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="YBMForms.PaperSizes.PaperSize" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PaperSizes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QAAABgAQAEAAEAEAAkAhAAIAKAAhAAAUIUyAQAAEMAQ=</HashCode>
+      <FileName>PaperSizes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

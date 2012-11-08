@@ -13,9 +13,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using Microsoft.Win32;
-using YBMForms.DLL.IOL;
+using YBMForms.DLL;
 using YBMForms.UIL.AdornerLib;
 using System.Globalization;
+using Xceed.Wpf;
 
 namespace YBMForms
 {
@@ -37,11 +38,21 @@ namespace YBMForms
             double temp = Math.Pow(10, (double)zoom);
             temp = temp / 100;
             tbxZoom.Text = temp.ToString("p");
-            PaperSizes.Dpi = 300;
-            DesignerCanvas.Height = PaperSizes.PixelBleedHeight;
-            DesignerCanvas.Width = PaperSizes.PixelBleedWidth;
-            DesignerCanvasZoomBox.Height = (int)(PaperSizes.PixelBleedHeight * temp);
-            DesignerCanvasZoomBox.Width = (int)(PaperSizes.PixelBleedWidth * temp);
+            PaperSizeConstructor(temp);
+            
+
+        }
+
+         private void PaperSizeConstructor(double temp)
+        {
+            PaperSizes.Dpi = 96;
+            DesignerCanvas.Height = PaperSizes.PixelPaperHeight;
+            DesignerCanvas.Width = PaperSizes.PixelPaperWidth;
+            DesignerCanvasZoomBox.Height = (int)(PaperSizes.PixelPaperHeight * temp);
+            DesignerCanvasZoomBox.Width = (int)(PaperSizes.PixelPaperWidth * temp);
+
+            backgroundPaper.Width = PaperSizes.PixelPaperWidth;
+            backgroundPaper.Height = PaperSizes.PixelPaperHeight;
             borderBleed.Width = PaperSizes.PixelBleedWidth;
             borderBleed.Height = PaperSizes.PixelBleedHeight;
             Canvas.SetZIndex(borderBleed, 0);
@@ -51,7 +62,6 @@ namespace YBMForms
             bordersafe.Width = PaperSizes.PixelSafeWidth;
             bordersafe.Height = PaperSizes.PixelSafeHeight;
             Canvas.SetZIndex(borderUnsafe, 2);
-
         }
 
         private ContentControl lastContentControl;
@@ -103,8 +113,7 @@ namespace YBMForms
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            PageSaver ps = new PageSaver();
-            ps.Page = DesignerCanvas;
+            PageSaver ps = new PageSaver(DesignerCanvas);
             ps.SavePage();
         }
 
@@ -178,6 +187,51 @@ namespace YBMForms
         private void tbxZoom_LostFocus_1(object sender, RoutedEventArgs e)
         {
             ZoomChange(true);
+        }
+
+        private void _CropImage_Click_1(object sender, RoutedEventArgs e)
+        {
+
+                    UIElement u = SeekSelection();
+                    if (u.GetType().ToString() == "System.Windows.Controls.Image")
+                    {
+                        Image img = u as Image;
+                        PhotoEditor croper = new PhotoEditor((BitmapSource)img.Source);
+                        croper.ShowDialog();
+                        img.Source = croper.Image;
+
+            }
+        }
+
+
+        private UIElement SeekSelection()
+        {
+            UIElement u = new UIElement();
+            foreach (ContentControl cc in DesignerCanvas.Children)
+            {
+                if (Selector.GetIsSelected(cc))        
+                    u = cc.Content as UIElement;
+            }
+            
+            return u;
+        }
+
+        private void colourShape_SelectedColorChanged_1(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        {
+            UIElement u = SeekSelection();
+            if (u.GetType().ToString() == "System.Windows.Shapes.Rectangle")
+            {
+                
+                Rectangle rectangle = u as Rectangle;
+                SolidColorBrush b = new SolidColorBrush(e.NewValue);
+                rectangle.Fill = b;
+            }
+            else if (u.GetType().ToString() == "System.Windows.Shapes.Ellipse")
+            {
+                Ellipse circle = u as Ellipse;
+                SolidColorBrush b = new SolidColorBrush(e.NewValue);
+                circle.Fill = b;
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Converters;
-namespace YBMForms.DLL.IOL
+namespace YBMForms.DLL
 {
     class PageSaver
     {
@@ -27,22 +27,17 @@ namespace YBMForms.DLL.IOL
             page = c;
         }
 
-        public PageSaver()
-        {
-
-        }
 
         private List<PageElement> elements = new List<PageElement>(); 
 
-        public void SavePage()
+        internal void SavePage()
         {
             foreach(UIElement child in page.Children)
             {
                 ContentControl cc = child as ContentControl;
                 PageElement PE = new PageElement();
                 SaveContentController(cc, PE);
-                PE.Child.BorderColor = ((Control)cc.Content).BorderBrush.ToString();
-                PE.Child.BorderThickness = ((Control)cc.Content).BorderThickness;
+
                 if (PE.Type == "System.Windows.Controls.RichTextBox")
                     SaveTextBox(cc, PE);
                 else if (PE.Type == "System.Windows.Controls.Image")
@@ -79,6 +74,8 @@ namespace YBMForms.DLL.IOL
 
         private static void SaveTextBox(ContentControl cc, PageElement PE)
         {
+            PE.Child.BorderColor = ((Control)cc.Content).BorderBrush.ToString();
+            PE.Child.BorderThickness = ((Control)cc.Content).BorderThickness;
             RichTextBox rtb = cc.Content as RichTextBox;
             TextRange content = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
             using (MemoryStream ME = new MemoryStream())
@@ -156,7 +153,6 @@ namespace YBMForms.DLL.IOL
                 }
             }
         }
-            
 
     }
 }

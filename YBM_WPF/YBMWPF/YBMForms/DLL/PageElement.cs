@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
-namespace YBMForms.DLL.IOL
+namespace YBMForms.DLL
 {
     /// <summary>
     /// Stores the content control and the content of the content control
