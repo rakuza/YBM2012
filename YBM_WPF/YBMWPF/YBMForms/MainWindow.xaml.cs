@@ -111,20 +111,20 @@ namespace YBMForms
 
 
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             PageSaver ps = new PageSaver(DesignerCanvas);
             ps.SavePage();
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void Print_Click(object sender, RoutedEventArgs e)
         {
             PrintDialog pd = new PrintDialog();
             if (pd.ShowDialog() == true)
             { pd.PrintVisual(DesignerCanvas, "my canvas"); }
         }
 
-        private void Button_Click_4(object sender, RoutedEventArgs e)
+        private void Load_Click(object sender, RoutedEventArgs e)
         {
             PageLoader pl = new PageLoader(DesignerCanvas, this);
             pl.ReadPage("durp.txt");
@@ -158,12 +158,11 @@ namespace YBMForms
             {
                 string parsestring = tbxZoom.Text.Replace('%', ' ').Trim();
                 double temp = double.Parse(parsestring);
-                tbxZoom.Text = (temp/100).ToString("p");
-                temp = Math.Log10(temp);
+                zoom = (decimal)Math.Log10(temp);
+                temp = temp/100;
+                tbxZoom.Text = (temp).ToString("p");
+
                 
-                tbxZoom.Text = (temp / 100).ToString("p");
-                temp = Math.Log10(temp);
-                zoom = (decimal)temp;
                 DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
                 DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
             }
@@ -175,9 +174,11 @@ namespace YBMForms
             {
                 string parsestring = tbxZoom.Text.Replace('%', ' ').Trim();
                 double temp = double.Parse(parsestring);
-                tbxZoom.Text = (temp / 100).ToString("p");
-                temp = Math.Log10(temp);
-                zoom = (decimal)temp;
+                zoom = (decimal)Math.Log10(temp);
+                temp = temp / 100;
+                tbxZoom.Text = (temp).ToString("p");
+                
+
                 DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
                 DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
             }
@@ -203,35 +204,54 @@ namespace YBMForms
             }
         }
 
-
+        /// <summary>
+        /// Method for accessing selected/adorned control on the canvas
+        /// </summary>
+        /// <returns>Control with out content container</returns>
         private UIElement SeekSelection()
         {
             UIElement u = new UIElement();
+            //Searches through existing controls
             foreach (ContentControl cc in DesignerCanvas.Children)
             {
-                if (Selector.GetIsSelected(cc))        
+                //if the content container is selected
+                //return turn it else send back blank uielement
+                if (Selector.GetIsSelected(cc))
                     u = cc.Content as UIElement;
             }
             
             return u;
         }
 
-        private void colourShape_SelectedColorChanged_1(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        /// <summary>
+        /// This method handles the changing of the fill color for the selected shape
+        /// </summary>
+        /// <param name="sender">ColorPicker</param>
+        /// <param name="e">Event args</param>
+        private void Shape_Fill_Change_On_Selected_Color(object sender, RoutedPropertyChangedEventArgs<Color> e)
         {
+            //getting the selected controlls
             UIElement u = SeekSelection();
-            if (u.GetType().ToString() == "System.Windows.Shapes.Rectangle")
+            //checking if its a shape
+            // if it is it sets the color to the selected color
+            if (u.GetType().ToString() == "System.Windows.Shapes.Rectangle" || u.GetType().ToString() == "System.Windows.Shapes.Ellipse")
             {
                 
-                Rectangle rectangle = u as Rectangle;
+                Shape shape = u as Shape;
                 SolidColorBrush b = new SolidColorBrush(e.NewValue);
-                rectangle.Fill = b;
-            }
-            else if (u.GetType().ToString() == "System.Windows.Shapes.Ellipse")
-            {
-                Ellipse circle = u as Ellipse;
-                SolidColorBrush b = new SolidColorBrush(e.NewValue);
-                circle.Fill = b;
+                shape.Fill = b;
             }
         }
+
+        /// <summary>
+        /// Exit Handler
+        /// </summary>
+        /// <param name="sender">Menu</param>
+        /// <param name="e">Event args</param>
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

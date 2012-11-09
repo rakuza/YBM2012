@@ -17,7 +17,7 @@
     <DockPanel>
 
         <!-- start of bottom menu-->
-        <StatusBar DockPanel.Dock="Bottom">
+        <StatusBar DockPanel.Dock="Bottom" Focusable="False">
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Zoom:"/>
@@ -62,13 +62,13 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Open" Click="Button_Click_4">
+                <MenuItem Header="Open" Click="Load_Click">
                     <MenuItem.Icon>
                         <Image Height="16" Width="16"  Source="/Resources/icons/application_osx_add.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Save" Click="Button_Click_2">
+                <MenuItem Header="Save" Click="Save_Click">
                     <MenuItem.Icon>
                         <Image Height="16" Width="16"  Source="/Resources/icons/application_osx_add.png" />
                     </MenuItem.Icon>
@@ -76,7 +76,7 @@
 
                 <Separator/>
 
-                <MenuItem Header="Exit">
+                <MenuItem Header="Exit" Click="MenuItem_Click_1">
                     <MenuItem.Icon>
                         <Image Height="16" Width="16"  Source="/Resources/icons/application_osx_add.png" />
                     </MenuItem.Icon>
@@ -89,7 +89,25 @@
             <MenuItem Header="Edit"/>
 
 
-            <MenuItem Header="Format"/>
+            <MenuItem Header="Format Text">
+                <MenuItem Header="Advanced" />
+                <Separator/>
+                <MenuItem Header="Bold"/>
+                <MenuItem Header="Italic"/>
+                <MenuItem Header="Underline"/>
+                <MenuItem Header="Colour">
+                    <c:ColorPicker />
+                </MenuItem>
+                <MenuItem Header="Size">
+                    <TextBox />
+                </MenuItem>
+                <MenuItem Header="Font">
+                            <ComboBox Grid.Row="1" Grid.Column="1"  
+        			VerticalAlignment="Center" Height="24" IsSynchronizedWithCurrentItem="True"
+        			ItemsSource="{x:Static Fonts.SystemFontFamilies}"/>
+                </MenuItem>
+                
+            </MenuItem>
 
 
             <MenuItem Header="Help">
@@ -121,21 +139,21 @@
         <!-- Top Menu-->
 
         <!-- start of tool bar pannel -->
-        <ToolBarTray DockPanel.Dock="Top" Background="#FFECECEC" Height="58" >
+        <ToolBarTray DockPanel.Dock="Top" Background="#FFECECEC" Height="58" Focusable="False">
             <ToolBar x:Name="FileAlias">
                 <Button Name="new">
                         <Image Height="16" Width="16"  Source="/Resources/icons/folder_up.png" />
                     </Button>
 
-                <Button Name="Save" Click="Button_Click_4">
+                <Button Name="Save" Click="Save_Click">
                         <Image Height="16" Width="16"  Source="/Resources/icons/disk_black.png" />
                 </Button>
 
-                <Button Name="Load" Click="Button_Click_2">
+                <Button Name="Load" Click="Load_Click">
                         <Image Height="16" Width="16"  Source="/Resources/icons/application_osx_add.png" />
                     </Button>
                 
-                <Button Name="Print">
+                <Button Name="Print" Click="Print_Click">
                     <Image Height="16" Width="16"  Source="/Resources/icons/printer_color.png"  />
                 </Button>
 
@@ -149,13 +167,13 @@
                 
                 <Separator />
 
-                <Button Click="Button_Click_5">
+                <Button Click="Bold_Click">
                     <Label FontWeight="Bold" FontFamily="Times New Roman" Content="B"/>
                 </Button>
-                <Button Click="Button_Click_1">
+                <Button Click="Italic_Click">
                     <Label FontWeight="Bold" FontStyle="Italic" FontFamily="Times New Roman" Content="I"/>
                 </Button>
-                <Button Click="Button_Click_6">
+                <Button Click="Underline_Click">
                     <Label FontWeight="Bold" FontFamily="Times New Roman">
                         <TextBlock><Underline><Run Text="U"/></Underline></TextBlock>
                     </Label>
@@ -185,7 +203,7 @@
                 </Button>
                 
                 <Separator/> 
-                <c:ColorPicker x:Name="colourShape" SelectedColorChanged="colourShape_SelectedColorChanged_1" Width="40" ToolTip="Background Color" />
+                <c:ColorPicker x:Name="colourShape" SelectedColorChanged="Shape_Fill_Change_On_Selected_Color" Width="40" ToolTip="Background Color" />
             </ToolBar>
             
             <ToolBar Name="tbrPicture">

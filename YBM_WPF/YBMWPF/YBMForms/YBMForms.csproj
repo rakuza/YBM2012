@@ -79,6 +79,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DLL\BookSaver.cs" />
+    <Compile Include="DLL\FileStreamOut.cs" />
     <Compile Include="DLL\LineReader.cs" />
     <Compile Include="DLL\MemImage.cs" />
     <Compile Include="DLL\PageElement.cs" />

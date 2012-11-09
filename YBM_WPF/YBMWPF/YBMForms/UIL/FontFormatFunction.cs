@@ -25,16 +25,13 @@ namespace YBMForms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Click_5(object sender, RoutedEventArgs e)
+        private void Bold_Click(object sender, RoutedEventArgs e)
         {
-            foreach (ContentControl cc in DesignerCanvas.Children)
+            UIElement u = SeekSelection();
+            if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
             {
-                UIElement u = cc.Content as UIElement;
-                if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
-                {
-                    RichTextBox rtb = u as RichTextBox;
-                    rtb.Selection.ApplyPropertyValue(RichTextBox.FontWeightProperty, "Bold");
-                }
+                RichTextBox rtb = u as RichTextBox;
+                rtb.Selection.ApplyPropertyValue(RichTextBox.FontWeightProperty, "Bold");
             }
         }
 
@@ -43,18 +40,16 @@ namespace YBMForms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Click_6(object sender, RoutedEventArgs e)
+        private void Underline_Click(object sender, RoutedEventArgs e)
         {
-            foreach (ContentControl cc in DesignerCanvas.Children)
+            UIElement u = SeekSelection();
+            if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
             {
-                UIElement u = cc.Content as UIElement;
-                if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
-                {
-                    RichTextBox rtb = u as RichTextBox;
-                    //rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty,TextDecorations.Underline);
-                    rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.OverLine);
-                }
+                RichTextBox rtb = u as RichTextBox;
+                //rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty,TextDecorations.Underline);
+                rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.OverLine);
             }
+
         }
 
         /// <summary>
@@ -62,25 +57,16 @@ namespace YBMForms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Click_7(object sender, RoutedEventArgs e)
+        private void Font_Dialogue_Click(object sender, RoutedEventArgs e)
         {
-            foreach (ContentControl cc in DesignerCanvas.Children)
-            {
-                UIElement u = cc.Content as UIElement;
+            UIElement u = SeekSelection();
                 if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
                 {
-                    
-                    
                     RichTextBox rtb = u as RichTextBox;
                     FontStyle fs = new FontStyle(rtb.Selection);
                     fs.ShowDialog();
-                    //rtb.Selection.ApplyPropertyValue(RichTextBox.FontWeightProperty, "Bold");
                      
                 }
-            }
-
-           // FontStyle fs = new FontStyle();
-           // fs.ShowDialog();
         }
 
         /// <summary>
@@ -88,47 +74,15 @@ namespace YBMForms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Italic_Click(object sender, RoutedEventArgs e)
         {
-            foreach (ContentControl cc in DesignerCanvas.Children)
+            UIElement u = SeekSelection();
+            if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
             {
-                UIElement u = cc.Content as UIElement;
-                if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
-                {
-                    RichTextBox rtb = u as RichTextBox;
-                    rtb.Selection.ApplyPropertyValue(RichTextBox.FontStyleProperty, "Italic");
-                }
+                RichTextBox rtb = u as RichTextBox;
+                rtb.Selection.ApplyPropertyValue(RichTextBox.FontStyleProperty, "Italic");
             }
         }
 
-        private void BasicEffectHandler(object sender, RoutedEventArgs e)
-        {
-            CheckBox checkbox = sender as CheckBox;
-            switch (checkbox.Name)
-            {
-                case "chkStrikeThrough":
-                    //do strikethrough method
-                    break;
-
-                case "chkOverline":
-                    //do overline method
-                    break;
-
-                case "chkUnderLine":
-                    //do overline method
-                    break;
-
-                case "chkBold":
-                    //do bold method
-                    break;
-
-                case "chkItalic":
-                    //do italic
-                    break;
-
-                default:
-                    break;
-            }
-        }
     }
 }

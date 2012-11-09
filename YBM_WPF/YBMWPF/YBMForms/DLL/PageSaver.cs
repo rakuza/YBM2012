@@ -112,43 +112,80 @@ namespace YBMForms.DLL
         public void PrintPage(List<PageElement> elements)
         {
             
-            using (FileStream fs = File.Open("durp.txt", FileMode.Create))
+            using (FileStreamOut fs = new FileStreamOut("durp.txt", FileMode.Create))
             {
-                fs.Write(UnicodeEncoding.Unicode.GetBytes("page:0" + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("page:0" + "\r\n"));
-                fs.Write(UnicodeEncoding.Unicode.GetBytes("node:" + elements.Count + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("node:" + elements.Count + "\r\n"));
+                //fs.Write(UnicodeEncoding.Unicode.GetBytes("page:0" + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("page:0" + "\r\n"));
+                //fs.Write(UnicodeEncoding.Unicode.GetBytes("node:" + elements.Count + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("node:" + elements.Count + "\r\n"));
+                //foreach (PageElement PE in elements)
+                //{
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes("cc:" + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("cc:" + "\r\n"));
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes(" width:" + PE.Width + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" width:" + PE.Width + "\r\n"));
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes(" height:" + PE.Height + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" height:" + PE.Height + "\r\n"));
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes(" top:" + PE.Top + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" top:" + PE.Top + "\r\n"));
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes(" left:" + PE.Left + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" left:" + PE.Left + "\r\n"));
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes(" zindex:" + PE.Zindex + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" zindex:" + PE.Zindex + "\r\n"));
+                    
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes(" bordercolor:" + PE.Child.BorderColor + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" bordercolor:" + PE.Child.BorderColor + "\r\n"));
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes(" borderthickness:" + PE.Child.BorderThickness + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" borderthickness:" + PE.Child.BorderThickness + "\r\n"));
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes(" rotation:" + PE.Rotation + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" rotation:" + PE.Rotation + "\r\n"));
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes(" child:" + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" child:" + "\r\n"));
+                //    fs.Write(UnicodeEncoding.Unicode.GetBytes("  type:" + PE.Type + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  type:" + PE.Type + "\r\n"));
+
+                //    if (PE.Type == "System.Windows.Controls.RichTextBox")
+                //    {
+                //        fs.Write(UnicodeEncoding.Unicode.GetBytes("  rtf:" + PE.Child.Document + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  rtf:" + PE.Child.Document + "\r\n"));
+                //        fs.Write(UnicodeEncoding.Unicode.GetBytes(" background:" + PE.Child.BackgroundColor + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" background:" + PE.Child.BackgroundColor + "\r\n"));
+                //    }
+                //    else if (PE.Type == "System.Windows.Controls.Image")
+                //    {
+
+                //        fs.Write(UnicodeEncoding.Unicode.GetBytes("  img:" + PE.Child.Image.Length + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  img:" + PE.Child.Image.Length + "\r\n"));
+
+
+                //        fs.Write(PE.Child.Image, 0, PE.Child.Image.Length);
+                //        fs.Write(UnicodeEncoding.Unicode.GetBytes("\r\n" + "  fill:" + PE.Child.Fill + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("\r\n" + "  fill:" + PE.Child.Fill + "\r\n"));
+
+                //    }
+                //    else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle")
+                //    {
+                //        fs.Write(UnicodeEncoding.Unicode.GetBytes("  brush:" + PE.Child.Brush + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  brush:" + PE.Child.Brush + "\r\n"));
+                //    }
+            //    }
+                                fs.WriteLine("page:0" + "\r\n");
+                fs.WriteLine("node:" + elements.Count + "\r\n");
                 foreach (PageElement PE in elements)
                 {
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes("cc:" + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("cc:" + "\r\n"));
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" width:" + PE.Width + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" width:" + PE.Width + "\r\n"));
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" height:" + PE.Height + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" height:" + PE.Height + "\r\n"));
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" top:" + PE.Top + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" top:" + PE.Top + "\r\n"));
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" left:" + PE.Left + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" left:" + PE.Left + "\r\n"));
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" zindex:" + PE.Zindex + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" zindex:" + PE.Zindex + "\r\n"));
-                    
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" bordercolor:" + PE.Child.BorderColor + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" bordercolor:" + PE.Child.BorderColor + "\r\n"));
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" borderthickness:" + PE.Child.BorderThickness + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" borderthickness:" + PE.Child.BorderThickness + "\r\n"));
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" rotation:" + PE.Rotation + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" rotation:" + PE.Rotation + "\r\n"));
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes(" child:" + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" child:" + "\r\n"));
-                    fs.Write(UnicodeEncoding.Unicode.GetBytes("  type:" + PE.Type + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  type:" + PE.Type + "\r\n"));
+                    fs.WriteLine("cc:" + "\r\n");
+                    fs.WriteLine(" width:" + PE.Width + "\r\n");
+                    fs.WriteLine(" height:" + PE.Height + "\r\n");
+                    fs.WriteLine(" top:" + PE.Top + "\r\n");
+                    fs.WriteLine(" left:" + PE.Left + "\r\n");
+                    fs.WriteLine(" zindex:" + PE.Zindex + "\r\n");
+
+                    fs.WriteLine(" bordercolor:" + PE.Child.BorderColor + "\r\n");
+                    fs.WriteLine(" borderthickness:" + PE.Child.BorderThickness + "\r\n");
+                    fs.WriteLine(" rotation:" + PE.Rotation + "\r\n");
+                    fs.WriteLine(" child:" + "\r\n");
+                    fs.WriteLine("  type:" + PE.Type + "\r\n");
 
                     if (PE.Type == "System.Windows.Controls.RichTextBox")
                     {
-                        fs.Write(UnicodeEncoding.Unicode.GetBytes("  rtf:" + PE.Child.Document + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  rtf:" + PE.Child.Document + "\r\n"));
-                        fs.Write(UnicodeEncoding.Unicode.GetBytes(" background:" + PE.Child.BackgroundColor + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(" background:" + PE.Child.BackgroundColor + "\r\n"));
+                        fs.WriteLine("  rtf:" + PE.Child.Document + "\r\n");
+                        fs.WriteLine(" background:" + PE.Child.BackgroundColor + "\r\n");
                     }
                     else if (PE.Type == "System.Windows.Controls.Image")
                     {
 
-                        fs.Write(UnicodeEncoding.Unicode.GetBytes("  img:" + PE.Child.Image.Length + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  img:" + PE.Child.Image.Length + "\r\n"));
+                        fs.WriteLine("  img:" + PE.Child.Image.Length + "\r\n");
 
 
                         fs.Write(PE.Child.Image, 0, PE.Child.Image.Length);
-                        fs.Write(UnicodeEncoding.Unicode.GetBytes("\r\n" + "  fill:" + PE.Child.Fill + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("\r\n" + "  fill:" + PE.Child.Fill + "\r\n"));
+                        fs.WriteLine("\r\n" + "  fill:" + PE.Child.Fill + "\r\n");
 
                     }
                     else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle")
                     {
-                        fs.Write(UnicodeEncoding.Unicode.GetBytes("  brush:" + PE.Child.Brush + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount("  brush:" + PE.Child.Brush + "\r\n"));
+                        fs.WriteLine("  brush:" + PE.Child.Brush + "\r\n");
                     }
                 }
             }
