@@ -27,11 +27,17 @@ namespace YBMForms
         /// <param name="e"></param>
         private void Bold_Click(object sender, RoutedEventArgs e)
         {
-            UIElement u = SeekSelection();
-            if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
+            RichTextBox rtb = SeekFocus();
+            if (rtb != null)
             {
-                RichTextBox rtb = u as RichTextBox;
-                rtb.Selection.ApplyPropertyValue(RichTextBox.FontWeightProperty, "Bold");
+                if (rtb.Selection.GetPropertyValue(Run.FontWeightProperty) is FontWeight && ((FontWeight)rtb.Selection.GetPropertyValue(Run.FontWeightProperty)) == FontWeights.Normal)
+                {
+                    rtb.Selection.ApplyPropertyValue(Run.FontWeightProperty, FontWeights.Bold);
+                }
+                else
+                {
+                    rtb.Selection.ApplyPropertyValue(Run.FontWeightProperty, FontWeights.Normal);
+                }
             }
         }
 
@@ -42,12 +48,28 @@ namespace YBMForms
         /// <param name="e"></param>
         private void Underline_Click(object sender, RoutedEventArgs e)
         {
-            UIElement u = SeekSelection();
-            if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
+            RichTextBox rtb = SeekFocus();
+            if (rtb != null)
             {
-                RichTextBox rtb = u as RichTextBox;
-                //rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty,TextDecorations.Underline);
-                rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.OverLine);
+                var value = rtb.Selection.GetPropertyValue(Run.TextDecorationsProperty);
+
+                //This if statement exists just to catch the an unset collection or a collection that doesnt match
+                //e.g. if you have a mix or underlined or not it returns DP.unset
+                if (value == null || value == DependencyProperty.UnsetValue)
+                {
+                    rtb.Selection.ApplyPropertyValue(Run.TextDecorationsProperty, TextDecorations.Underline);
+                }
+                else if (value is TextDecorationCollection)
+                {
+                    if (((TextDecorationCollection)value).Count == 0)
+                    {
+                        rtb.Selection.ApplyPropertyValue(Run.TextDecorationsProperty, TextDecorations.Underline);
+                    }
+                    else
+                    {
+                        rtb.Selection.ApplyPropertyValue(Run.TextDecorationsProperty, null);
+                    }
+                }
             }
 
         }
@@ -59,14 +81,14 @@ namespace YBMForms
         /// <param name="e"></param>
         private void Font_Dialogue_Click(object sender, RoutedEventArgs e)
         {
-            UIElement u = SeekSelection();
-                if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
-                {
-                    RichTextBox rtb = u as RichTextBox;
-                    FontStyle fs = new FontStyle(rtb.Selection);
-                    fs.ShowDialog();
-                     
-                }
+            RichTextBox rtb = SeekFocus();
+            if (rtb != null)
+            {
+                FontStyleForm fs = new FontStyleForm(rtb.Selection);
+                fs.ShowDialog();
+            }
+
+
         }
 
         /// <summary>
@@ -76,12 +98,35 @@ namespace YBMForms
         /// <param name="e"></param>
         private void Italic_Click(object sender, RoutedEventArgs e)
         {
-            UIElement u = SeekSelection();
-            if (u.IsFocused && u.GetType().ToString() == "System.Windows.Controls.RichTextBox")
+            RichTextBox rtb = SeekFocus();
+            if (rtb != null)
             {
-                RichTextBox rtb = u as RichTextBox;
-                rtb.Selection.ApplyPropertyValue(RichTextBox.FontStyleProperty, "Italic");
+                if (rtb.Selection.GetPropertyValue(Run.FontStyleProperty) is FontStyle && ((FontStyle)rtb.Selection.GetPropertyValue(Run.FontStyleProperty)) == FontStyles.Normal)
+                    rtb.Selection.ApplyPropertyValue(Run.FontStyleProperty, FontStyles.Italic);
+                else
+                   rtb.Selection.ApplyPropertyValue(Run.FontStyleProperty, FontStyles.Normal);
             }
+        }
+
+        private RichTextBox SeekFocus()
+        {
+            RichTextBox rtb = new RichTextBox(); ;
+
+            foreach (ContentControl cc in DesignerCanvas.Children)
+            {
+                UIElement u = cc.Content as UIElement;
+                if (u.GetType().ToString() == "System.Windows.Controls.RichTextBox" && u.IsFocused)
+                {
+
+                    rtb = cc.Content as RichTextBox;
+                }
+                else
+                {
+                    rtb = null;
+                }
+            }
+
+            return rtb;
         }
 
     }

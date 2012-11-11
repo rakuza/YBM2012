@@ -20,9 +20,9 @@ namespace YBMForms
     /// <summary>
     /// Interaction logic for FontStyle.xaml
     /// </summary>
-    public partial class FontStyle : Window
+    public partial class FontStyleForm : Window
     {
-        public FontStyle(TextSelection t)
+        public FontStyleForm(TextSelection t)
         {
             
             InitializeComponent();

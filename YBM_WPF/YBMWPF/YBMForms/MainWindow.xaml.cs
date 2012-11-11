@@ -248,9 +248,14 @@ namespace YBMForms
         /// </summary>
         /// <param name="sender">Menu</param>
         /// <param name="e">Event args</param>
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Font_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
     }
