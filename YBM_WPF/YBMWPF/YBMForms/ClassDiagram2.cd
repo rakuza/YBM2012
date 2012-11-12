@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="YBMForms.DLL.BookReader">
+    <Position X="1.5" Y="4.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="YBMForms.DLL.BookReader.Page">
+        <TypeIdentifier>
+          <NewMemberFileName>DLL\BookReader.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAAAQIAIAEAgAgQAgAIAEgggAoCAAQ=</HashCode>
+      <FileName>DLL\BookReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.DLL.BookSaver" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DLL\BookSaver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.DLL.FileStreamOut">
+    <Position X="8" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DLL\FileStreamOut.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.DLL.LineReader" BaseTypeListCollapsed="true">
+    <Position X="2" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAACAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DLL\LineReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="YBMForms.DLL.MemImage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAEAAAABAAAAAAAAAAQAA=</HashCode>
+      <FileName>DLL\MemImage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="YBMForms.DLL.PageElement" Collapsed="true">
+    <Position X="5.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAABAAAAIAAgAAAAEAAAAAIAAAACQAAAAAAAAA=</HashCode>
+      <FileName>DLL\PageElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.DLL.PageLoader">
+    <Position X="5.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAgAAAAAAAAAAAABAACAAAAgAAAAAAAAAgAAAA=</HashCode>
+      <FileName>DLL\PageLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.DLL.PageSaver" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAABEAEAIAAAAAAAAAgAAAAAAAAAAAABA=</HashCode>
+      <FileName>DLL\PageSaver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

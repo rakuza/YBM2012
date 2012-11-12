@@ -126,8 +126,8 @@ namespace YBMForms
 
         private void Load_Click(object sender, RoutedEventArgs e)
         {
-            PageLoader pl = new PageLoader(DesignerCanvas, this);
-            pl.ReadPage("durp.txt");
+            //PageLoader pl = new PageLoader(DesignerCanvas, this);
+           // pl.ReadPage("durp.txt");
         }
 
 

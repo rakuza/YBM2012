@@ -15,11 +15,12 @@ using System.Windows.Media.Converters;
 
 namespace YBMForms.DLL
 {
-    class BookSaver 
+    class BookSaver : PageSaver
     {
-       public BookSaver(Canvas c) 
+
+       public BookSaver(Canvas c): base(c)
     {
-          
+
     }
 
 
