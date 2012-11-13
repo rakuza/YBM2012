@@ -1,69 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Media;
-using System.Windows.Media.Converters;
 using System.Windows.Converters;
-using System.Windows.Media.Imaging;
-using System.IO;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Converters;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 namespace YBMForms.DLL
 {
     class BookReader : PageLoader
     {
-        internal class Page
-        {
-            public Page()
-            {
-                offset = 0;
-                length = 0;
-            }
+        
 
-            private int offset;
-
-            public int Offset
-            {
-                get { return offset; }
-                set { offset = value; }
-            }
-            private int length;
-
-            public int Length
-            {
-                get { return length; }
-                set { length = value; }
-            }
-        }
-
-        public BookReader(string fileLocation, Canvas c, MainWindow Host) : base(c)
+        public BookReader(string fileLocation, Canvas c, MainWindow h) : base(c)
         {
             fileLoc = fileLocation;
             ReadPageLocations();
             ReadPage(0);
             designerCanvas = c;
-            host = Host;
+            host = h;
         }
 
         private string fileLoc;
         private string bookTitle;
         private int viewIndex;
+        private MainWindow host;
 
         public int ViewIndex
         {
             get { return viewIndex; }
         }
-        List<Page> pages = new List<Page>();
+        private List<Page> pages = new List<Page>();
+
+        public List<Page> Pages
+        {
+            get { return pages; }
+            set { pages = value; }
+        }
 
         List<PageElement> current, previous, next;
 
         Canvas designerCanvas;
-        MainWindow host;
 
 
         #region Page Navigation

@@ -18,7 +18,7 @@ namespace YBMForms.DLL
     class BookSaver : PageSaver
     {
 
-       public BookSaver(Canvas c): base(c)
+       public BookSaver(Canvas c, Page list): base(c)
     {
 
     }

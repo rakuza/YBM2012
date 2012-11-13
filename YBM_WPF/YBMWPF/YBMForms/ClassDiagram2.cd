@@ -5,13 +5,6 @@
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Class Name="YBMForms.DLL.BookReader.Page">
-        <TypeIdentifier>
-          <NewMemberFileName>DLL\BookReader.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAABAAAQIAIAEAgAgQAgAIAEgggAoCAAQ=</HashCode>
       <FileName>DLL\BookReader.cs</FileName>

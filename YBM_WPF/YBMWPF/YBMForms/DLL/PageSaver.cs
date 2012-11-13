@@ -8,11 +8,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 namespace YBMForms.DLL
 {
-    class PageSaver
+    internal class PageSaver
     {
         private Canvas page;
 
-        public PageSaver(Canvas c)
+        internal PageSaver(Canvas c)
         {
             page = c;
         }
@@ -98,13 +98,13 @@ namespace YBMForms.DLL
         /// 
         /// p.s. the image saving/loading from this point works fine
         /// </summary>
-        /// <param name="elements">All the components of the page</param>
-        public void PrintPage(List<PageElement> elements)
+        /// <param name="page">All the components of the page</param>
+        static internal void PrintPage(List<PageElement> page)
         {
             using (FileStreamOut fs = new FileStreamOut("durp.txt", FileMode.Create))
             {
-                fs.WriteLine("node:" + elements.Count + "\r\n");
-                foreach (PageElement PE in elements)
+                fs.WriteLine("node:" + page.Count + "\r\n");
+                foreach (PageElement PE in page)
                 {
                     fs.WriteLine("cc:" + "\r\n");
                     fs.WriteLine(" width:" + PE.Width + "\r\n");

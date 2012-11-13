@@ -83,6 +83,7 @@
     <Compile Include="DLL\FileStreamOut.cs" />
     <Compile Include="DLL\LineReader.cs" />
     <Compile Include="DLL\MemImage.cs" />
+    <Compile Include="DLL\Page.cs" />
     <Compile Include="DLL\PageElement.cs" />
     <Compile Include="DLL\PageLoader.cs" />
     <Compile Include="DLL\PageSaver.cs" />
@@ -164,6 +165,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram2.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
