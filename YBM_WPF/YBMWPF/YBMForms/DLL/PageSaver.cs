@@ -103,40 +103,40 @@ namespace YBMForms.DLL
         {
             using (FileStreamOut fs = new FileStreamOut("durp.txt", FileMode.Create))
             {
-                fs.WriteLine("node:" + page.Count + "\r\n");
+                fs.WriteLine("node:" + page.Count);
                 foreach (PageElement PE in page)
                 {
-                    fs.WriteLine("cc:" + "\r\n");
-                    fs.WriteLine(" width:" + PE.Width + "\r\n");
-                    fs.WriteLine(" height:" + PE.Height + "\r\n");
-                    fs.WriteLine(" top:" + PE.Top + "\r\n");
-                    fs.WriteLine(" left:" + PE.Left + "\r\n");
-                    fs.WriteLine(" zindex:" + PE.Zindex + "\r\n");
+                    fs.WriteLine("cc:");
+                    fs.WriteLine(" width:" + PE.Width);
+                    fs.WriteLine(" height:" + PE.Height);
+                    fs.WriteLine(" top:" + PE.Top);
+                    fs.WriteLine(" left:" + PE.Left);
+                    fs.WriteLine(" zindex:" + PE.Zindex);
 
-                    fs.WriteLine(" bordercolor:" + PE.Child.BorderColor + "\r\n");
-                    fs.WriteLine(" borderthickness:" + PE.Child.BorderThickness + "\r\n");
-                    fs.WriteLine(" rotation:" + PE.Rotation + "\r\n");
-                    fs.WriteLine(" child:" + "\r\n");
-                    fs.WriteLine("  type:" + PE.Type + "\r\n");
+                    fs.WriteLine(" bordercolor:" + PE.Child.BorderColor);
+                    fs.WriteLine(" borderthickness:" + PE.Child.BorderThickness);
+                    fs.WriteLine(" rotation:" + PE.Rotation);
+                    fs.WriteLine(" child:");
+                    fs.WriteLine("  type:" + PE.Type);
 
                     if (PE.Type == "System.Windows.Controls.RichTextBox")
                     {
-                        fs.WriteLine("  rtf:" + PE.Child.Document + "\r\n");
-                        fs.WriteLine(" background:" + PE.Child.BackgroundColor + "\r\n");
+                        fs.WriteLine("  rtf:" + PE.Child.Document);
+                        fs.WriteLine(" background:" + PE.Child.BackgroundColor);
                     }
                     else if (PE.Type == "System.Windows.Controls.Image")
                     {
 
-                        fs.WriteLine("  img:" + PE.Child.Image.Length + "\r\n");
+                        fs.WriteLine("  img:" + PE.Child.Image.Length);
 
 
                         fs.Write(PE.Child.Image, 0, PE.Child.Image.Length);
-                        fs.WriteLine("\r\n" + "  fill:" + PE.Child.Fill + "\r\n");
+                        fs.WriteLine("\r\n" + "  fill:" + PE.Child.Fill);
 
                     }
                     else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle")
                     {
-                        fs.WriteLine("  brush:" + PE.Child.Brush + "\r\n");
+                        fs.WriteLine("  brush:" + PE.Child.Brush);
                     }
                 }
             }

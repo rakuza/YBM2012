@@ -21,9 +21,17 @@ namespace YBMForms.DLL
             {
                 offset = 0;
                 length = 0;
-                controls = new List<PageElement>();
+                type = PageType.BlackWhite;
+                pageNumber = -1;
             }
 
+            private int pageNumber;
+
+            public int PageNumber
+            {
+                get { return pageNumber; }
+                set { pageNumber = value; }
+            }
             private int offset;
 
             public int Offset
@@ -45,14 +53,6 @@ namespace YBMForms.DLL
             {
                 get { return type; }
                 set { type = value; }
-            }
-
-            private List<PageElement> controls;
-
-            public List<PageElement> Controls
-            {
-                get { return controls; }
-                set { controls = value; }
             }
         
     }

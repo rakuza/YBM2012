@@ -17,7 +17,7 @@ namespace YBMForms.DLL
 
         public void WriteLine(string s)
         {
-            Write(UnicodeEncoding.Unicode.GetBytes(s), 0, UnicodeEncoding.Unicode.GetByteCount(s));
+            Write(UnicodeEncoding.Unicode.GetBytes(s + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(s + "\r\n"));
         }
     }
 }

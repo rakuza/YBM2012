@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DLL\Book.cs" />
     <Compile Include="DLL\BookReader.cs" />
     <Compile Include="DLL\BookSaver.cs" />
     <Compile Include="DLL\FileStreamOut.cs" />

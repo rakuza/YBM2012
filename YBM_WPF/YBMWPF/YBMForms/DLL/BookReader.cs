@@ -260,6 +260,10 @@ namespace YBMForms.DLL
                             p.Length = Getint(buffer);
                             break;
 
+                        case"pagetype":
+                            p.Type = (PageType)Enum.Parse(typeof(PageType),GetString(buffer));
+                            break;
+
                         case"node":
                             indexRead = true;
                             break;
