@@ -324,6 +324,11 @@ namespace YBMForms
             tbxPageIndex.Text = (current.ViewIndex + 1).ToString();
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Font_Dialogue_Click(sender,e);
+        }
+
 
     }
 }

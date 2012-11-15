@@ -5,7 +5,7 @@
         xmlns:c="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="YBMForms.MainWindow"
         Title="Palmerston North Intermediate Normal - Year Book Maker" Height="auto" Width="auto" WindowStartupLocation="CenterScreen"
-        PreviewKeyDown="Window_KeyDown_1" Initialized="Window_Initialized_1">
+        PreviewKeyDown="Window_KeyDown_1" Initialized="Window_Initialized_1" Icon="/Resources/icons/ID-10050906.ico">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -195,6 +195,7 @@
         			ItemsSource="{x:Static Fonts.SystemFontFamilies}" SelectionChanged="Font_SelectionChanged_1"/>
                 <c:ColorPicker  x:Name="color" VerticalAlignment="Center" ShowRecentColors="True" IsManipulationEnabled="True" ShowStandardColors="False"  />
                 <TextBox MinWidth="30"></TextBox>
+                <Button Content="Advanced" Click="Button_Click_1" />
             </ToolBar>
 
             <ToolBar Name="HelpAlias">
