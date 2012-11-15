@@ -103,6 +103,7 @@
     <Compile Include="UIL\AdornerLib\RotateThumb.cs" />
     <Compile Include="UIL\AdornerLib\SizeAdorner.cs" />
     <Compile Include="UIL\AdornerLib\SizeChrome.cs" />
+    <Compile Include="UIL\BookViewer.cs" />
     <Compile Include="UIL\ControlSpawner.cs" />
     <Compile Include="UIL\FontFormatFunction.cs" />
     <Compile Include="UIL\FormatRTF.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.Win32.SafeHandles;
 
 namespace YBMForms.DLL
 {
@@ -11,6 +12,12 @@ namespace YBMForms.DLL
     {
         public FileStreamOut(string path, FileMode fileMode)
             : base(path,fileMode)
+        {
+
+        }
+
+        public FileStreamOut(SafeFileHandle path, FileAccess fileAccess)
+            : base(path, fileAccess)
         {
 
         }

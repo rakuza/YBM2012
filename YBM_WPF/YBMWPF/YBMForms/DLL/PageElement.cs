@@ -9,7 +9,7 @@ namespace YBMForms.DLL
     /// <summary>
     /// Stores the content control and the content of the content control
     /// </summary>
-    class PageElement
+    public class PageElement
     {
 
         public PageElement()
@@ -60,7 +60,7 @@ namespace YBMForms.DLL
         /// <summary>
         /// The Child Element For storing the content of the content control
         /// </summary>
-        internal class ChildElement
+        public class ChildElement
         {
             internal ChildElement()
             {
@@ -75,16 +75,16 @@ namespace YBMForms.DLL
 
 
             //getters and setters
-            internal string Brush { get; set; }
-            internal string Fill { get; set; }
-            internal byte[] Image { get; set; }
-            internal string Document { get; set; }
-            internal string BackgroundColor { get; set; }
-            internal string BorderColor { get; set; }
-            internal Thickness BorderThickness { get; set; }
+            public string Brush { get; set; }
+            public string Fill { get; set; }
+            public byte[] Image { get; set; }
+            public string Document { get; set; }
+            public string BackgroundColor { get; set; }
+            public string BorderColor { get; set; }
+            public Thickness BorderThickness { get; set; }
 
 
-            internal  bool Equals(ChildElement CE)
+            public  bool Equals(ChildElement CE)
             {
 
                 if (

@@ -5,7 +5,7 @@
         xmlns:c="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="YBMForms.MainWindow"
         Title="Palmerston North Intermediate Normal - Year Book Maker" Height="auto" Width="auto" WindowStartupLocation="CenterScreen"
-        PreviewKeyDown="Window_KeyDown_1" >
+        PreviewKeyDown="Window_KeyDown_1" Initialized="Window_Initialized_1">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -38,13 +38,19 @@
 
             <StatusBarItem HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
-                    <Button>
+                    <Button Margin="0,0,5,0" Click="PreviousPageClick">
                         <Image  Width="16" Height="16" Source="/Resources/icons/reverse_blue.png"/>
                     </Button>
-                    <TextBox MinWidth="50" Text="1"/>
-                    <Label Content="/ 1"/>
-                    <Button>
+                    <TextBox Name="tbxPageIndex" MinWidth="50" Text="1" KeyDown="tbxPageIndex_Enter" LostFocus="tbxPageJump_LostFocus"/>
+                    <Label Name="lblTotalPages" Content="/ 1"/>
+                    <Button Click="NextPageClick">
                         <Image Source="/Resources/icons/play_blue.png" Width="16" Height="16"/>
+                    </Button>
+                    <Button Margin="5,0,0,0" Click="NewPageClick">
+                        <Image Source="/Resources/icons/bullet_sparkle.png" Width="16" Height="16"/>
+                    </Button>
+                    <Button Margin="5,0,0,0" Click="DeletePageClick">
+                        <Image Source="/Resources/icons/bullet_cross.png" Width="16" Height="16"/>
                     </Button>
                 </StackPanel>
             </StatusBarItem>
@@ -96,7 +102,7 @@
 
 
             <MenuItem Header="Format Text">
-                <MenuItem Header="Advanced" ToolTip="Advanced Formatter"/>
+                <MenuItem Header="Advanced" ToolTip="Advanced Formatter" Click="MenuItem_Click_1"/>
                 <Separator/>
                 <MenuItem Header="Bold"/>
                 <MenuItem Header="Italic"/>
