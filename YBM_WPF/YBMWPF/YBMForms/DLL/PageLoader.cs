@@ -24,29 +24,43 @@ namespace YBMForms.DLL
         internal PageLoader(Canvas c)
         {
             canvas = c;
+            HeaderOffset = 0;
         }
 
+        private int HeaderOffset;
+
+        internal int Offset
+        {
+            get { return HeaderOffset; }
+            set { HeaderOffset = value; }
+        }
         
 
-        static internal List<PageElement> ReadPage(string fileLocation,int offSet, int Length)
+        internal List<PageElement> ReadPage(string fileLocation,int Length,int offSet)
         {
             //method life long vars
             List<PageElement> readControls = new List<PageElement>();
 
-            using (MemoryStream pageStream = new MemoryStream())
+            using (MemoryStream pageStream = new MemoryStream() )
             {
                 using (FileStream fs = File.Open(fileLocation, FileMode.Open))
                 {
-                    fs.CopyTo(pageStream);
-                    fs.Flush();
+                    byte[] bytebuffer = new byte[Length];
+                    fs.Position = offSet + HeaderOffset;
+                    fs.Read(bytebuffer, 0, Length);
+                    pageStream.Write(bytebuffer, 0, bytebuffer.Length);
                 }
+
+                pageStream.Flush();
+                pageStream.Position = 0;
 
                 int nodes = 0;
                 string buffer = "";
                 LineReader lr = new LineReader(pageStream);
-                PageElement PE = new PageElement(); ;
-                buffer = lr.ReadLine();
-                nodes = Convert.ToInt32(GetDouble(buffer));
+                PageElement PE = new PageElement();
+                    buffer = lr.ReadLine();
+
+                nodes = Getint(buffer);
                 nodes *= 13;
                 while (nodes != 0)
                 {

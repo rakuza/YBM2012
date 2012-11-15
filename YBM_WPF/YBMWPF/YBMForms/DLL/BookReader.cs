@@ -35,11 +35,6 @@ namespace YBMForms.DLL
 
         Canvas designerCanvas;
 
-/*
-     
- * */
-
-
 #region page Rendering
 
 
@@ -52,15 +47,17 @@ namespace YBMForms.DLL
         /// <param name="fileLocation"></param>
         public Book ReadBook()
         {
-            newBook = new Book();
+            newBook = new Book(true);
             using (FileStream fs = File.Open(fileLoc, FileMode.Open))
             {
+                string headerLog = "";
                 LineReader lr = new LineReader(fs);
                 Page p = new Page();
                 int index = 0;
                 while (fs.Position != fs.Length)
                 {
                     string buffer = lr.ReadLine();
+                    headerLog += buffer + "\r\n";
                     bool indexRead = false;
                     string action = GetParam(buffer);
 
@@ -89,6 +86,7 @@ namespace YBMForms.DLL
                                 newBook.Pages.Add(p);
                             }
                             p = new Page();
+                            index++;
                             break;
 
                         case "offset":
@@ -103,9 +101,13 @@ namespace YBMForms.DLL
                             p.Type = (PageType)Enum.Parse(typeof(PageType),GetString(buffer));
                             break;
 
+                        case"indexend":
+                            newBook.Pages.Add(p);
+                            Offset = UnicodeEncoding.Unicode.GetByteCount(headerLog);
+                            break;
+
                         case"node":
                             indexRead = true;
-                            
                             break;
 
                         default:
@@ -121,16 +123,17 @@ namespace YBMForms.DLL
                 }
             }
 
-            for(int i = 0; i <= newBook.Pages.Count;i++)
+            for(int i = 0; i < newBook.Pages.Count;i++)
             {
-               newBook.Pages[i].Children = ReadPage(fileLoc,newBook.Pages[i].Offset,newBook.Pages[i].Length);
+               newBook.Pages[i].PageNumber = i;
+               newBook.Pages[i].Children = ReadPage(fileLoc,newBook.Pages[i].Length,newBook.Pages[i].Offset);
             }
             return newBook;
         }
 
         private DateTime GetDate(string s)
         {
-            DateTime temp = DateTime.Parse(s);
+            DateTime temp = DateTime.Parse(s.Substring(s.IndexOf(':') + 1));
             return temp;
         }
     }

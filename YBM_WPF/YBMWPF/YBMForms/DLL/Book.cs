@@ -32,6 +32,14 @@ namespace YBMForms.DLL
             this.pages[2].Offset += offset;
         }
 
+        public Book(bool isBlank)
+        {
+            title = "";
+            created = DateTime.Now;
+            lastModified = DateTime.Now;
+            pages = new List<Page>();
+        }
+
 
         private List<Page> pages;
 

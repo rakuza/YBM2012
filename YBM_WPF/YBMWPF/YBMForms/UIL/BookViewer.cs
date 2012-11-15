@@ -20,7 +20,7 @@ namespace YBMForms.UIL
 {
     public class BookViewer
     {
-        public BookViewer(Canvas c,MainWindow h,Book b)
+        public BookViewer(Canvas c, MainWindow h, Book b)
         {
             designerCanvas = c;
             host = h;
@@ -28,7 +28,7 @@ namespace YBMForms.UIL
             viewIndex = 0;
         }
 
-       static private MainWindow host;
+        static private MainWindow host;
         static private Canvas designerCanvas;
 
         private Book currentbook;
@@ -36,9 +36,11 @@ namespace YBMForms.UIL
         public Book CurrentBook
         {
             get { return currentbook; }
-            set { currentbook = value;
-            this.ViewIndex = 0;
 
+            set
+            {
+                currentbook = value;
+                SetNewViewIndex(0);
             }
         }
 
@@ -47,19 +49,29 @@ namespace YBMForms.UIL
         public int ViewIndex
         {
             get { return viewIndex; }
-            set {
+            set
+            {
                 if (viewIndex >= 0 && viewIndex <= currentbook.Pages.Count)
                 {
+                    SavePage();
                     viewIndex = value;
                     RenderPage();
                 }
-                }
+            }
+        }
+
+        public void SetNewViewIndex(int index)
+        {
+            viewIndex = index;
+            RenderPage();
         }
 
         public void OpenBook(string filelocation)
         {
             BookReader br = new BookReader(filelocation, designerCanvas, host);
-            this.CurrentBook = br.ReadBook();
+            Book openedBook = br.ReadBook();
+            currentbook = openedBook;
+            SetNewViewIndex(0);
         }
 
         public void SaveBook(string filelocation)
@@ -70,24 +82,35 @@ namespace YBMForms.UIL
 
         public void DeletePage()
         {
+            designerCanvas.Children.RemoveRange(0, designerCanvas.Children.Count);
             this.currentbook.Pages.Remove(this.currentbook.Pages[viewIndex]);
-            this.viewIndex = viewIndex - 1;
+            SetNewViewIndex(viewIndex--);
         }
 
         public void NewPage()
         {
             DLL.Page p = new DLL.Page();
             p.PageNumber = this.currentbook.Pages.Count - 1;
-            this.currentbook.Pages.Insert(this.currentbook.Pages.Count,p);
-            viewIndex = this.currentbook.Pages.Count;
+            this.currentbook.Pages[this.currentbook.Pages.Count -1].PageNumber++;
+            this.currentbook.Pages.Insert(this.currentbook.Pages.Count-1, p);
+            SetNewViewIndex( p.PageNumber);
         }
+
+
+
+        private void SavePage()
+        {
+            PageSaver ps = new PageSaver(designerCanvas);
+            currentbook.Pages[viewIndex].Children = ps.SaveCanvas();
+        }
+
 
         #region Render
         private void RenderPage()
         {
-            
+
             designerCanvas.Children.RemoveRange(0, designerCanvas.Children.Count);
-            foreach (PageElement PE in currentbook.Pages[viewIndex].Children)
+            foreach (PageElement PE in this.CurrentBook.Pages[viewIndex].Children)
             {
                 ContentControl cc = FormContentControl(PE);
 

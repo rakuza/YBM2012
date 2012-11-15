@@ -266,30 +266,30 @@ namespace YBMForms
         private void NewPageClick(object sender, RoutedEventArgs e)
         {
             current.NewPage();
-            lblTotalPages.Content = current.CurrentBook.Pages.Count.ToString();
-            tbxPageIndex.Text = current.ViewIndex.ToString();
+            lblTotalPages.Content = "/ "+current.CurrentBook.Pages.Count.ToString();
+            tbxPageIndex.Text = (current.ViewIndex + 1).ToString();
         }
 
         //delete
         private void DeletePageClick(object sender, RoutedEventArgs e)
         {
             current.DeletePage();
-            lblTotalPages.Content = current.CurrentBook.Pages.Count.ToString();
-            tbxPageIndex.Text = current.ViewIndex.ToString();
+            lblTotalPages.Content = "/ " + current.CurrentBook.Pages.Count.ToString();
+            tbxPageIndex.Text = (current.ViewIndex + 1).ToString();
         }
 
         //next
         private void NextPageClick(object sender, RoutedEventArgs e)
         {
             current.ViewIndex++;
-            tbxPageIndex.Text = current.ViewIndex.ToString();
+            tbxPageIndex.Text = (current.ViewIndex + 1).ToString();
         }
 
         //previous
         private void PreviousPageClick(object sender, RoutedEventArgs e)
         {
             current.ViewIndex--;
-            tbxPageIndex.Text = current.ViewIndex.ToString();
+            tbxPageIndex.Text = (current.ViewIndex + 1).ToString();
         }
 
         /// <summary>
@@ -321,6 +321,7 @@ namespace YBMForms
         {
             current = new BookViewer(DesignerCanvas, this, new Book());
             lblTotalPages.Content = "/ " +current.CurrentBook.Pages.Count.ToString();
+            tbxPageIndex.Text = (current.ViewIndex + 1).ToString();
         }
 
 

@@ -20,7 +20,6 @@ namespace YBMForms.DLL
     class BookSaver : PageSaver
     {
 
-        private FileStream NewBook;
 
         public BookSaver(Canvas c, Book b)
             : base(c)
@@ -38,13 +37,19 @@ namespace YBMForms.DLL
         {
             Book adjusted = book;
             adjusted.Pages[viewIndex].Children = SaveCanvas();
-            byte[] pageBytes = SavePageElements(adjusted.Pages[viewIndex].Children);
-            int incrementOffset = book.Pages[viewIndex].Length - pageBytes.Length;
-            adjusted.Pages[viewIndex].Length = pageBytes.Length;
-
-            for (int i = viewIndex; i < book.Pages.Count; i++)
+            for (int i = 0; i < adjusted.Pages.Count; i++)
             {
-                adjusted.Pages[i].Offset += incrementOffset;
+                
+                int length = SavePageElements(adjusted.Pages[i].Children).Length;
+                adjusted.Pages[i].Length = length;
+                if (i == 0)
+                {
+                    adjusted.Pages[i].Offset = 0;
+                }
+                else
+                {
+                    adjusted.Pages[i].Offset = adjusted.Pages[i - 1].Offset + adjusted.Pages[i - 1].Length;
+                }
             }
 
             return adjusted;
@@ -53,8 +58,11 @@ namespace YBMForms.DLL
         public void SaveBook(string fileloc, int viewIndex)
         {
             book = RealignPage(viewIndex);
-            NewBook = new FileStream(fileloc,FileMode.Create);
             byte[] header = WriteHeader(book);
+            
+
+            FileStream NewBook = new FileStream(fileloc,FileMode.Create);
+            
             NewBook.Write(header, 0, header.Length);
             foreach (Page p in book.Pages)
             {
@@ -79,6 +87,7 @@ namespace YBMForms.DLL
                     mso.WriteLine("length:" + p.Length);
                     mso.WriteLine("pagetype:" + p.Type);
                 }
+                mso.WriteLine("indexend:");
                 mso.Flush();
                 buffer = mso.ToArray();
                 return buffer;
