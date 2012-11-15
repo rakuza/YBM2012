@@ -1,11 +1,18 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Shapes;
+using System.IO;
+using System.IO.Compression;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Media.Converters;
+
 namespace YBMForms.DLL
 {
     internal class PageSaver
@@ -17,11 +24,24 @@ namespace YBMForms.DLL
             page = c;
         }
 
-
-        private List<PageElement> elements = new List<PageElement>();
-
-        internal void SavePage()
+        internal class MemorystreamOut : MemoryStream
         {
+            internal MemorystreamOut()
+            {
+
+            }
+
+            internal void WriteLine(string s)
+            {
+                Write(UnicodeEncoding.Unicode.GetBytes(s), 0, UnicodeEncoding.Unicode.GetByteCount(s));
+            }
+        }
+
+        
+
+        internal List<PageElement> SaveCanvas()
+        {
+            List<PageElement> elements = new List<PageElement>();
             foreach (UIElement child in page.Children)
             {
                 ContentControl cc = child as ContentControl;
@@ -40,7 +60,7 @@ namespace YBMForms.DLL
                 elements.Add(PE);
             }
 
-            PrintPage(elements);
+            return elements;
         }
 
         private static void SaveImage(ContentControl cc, PageElement PE)
@@ -99,46 +119,51 @@ namespace YBMForms.DLL
         /// p.s. the image saving/loading from this point works fine
         /// </summary>
         /// <param name="page">All the components of the page</param>
-        static internal void PrintPage(List<PageElement> page)
+        static internal byte[] SavePageElements(List<PageElement> page)
         {
-            using (FileStreamOut fs = new FileStreamOut("durp.txt", FileMode.Create))
+            byte[] buffer;
+            using (MemorystreamOut mso = new MemorystreamOut())
             {
-                fs.WriteLine("node:" + page.Count);
+                mso.WriteLine("node:" + page.Count);
                 foreach (PageElement PE in page)
                 {
-                    fs.WriteLine("cc:");
-                    fs.WriteLine(" width:" + PE.Width);
-                    fs.WriteLine(" height:" + PE.Height);
-                    fs.WriteLine(" top:" + PE.Top);
-                    fs.WriteLine(" left:" + PE.Left);
-                    fs.WriteLine(" zindex:" + PE.Zindex);
+                    mso.WriteLine("cc:");
+                    mso.WriteLine(" width:" + PE.Width);
+                    mso.WriteLine(" height:" + PE.Height);
+                    mso.WriteLine(" top:" + PE.Top);
+                    mso.WriteLine(" left:" + PE.Left);
+                    mso.WriteLine(" zindex:" + PE.Zindex);
 
-                    fs.WriteLine(" bordercolor:" + PE.Child.BorderColor);
-                    fs.WriteLine(" borderthickness:" + PE.Child.BorderThickness);
-                    fs.WriteLine(" rotation:" + PE.Rotation);
-                    fs.WriteLine(" child:");
-                    fs.WriteLine("  type:" + PE.Type);
+                    mso.WriteLine(" bordercolor:" + PE.Child.BorderColor);
+                    mso.WriteLine(" borderthickness:" + PE.Child.BorderThickness);
+                    mso.WriteLine(" rotation:" + PE.Rotation);
+                    mso.WriteLine(" child:");
+                    mso.WriteLine("  type:" + PE.Type);
 
                     if (PE.Type == "System.Windows.Controls.RichTextBox")
                     {
-                        fs.WriteLine("  rtf:" + PE.Child.Document);
-                        fs.WriteLine(" background:" + PE.Child.BackgroundColor);
+                        mso.WriteLine("  rtf:" + PE.Child.Document);
+                        mso.WriteLine(" background:" + PE.Child.BackgroundColor);
                     }
                     else if (PE.Type == "System.Windows.Controls.Image")
                     {
 
-                        fs.WriteLine("  img:" + PE.Child.Image.Length);
+                        mso.WriteLine("  img:" + PE.Child.Image.Length);
 
 
-                        fs.Write(PE.Child.Image, 0, PE.Child.Image.Length);
-                        fs.WriteLine("\r\n" + "  fill:" + PE.Child.Fill);
+                        mso.Write(PE.Child.Image, 0, PE.Child.Image.Length);
+                        mso.WriteLine("\r\n" + "  fill:" + PE.Child.Fill);
 
                     }
                     else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle")
                     {
-                        fs.WriteLine("  brush:" + PE.Child.Brush);
+                        mso.WriteLine("  brush:" + PE.Child.Brush);
                     }
                 }
+
+                mso.Flush();
+                buffer = mso.ToArray();
+                return buffer;
             }
         }
 

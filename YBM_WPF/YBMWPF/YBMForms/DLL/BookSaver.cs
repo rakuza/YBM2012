@@ -15,119 +15,77 @@ using System.Windows.Media.Converters;
 
 namespace YBMForms.DLL
 {
-    internal class MemorystreamOut : MemoryStream
-    {
-        internal MemorystreamOut()
-        {
 
-        }
-
-        internal void WriteLine(string s)
-        {
-         Write(UnicodeEncoding.Unicode.GetBytes(s), 0, UnicodeEncoding.Unicode.GetByteCount(s));
-        }
-    }
 
     class BookSaver : PageSaver
     {
 
+        private FileStream NewBook;
+
         public BookSaver(Canvas c, Book b)
             : base(c)
         {
-            unmodifiedYearBook = b;
-            designerCanvas = c;
+            book = b;
         }
 
-        private Book unmodifiedYearBook;
-        private Canvas designerCanvas;
-        private Page pageToSave;
-        private Book modifiedYearBook;
+        Book book;
 
-        public void WriteHeader(byte[] page, string fileLoc)
+        /// <summary>
+        /// Adjusts all the offsets for the book
+        /// </summary>
+        /// <param name="fileloc"></param>
+        public Book RealignPage( int viewIndex)
         {
-            var pageEdit = (from p in unmodifiedYearBook.Pages
-                            where p.PageNumber == pageToSave.PageNumber
-                            select p);
+            Book adjusted = book;
+            adjusted.Pages[viewIndex].Children = SaveCanvas();
+            byte[] pageBytes = SavePageElements(adjusted.Pages[viewIndex].Children);
+            int incrementOffset = book.Pages[viewIndex].Length - pageBytes.Length;
+            adjusted.Pages[viewIndex].Length = pageBytes.Length;
 
-            using (FileStreamOut fs = new FileStreamOut(fileLoc, FileMode.OpenOrCreate))
+            for (int i = viewIndex; i < book.Pages.Count; i++)
             {
-                //Header
-                fs.WriteLine("bookname:" + modifiedYearBook.Title);
-                fs.WriteLine("created:" + modifiedYearBook.Created);
-                fs.WriteLine("lastmodified:" + modifiedYearBook.LastModified);
-                //print index
-                fs.WriteLine("index:");
-
-                var yearbookwrite = (from u in modifiedYearBook.Pages
-                                     orderby u.PageNumber
-                                     select modifiedYearBook).Single();
-
-                foreach (Page pageToWrite in yearbookwrite.Pages)
-                {
-                    fs.WriteLine("pagetype:"+pageToWrite.Type.ToString());
-                    fs.WriteLine("pagenumber:" + pageToWrite.PageNumber);
-                    fs.WriteLine("pagetype:" + pageToWrite.Offset);
-                    fs.WriteLine("pagetype:" + pageToWrite.Length);
-                    fs.WriteLine("pagetype:" + pageToWrite.Type.ToString());
-                }
+                adjusted.Pages[i].Offset += incrementOffset;
             }
 
+            return adjusted;
         }
 
-        public byte[] SavePage(Page p, List<PageElement> page)
+        public void SaveBook(string fileloc, int viewIndex)
+        {
+            book = RealignPage(viewIndex);
+            NewBook = new FileStream(fileloc,FileMode.Create);
+            byte[] header = WriteHeader(book);
+            NewBook.Write(header, 0, header.Length);
+            foreach (Page p in book.Pages)
+            {
+                byte[] pageBytes = SavePageElements(p.Children);
+                NewBook.Write(pageBytes,0,pageBytes.Length);
+            }
+        }
+
+        static public byte[] WriteHeader(Book b)
         {
             byte[] buffer;
-            pageToSave = p;
-            using (MemorystreamOut ms = new MemorystreamOut())
+            using (MemorystreamOut mso = new MemorystreamOut())
             {
-                ms.WriteLine("node:" + page.Count);
-                foreach (PageElement PE in page)
+                mso.WriteLine("bookname:"+b.BookName);
+                mso.WriteLine("created:" + b.Created.ToString());
+                mso.WriteLine("lastmodified:" + b.LastModified.ToString());
+                mso.WriteLine("index:");
+                foreach (Page p in b.Pages)
                 {
-                    ms.WriteLine("cc:");
-                    ms.WriteLine(" width:" + PE.Width);
-                    ms.WriteLine(" height:" + PE.Height);
-                    ms.WriteLine(" top:" + PE.Top);
-                    ms.WriteLine(" left:" + PE.Left);
-                    ms.WriteLine(" zindex:" + PE.Zindex);
-
-                    ms.WriteLine(" bordercolor:" + PE.Child.BorderColor);
-                    ms.WriteLine(" borderthickness:" + PE.Child.BorderThickness);
-                    ms.WriteLine(" rotation:" + PE.Rotation);
-                    ms.WriteLine(" child:");
-                    ms.WriteLine("  type:" + PE.Type);
-
-                    if (PE.Type == "System.Windows.Controls.RichTextBox")
-                    {
-                        ms.WriteLine("  rtf:" + PE.Child.Document);
-                        ms.WriteLine(" background:" + PE.Child.BackgroundColor);
-                    }
-                    else if (PE.Type == "System.Windows.Controls.Image")
-                    {
-
-                        ms.WriteLine("  img:" + PE.Child.Image.Length);
-
-
-                        ms.Write(PE.Child.Image, 0, PE.Child.Image.Length);
-                        ms.WriteLine("\r\n" + "  fill:" + PE.Child.Fill);
-
-                    }
-                    else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle")
-                    {
-                        ms.WriteLine("  brush:" + PE.Child.Brush);
-                    }
+                    mso.WriteLine("page:");
+                    mso.WriteLine("offset:" + p.Offset);
+                    mso.WriteLine("length:" + p.Length);
+                    mso.WriteLine("pagetype:" + p.Type);
                 }
-
-                ms.Flush();
-                buffer = new byte[ms.Length];
-                  buffer =  ms.ToArray();
+                mso.Flush();
+                buffer = mso.ToArray();
+                return buffer;
             }
-            p.Length = buffer.Length;
-            return buffer;
         }
 
-        public void SavePages(Dictionary<Page,List<PageElement>> pages )
-        {
 
-        }
+        
     }
 }

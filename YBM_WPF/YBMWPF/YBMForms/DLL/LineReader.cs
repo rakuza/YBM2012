@@ -11,6 +11,17 @@ namespace YBMForms.DLL
         private BinaryReader br;
 
       
+        public bool isEndOfFile {
+        get{
+            if(br.BaseStream.Position == br.BaseStream.Length)
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+        }
+        }
 
         public LineReader(Stream stream) { br = new BinaryReader(stream, Encoding.Unicode); }
 

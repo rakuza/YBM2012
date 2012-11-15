@@ -16,7 +16,7 @@ using System.Windows.Input;
 
 namespace YBMForms.DLL
 {
-     internal class PageLoader 
+     public class PageLoader 
     {
         
         private Canvas canvas;
@@ -33,16 +33,14 @@ namespace YBMForms.DLL
             //method life long vars
             List<PageElement> readControls = new List<PageElement>();
 
-            //Reading the file into a byte[] for converstion to a memory stream;
-            byte[] byteBuffer = new byte[Length];
-            using (FileStream fs = File.Open(fileLocation, FileMode.Open))
+            using (MemoryStream pageStream = new MemoryStream())
             {
-                fs.Read(byteBuffer, offSet, Length);
-            }
+                using (FileStream fs = File.Open(fileLocation, FileMode.Open))
+                {
+                    fs.CopyTo(pageStream);
+                    fs.Flush();
+                }
 
-            //i previously used a filestream hence the fs remaining as the name
-            using (MemoryStream pageStream = new MemoryStream(byteBuffer))
-            {
                 int nodes = 0;
                 string buffer = "";
                 LineReader lr = new LineReader(pageStream);

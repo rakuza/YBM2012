@@ -15,6 +15,7 @@ using System.Windows.Controls.Primitives;
 using Microsoft.Win32;
 using YBMForms.DLL;
 using YBMForms.UIL.AdornerLib;
+using YBMForms.UIL;
 using System.Globalization;
 using Xceed.Wpf;
 
@@ -39,6 +40,7 @@ namespace YBMForms
             temp = temp / 100;
             tbxZoom.Text = temp.ToString("p");
             PaperSizeConstructor(temp);
+            
             
 
         }
@@ -66,7 +68,7 @@ namespace YBMForms
 
         private ContentControl lastContentControl;
         private UIElement LastUIElement;
-
+        private static BookViewer current;
 
 
         /// <summary>
@@ -113,8 +115,9 @@ namespace YBMForms
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            PageSaver ps = new PageSaver(DesignerCanvas);
-            ps.SavePage();
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.ShowDialog();
+            current.SaveBook(new Uri(sfd.FileName).LocalPath);
         }
 
         private void Print_Click(object sender, RoutedEventArgs e)
@@ -126,8 +129,9 @@ namespace YBMForms
 
         private void Load_Click(object sender, RoutedEventArgs e)
         {
-            //PageLoader pl = new PageLoader(DesignerCanvas, this);
-           // pl.ReadPage("durp.txt");
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.ShowDialog();
+            current.OpenBook(new Uri(ofd.FileName).LocalPath);
         }
 
 
@@ -257,6 +261,68 @@ namespace YBMForms
         {
 
         }
+
+        //new
+        private void NewPageClick(object sender, RoutedEventArgs e)
+        {
+            current.NewPage();
+            lblTotalPages.Content = current.CurrentBook.Pages.Count.ToString();
+            tbxPageIndex.Text = current.ViewIndex.ToString();
+        }
+
+        //delete
+        private void DeletePageClick(object sender, RoutedEventArgs e)
+        {
+            current.DeletePage();
+            lblTotalPages.Content = current.CurrentBook.Pages.Count.ToString();
+            tbxPageIndex.Text = current.ViewIndex.ToString();
+        }
+
+        //next
+        private void NextPageClick(object sender, RoutedEventArgs e)
+        {
+            current.ViewIndex++;
+            tbxPageIndex.Text = current.ViewIndex.ToString();
+        }
+
+        //previous
+        private void PreviousPageClick(object sender, RoutedEventArgs e)
+        {
+            current.ViewIndex--;
+            tbxPageIndex.Text = current.ViewIndex.ToString();
+        }
+
+        /// <summary>
+        /// Change Page Number
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbxPageJump_LostFocus(object sender, RoutedEventArgs e)
+        {
+            int index = int.Parse(tbxPageIndex.Text);
+            current.ViewIndex = index;
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            FontStyleForm fs = new FontStyleForm(new RichTextBox().Selection);
+            fs.ShowDialog();
+        }
+
+        private void tbxPageIndex_Enter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                FocusManager.SetFocusedElement(this, null);
+            }
+        }
+
+        private void Window_Initialized_1(object sender, EventArgs e)
+        {
+            current = new BookViewer(DesignerCanvas, this, new Book());
+            lblTotalPages.Content = "/ " +current.CurrentBook.Pages.Count.ToString();
+        }
+
 
     }
 }

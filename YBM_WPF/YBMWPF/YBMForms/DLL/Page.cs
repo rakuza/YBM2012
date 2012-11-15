@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace YBMForms.DLL
 {
-    enum PageType
+    public enum PageType
     {
         Title,
         BackPage,
@@ -15,14 +15,15 @@ namespace YBMForms.DLL
 
     }
 
-        internal class Page
+        public class Page
         {
             public Page()
             {
                 offset = 0;
-                length = 0;
+                length = 10;
                 type = PageType.BlackWhite;
                 pageNumber = -1;
+                children = new List<PageElement>();
             }
 
             private int pageNumber;
@@ -53,6 +54,14 @@ namespace YBMForms.DLL
             {
                 get { return type; }
                 set { type = value; }
+            }
+
+            private List<PageElement> children;
+
+            public List<PageElement> Children
+            {
+                get { return children; }
+                set { children = value; }
             }
         
     }
