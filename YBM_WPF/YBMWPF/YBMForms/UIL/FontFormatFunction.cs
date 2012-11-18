@@ -120,10 +120,6 @@ namespace YBMForms
 
                     rtb = cc.Content as RichTextBox;
                 }
-                else
-                {
-                    rtb = null;
-                }
             }
 
             return rtb;

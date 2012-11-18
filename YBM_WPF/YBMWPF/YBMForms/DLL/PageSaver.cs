@@ -70,8 +70,16 @@ namespace YBMForms.DLL
             PngBitmapEncoder png = new PngBitmapEncoder();
             using (MemoryStream ME = new MemoryStream())
             {
-                var imagesource = i.Source as BitmapImage;
-                png.Frames.Add(BitmapFrame.Create(imagesource));
+                var imagesource = i.Source;
+                if (i.Source is CroppedBitmap)
+                {
+                    png.Frames.Add(BitmapFrame.Create(imagesource as CroppedBitmap));
+                }
+                else
+                {
+                    png.Frames.Add(BitmapFrame.Create(imagesource as BitmapImage));
+                }
+                
                 png.Save(ME);
                 ME.Flush();
                 var stream = ME;
