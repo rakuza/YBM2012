@@ -6,14 +6,14 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAABAAAQIAIAEAgAgQAgAIAEgggAoCAAQ=</HashCode>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAgAAAAAAAigAAAgAAA=</HashCode>
       <FileName>DLL\BookReader.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YBMForms.DLL.BookSaver" Collapsed="true">
-    <Position X="4.75" Y="0.5" Width="1.5" />
+    <Position X="8" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAEAAAAAACAAAQAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>DLL\BookSaver.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -24,24 +24,36 @@
       <FileName>DLL\FileStreamOut.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="YBMForms.DLL.LineReader" BaseTypeListCollapsed="true">
-    <Position X="2" Y="1.25" Width="1.5" />
+  <Class Name="YBMForms.DLL.LineReader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAACAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AABAIAAAACAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DLL\LineReader.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="YBMForms.DLL.MemImage" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="1.5" Width="1.5" />
+    <Position X="3" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAAAAAAEAAAABAAAAAAAAAAQAA=</HashCode>
       <FileName>DLL\MemImage.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="YBMForms.DLL.PageElement" Collapsed="true">
-    <Position X="5.25" Y="3" Width="1.5" />
+  <Class Name="YBMForms.DLL.PageElement">
+    <Position X="6.25" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="YBMForms.DLL.PageElement.ChildElement" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DLL\PageElement.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAQAABAAAAIAAgAAAAEAAAAAIAAAACQAAAAAAAAA=</HashCode>
       <FileName>DLL\PageElement.cs</FileName>
@@ -50,14 +62,21 @@
   <Class Name="YBMForms.DLL.PageLoader">
     <Position X="5.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAgAAAAAAAAAAAABAACAAAAgAAAAAAAAAgAAAA=</HashCode>
+      <HashCode>AIAAAAAgAAAAAAAAAAAABAACAAAAgAAAACAAAAgAgAA=</HashCode>
       <FileName>DLL\PageLoader.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YBMForms.DLL.PageSaver" Collapsed="true">
-    <Position X="8.25" Y="1.5" Width="1.5" />
+    <Position X="8" Y="1.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="YBMForms.DLL.PageSaver.MemorystreamOut" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DLL\PageSaver.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAABEAEAIAAAAAAAAAgAAAAAAAAAAAABA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAEAEAAAAAAAAAAAgAAACAABAAAAABA=</HashCode>
       <FileName>DLL\PageSaver.cs</FileName>
     </TypeIdentifier>
   </Class>
