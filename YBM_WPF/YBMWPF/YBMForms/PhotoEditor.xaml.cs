@@ -31,17 +31,30 @@ namespace YBMForms
             get { return img; }
         }
 
+        /// <summary>
+        /// constructor
+        /// 
+        /// resizes form controls to match incoming image
+        /// </summary>
+        /// <param name="s"></param>
         public PhotoEditor(BitmapSource s)
         {
             InitializeComponent();
             ApplyImage(s);
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// loads in a file to crop
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        [Obsolete("Surplus to current requirements")]
+        private void OpenFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.ShowDialog();
 
+            //reads the file and converts it into a bit map
             byte[] file = File.ReadAllBytes(new Uri(ofd.FileName).LocalPath);
             using (MemoryStream MS = new MemoryStream(file))
             {
@@ -54,6 +67,10 @@ namespace YBMForms
             }
         }
 
+        /// <summary>
+        /// Resizes the content container to handle certain sized images
+        /// </summary>
+        /// <param name="image"></param>
         private void ApplyImage(BitmapSource image)
         {
             CropContainer.Width = image.PixelWidth;
@@ -63,7 +80,13 @@ namespace YBMForms
             pbxContent.Source = image;
         }
 
-        private void pbxContent_MouseDown_1(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// This will start the selection process of
+        /// drawing the selection box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectionBegin(object sender, MouseButtonEventArgs e)
         {
             CropContainer.Children.Remove(selection);
             moving = true;
@@ -83,13 +106,25 @@ namespace YBMForms
 
         }
 
-        private void pbxContent_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// When the left click button is release
+        /// this will set moving to false
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectionLeftButtonOff(object sender, MouseButtonEventArgs e)
         {
             moving = false;
         }
 
-        private void pbxContent_MouseMove_1(object sender, MouseEventArgs e)
+        /// <summary>
+        /// the event for detecting the mouse being dragged across a image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DragSelection(object sender, MouseEventArgs e)
         {
+            //if the moving bool has been set trigger off the if statement
             if (moving)
             {
                 double top, x, y, left;
@@ -97,6 +132,7 @@ namespace YBMForms
                 top = Canvas.GetTop(selection);
                 x = e.GetPosition(CropContainer).X;
                 y = e.GetPosition(CropContainer).Y;
+                //if the size is within the smallest size then resize to the following
                 if (!(x - left < 10))
                 {
                     selection.Width = x - left;
@@ -110,28 +146,37 @@ namespace YBMForms
             }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Crop Image Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CropImageClick(object sender, RoutedEventArgs e)
         {
             int left, top, width, height;
+            //gets and sets cordinates of the rectangle
             left = Convert.ToInt32(Canvas.GetLeft(selection));
             top = Convert.ToInt32(Canvas.GetTop(selection));
             width = Convert.ToInt32(selection.Width);
             height = Convert.ToInt32(selection.Height);
+            //turns the cordinates of the rectangle and makes a rect and crops the image
             Int32Rect r = new Int32Rect(left, top, width, height);
             CroppedBitmap cbm = new CroppedBitmap((BitmapSource)pbxContent.Source, r);
             img = cbm;
+            //applies the new cropped bitmap
             ApplyImage((BitmapSource)cbm);
+            //remove selection container
             CropContainer.Children.Remove(selection);
         }
 
         /// <summary>
-        /// Exit Handler
+        /// Reject Image
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ExitClick(object sender, RoutedEventArgs e)
+        private void RejectImage(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            //come back to here
         }
     }
 }
