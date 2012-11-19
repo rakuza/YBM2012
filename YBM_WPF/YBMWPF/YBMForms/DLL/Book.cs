@@ -3,9 +3,26 @@ using System.Collections.Generic;
 
 namespace YBMForms.DLL
 {
+
     public class Book
     {
+        /// <summary>
+        /// Book constructor
+        /// 
+        /// Initilises a new book for user use
+        /// </summary>
         public Book()
+        {
+            title = "";
+            created = DateTime.Now;
+            lastModified = DateTime.Now;
+            pages = new List<Page>();
+        }
+
+        /// <summary>
+        /// creates a basic book
+        /// </summary>
+        public void SetAsStarterBook()
         {
             created = DateTime.Now;
             lastModified = DateTime.Now;
@@ -23,23 +40,17 @@ namespace YBMForms.DLL
             p[2].Type = PageType.BackPage;
             p[2].PageNumber = 2;
             pages.AddRange(p);
-            int offset = BookSaver.WriteHeader(this).Length;
-            this.pages[0].Offset = offset;
-            this.pages[1].Offset += offset;
-            this.pages[2].Offset += offset;
-        }
-
-        public Book(bool isBlank)
-        {
-            title = "";
-            created = DateTime.Now;
-            lastModified = DateTime.Now;
-            pages = new List<Page>();
+            this.pages[0].Offset = 0;
+            this.pages[1].Offset += this.pages[0].Offset;
+            this.pages[2].Offset += this.pages[1].Offset;
         }
 
 
         private List<Page> pages;
-
+        
+        /// <summary>
+        /// A list of all pages in the year book
+        /// </summary>
         public List<Page> Pages
         {
             get { return pages; }
@@ -47,6 +58,9 @@ namespace YBMForms.DLL
         }
         private string title;
 
+        /// <summary>
+        /// the name of the book
+        /// </summary>
         public string BookName
         {
             get { return title; }
@@ -54,6 +68,9 @@ namespace YBMForms.DLL
         }
         private DateTime created;
 
+        /// <summary>
+        /// the time the book was created
+        /// </summary>
         public DateTime Created
         {
             get { return created; }
@@ -61,6 +78,9 @@ namespace YBMForms.DLL
         }
         private DateTime lastModified;
 
+        /// <summary>
+        /// the time the book was lastmodified
+        /// </summary>
         public DateTime LastModified
         {
             get { return lastModified; }

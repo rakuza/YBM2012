@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 namespace YBMForms.DLL
 {
@@ -35,7 +31,11 @@ namespace YBMForms.DLL
         public double Rotation { get; set; }
 
 
-
+        /// <summary>
+        /// wrote a quick method which compares the object with its self
+        /// </summary>
+        /// <param name="PE">the page element</param>
+        /// <returns>if it was equal or not</returns>
         public bool Equals(PageElement PE)
         {
             if (
@@ -55,7 +55,7 @@ namespace YBMForms.DLL
             {
                 return false;
             }
-        } 
+        }
 
         /// <summary>
         /// The Child Element For storing the content of the content control
@@ -83,8 +83,12 @@ namespace YBMForms.DLL
             public string BorderColor { get; set; }
             public Thickness BorderThickness { get; set; }
 
-
-            public  bool Equals(ChildElement CE)
+            /// <summary>
+            /// a class for determining if it is equal with its self
+            /// </summary>
+            /// <param name="CE">the childern elements</param>
+            /// <returns>if it was true or not</returns>
+            public bool Equals(ChildElement CE)
             {
 
                 if (
@@ -106,8 +110,6 @@ namespace YBMForms.DLL
                 }
             }
         }
-
-
 
     }
 }

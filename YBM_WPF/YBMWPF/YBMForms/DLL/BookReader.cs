@@ -1,65 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Converters;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Converters;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Globalization;
 namespace YBMForms.DLL
 {
+
     class BookReader : PageLoader
     {
-        
-
-        public BookReader(string fileLocation, Canvas c, MainWindow h) : base(c)
+        /// <summary>
+        /// initilizes the book reader class
+        /// </summary>
+        /// <param name="fileLocation">The Path of the file</param>
+        /// <param name="c">The Main canvas for the mainwindowform</param>
+        /// <param name="h">The mainwindow its self</param>
+        public BookReader(string fileLocation, Canvas c, MainWindow h)
+            : base(c)
         {
-            fileLoc = fileLocation;       
+            fileLoc = fileLocation;
             designerCanvas = c;
             host = h;
         }
 
-        private string fileLoc;
-        private MainWindow host;
+        //global vars
         private Book newBook;
-
-        //List<PageElement> current, previous, next;
-
-        Canvas designerCanvas;
-
-#region page Rendering
-
-
-#endregion
-
+        private MainWindow host;
+        private Canvas designerCanvas;
+        private string fileLoc;
 
         /// <summary>
         /// Reads out the offsets and the lengths in the file for the pages in question
         /// </summary>
-        /// <param name="fileLocation"></param>
+        /// <param name="fileLocation">string of the file location</param>
         public Book ReadBook()
         {
-            newBook = new Book(true);
+            //adds in a new blank book 
+            newBook = new Book();
+            //opens the file at the location provided
             using (FileStream fs = File.Open(fileLoc, FileMode.Open))
             {
+
                 string headerLog = "";
                 LineReader lr = new LineReader(fs);
                 Page p = new Page();
                 int index = 0;
+
+                //reads untill the end of the file
                 while (fs.Position != fs.Length)
                 {
+                    //reads in the inital line
                     string buffer = lr.ReadLine();
+                    //adds the buffer and the end line demimiter to the log
                     headerLog += buffer + "\r\n";
                     bool indexRead = false;
+                    //gets the action from the buffer
                     string action = GetParam(buffer);
+
 
                     switch (action)
                     {
@@ -68,19 +63,20 @@ namespace YBMForms.DLL
                             newBook.BookName = GetString(buffer);
                             break;
 
-                        case"created":
+                        case "created":
                             newBook.Created = GetDate(buffer);
                             break;
 
-                        case"lastmodified":
+                        case "lastmodified":
                             newBook.LastModified = GetDate(buffer);
                             break;
 
-                        case"pagenumber":
+                        case "pagenumber":
                             p.PageNumber = Getint(buffer);
                             break;
 
-                        case"page":
+                        case "page":
+                            //if not the first page add the page to the book
                             if (index != 0)
                             {
                                 newBook.Pages.Add(p);
@@ -97,25 +93,30 @@ namespace YBMForms.DLL
                             p.Length = Getint(buffer);
                             break;
 
-                        case"pagetype":
-                            p.Type = (PageType)Enum.Parse(typeof(PageType),GetString(buffer));
+                        case "pagetype":
+                            //parses the enum value
+                            p.Type = (PageType)Enum.Parse(typeof(PageType), GetString(buffer));
                             break;
 
-                        case"indexend":
+                        case "indexend":
+                            //adds the last page to the book
                             newBook.Pages.Add(p);
+                            //sets the number of bytes in the header
                             Offset = UnicodeEncoding.Unicode.GetByteCount(headerLog);
+                            indexRead = true;
                             break;
 
-                        case"node":
+                        //probally unreachible code now
+                        case "node":
                             indexRead = true;
                             break;
 
                         default:
                             break;
 
-                            
-                    }
 
+                    }
+                    //if we read the end of the header end the loop
                     if (indexRead)
                     {
                         break;
@@ -123,18 +124,17 @@ namespace YBMForms.DLL
                 }
             }
 
-            for(int i = 0; i < newBook.Pages.Count;i++)
+            //loop through the number of pages found
+            //assigns a page number
+            // and gets the page contents
+            for (int i = 0; i < newBook.Pages.Count; i++)
             {
-               newBook.Pages[i].PageNumber = i;
-               newBook.Pages[i].Children = ReadPage(fileLoc,newBook.Pages[i].Length,newBook.Pages[i].Offset);
+                newBook.Pages[i].PageNumber = i;
+                newBook.Pages[i].Children = ReadPage(fileLoc, newBook.Pages[i].Length, newBook.Pages[i].Offset);
             }
             return newBook;
         }
 
-        private DateTime GetDate(string s)
-        {
-            DateTime temp = DateTime.Parse(s.Substring(s.IndexOf(':') + 1));
-            return temp;
-        }
+
     }
 }

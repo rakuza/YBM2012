@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,9 +7,9 @@ using System.Windows.Documents;
 
 namespace YBMForms.DLL
 {
-     public class PageLoader 
+    internal class PageLoader
     {
-        
+
         private Canvas canvas;
 
         internal PageLoader(Canvas c)
@@ -19,36 +20,40 @@ namespace YBMForms.DLL
 
         private int HeaderOffset;
 
-        internal int Offset
+        /// <summary>
+        /// a class to parse all the controls in a file
+        /// </summary>
+        /// <param name="fileLocation">location of the file</param>
+        /// <param name="Length">length of the section</param>
+        /// <param name="offSet">where in the file it is stored</param>
+        /// <returns>a list of page elements</returns>
+        internal List<PageElement> ReadPage(string fileLocation, int Length, int offSet)
         {
-            get { return HeaderOffset; }
-            set { HeaderOffset = value; }
-        }
-        
-
-        internal List<PageElement> ReadPage(string fileLocation,int Length,int offSet)
-        {
-            //method life long vars
             List<PageElement> readControls = new List<PageElement>();
 
-            using (MemoryStream pageStream = new MemoryStream() )
+            //opens up a memory stream to store the bytes from the file
+            using (MemoryStream pageStream = new MemoryStream())
             {
                 using (FileStream fs = File.Open(fileLocation, FileMode.Open))
                 {
+                    //reads in all the bytes
                     byte[] bytebuffer = new byte[Length];
                     fs.Position = offSet + HeaderOffset;
                     fs.Read(bytebuffer, 0, Length);
+                    //saves the bytes into the memory stream
                     pageStream.Write(bytebuffer, 0, bytebuffer.Length);
                 }
-
+                //flushes the memory stream to save all the data in and resets the position
                 pageStream.Flush();
                 pageStream.Position = 0;
 
                 int nodes = 0;
                 string buffer = "";
+                //opens the line reader
+                //and sets the expected number of nodes
                 LineReader lr = new LineReader(pageStream);
                 PageElement PE = new PageElement();
-                    buffer = lr.ReadLine();
+                buffer = lr.ReadLine();
 
                 nodes = Getint(buffer);
                 nodes *= 13;
@@ -56,8 +61,10 @@ namespace YBMForms.DLL
                 {
 
                     buffer = lr.ReadLine();
-                    if ( !string.IsNullOrWhiteSpace(buffer))
+                    //if the buffer is empty skip to the next line
+                    if (!string.IsNullOrWhiteSpace(buffer))
                     {
+                        //gets the action
                         string action = GetParam(buffer);
 
 
@@ -65,6 +72,7 @@ namespace YBMForms.DLL
                         {
 
                             case "cc":
+                                //adds a new page element if it is not new
                                 if (!PE.Equals(new PageElement()))
                                     readControls.Add(PE);
                                 PE = new PageElement();
@@ -113,6 +121,7 @@ namespace YBMForms.DLL
                                 break;
 
                             case "borderthickness":
+                                //read in an array of numbers
                                 string[] numbers = GetString(buffer).Split(',');
                                 int[] directions = new int[4];
                                 for (int i = 0; i < 4; i++)
@@ -126,6 +135,7 @@ namespace YBMForms.DLL
                                 break;
 
                             case "rtf":
+                                //if the rtf document still has more content keep reading
                                 PE.Child.Document = GetString(buffer);
                                 while (lr.Peek() == '{' || lr.Peek() == '}')
                                 {
@@ -135,6 +145,7 @@ namespace YBMForms.DLL
                                 break;
 
                             case "img":
+                                //read the entire image
                                 int block = Getint(buffer);
                                 PE.Child.Image = new byte[block];
                                 pageStream.Read(PE.Child.Image, 0, block);
@@ -145,6 +156,7 @@ namespace YBMForms.DLL
                                 break;
                         }
                     }
+                    //deincrement the amount of nodes remaining
                     nodes--;
 
                 }
@@ -155,9 +167,10 @@ namespace YBMForms.DLL
 
         }
 
+        #region string converters
         static internal double GetDouble(string s)
         {
-            string number = s.Substring(s.IndexOf(':')+1);
+            string number = s.Substring(s.IndexOf(':') + 1);
             return double.Parse(number);
         }
 
@@ -169,7 +182,7 @@ namespace YBMForms.DLL
 
         static internal string GetString(string s)
         {
-            string line = s.Substring(s.IndexOf(':')+1);
+            string line = s.Substring(s.IndexOf(':') + 1);
             return line;
         }
 
@@ -177,9 +190,17 @@ namespace YBMForms.DLL
         {
 
             string param = s.Remove(s.IndexOf(':'));
-            param = param.Replace(":","");
+            param = param.Replace(":", "");
             param = param.TrimStart();
             return param;
         }
+
+        static internal DateTime GetDate(string s)
+        {
+            DateTime temp = DateTime.Parse(s.Substring(s.IndexOf(':') + 1));
+            return temp;
+        }
+
+        #endregion
     }
 }

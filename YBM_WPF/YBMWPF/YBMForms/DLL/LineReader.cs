@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Text;
 
 namespace YBMForms.DLL
 {
@@ -10,55 +8,66 @@ namespace YBMForms.DLL
     {
         private BinaryReader br;
 
-      
-        public bool isEndOfFile {
-        get{
-            if(br.BaseStream.Position == br.BaseStream.Length)
-            {
-                return true;
-            }else
-            {
-                return false;
-            }
-        }
-        }
-
+        /// <summary>
+        /// LineReader constructor
+        /// 
+        /// opens a new binaryreader from the stream with it in unicode reading mode
+        /// </summary>
+        /// <param name="stream">the stream to read</param>
         public LineReader(Stream stream) { br = new BinaryReader(stream, Encoding.Unicode); }
 
-
+        /// <summary>
+        /// reads from a file till it finds a \n\r end of line character
+        /// </summary>
+        /// <returns>a line of text from a file</returns>
         public string ReadLine()
         {
 
-                StringBuilder sb = new StringBuilder();
-                char last = ' ';
-                if (br.PeekChar() < 0)
-                    return string.Empty;
-                char buffer = br.ReadChar();
+            StringBuilder sb = new StringBuilder();
+            
+            char last = ' ';
+            //if no character read return an empty string
+            if (br.PeekChar() < 0)
+                return string.Empty;
+            //read one character into the buffer
+            char buffer = br.ReadChar();
+            //add the char to the bring builder
+            sb.Append(buffer);
+            //peeks at the next char
+            int i = br.PeekChar();
+            //file no empty data is being returned keep reading
+            while (!(i < 0))
+            {
+                last = buffer;
+
+                buffer = (char)br.ReadChar();
                 sb.Append(buffer);
-                int i = br.PeekChar();
-                while (!(i < 0))
+                //if end of line reached stop reading
+                if (buffer == '\n' && last == '\r')
                 {
-                    last = buffer;
-
-                    buffer = (char)br.ReadChar();
-                    sb.Append(buffer);
-                    if (buffer == '\n' && last == '\r')
-                    {
-                        break;
-                    }
-
+                    break;
                 }
-                sb.Replace("\r\n", "");
 
-                return sb.ToString();
+            }
+            //remove end of line charas
+            sb.Replace("\r\n", "");
+
+            return sb.ToString();
 
         }
 
+        /// <summary>
+        /// Allows for a character to be seen from the stream
+        /// </summary>
+        /// <returns>a character from the stream</returns>
         public char Peek()
         {
             return (char)br.PeekChar();
         }
 
+        /// <summary>
+        /// deconstructor for the stream
+        /// </summary>
         public void Dispose()
         {
             br.Dispose();

@@ -41,9 +41,16 @@ namespace YBMForms
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.ShowDialog();
-            using(MemImage MI = new MemImage(new Uri(ofd.FileName)))
+
+            byte[] file = File.ReadAllBytes(new Uri(ofd.FileName).LocalPath);
+            using (MemoryStream MS = new MemoryStream(file))
             {
-                ApplyImage(MI.Image);
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = MS;
+                image.EndInit();
+                ApplyImage(image);
             }
         }
 
@@ -61,7 +68,7 @@ namespace YBMForms
             CropContainer.Children.Remove(selection);
             moving = true;
             mDownLoc = e.GetPosition(CropContainer);
-            SolidColorBrush b = new SolidColorBrush(Color.FromArgb(100,255,255,255));
+            SolidColorBrush b = new SolidColorBrush(Color.FromArgb(100, 255, 255, 255));
             selection.Fill = b;
             selection.Name = "selectionBox";
             selection.Visibility = Visibility.Visible;
@@ -90,13 +97,13 @@ namespace YBMForms
                 top = Canvas.GetTop(selection);
                 x = e.GetPosition(CropContainer).X;
                 y = e.GetPosition(CropContainer).Y;
-                if (!(x - left < 10 ))
+                if (!(x - left < 10))
                 {
                     selection.Width = x - left;
-                    
+
                 }
 
-                if(!(y - top < 10))
+                if (!(y - top < 10))
                 {
                     selection.Height = y - top;
                 }
@@ -105,13 +112,13 @@ namespace YBMForms
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            int left,top,width,height;
+            int left, top, width, height;
             left = Convert.ToInt32(Canvas.GetLeft(selection));
             top = Convert.ToInt32(Canvas.GetTop(selection));
             width = Convert.ToInt32(selection.Width);
             height = Convert.ToInt32(selection.Height);
-            Int32Rect r = new Int32Rect(left,top,width,height);
-            CroppedBitmap cbm = new CroppedBitmap((BitmapSource)pbxContent.Source,r);
+            Int32Rect r = new Int32Rect(left, top, width, height);
+            CroppedBitmap cbm = new CroppedBitmap((BitmapSource)pbxContent.Source, r);
             img = cbm;
             ApplyImage((BitmapSource)cbm);
             CropContainer.Children.Remove(selection);

@@ -495,7 +495,9 @@ namespace YBMForms
         private void Window_Initialized_1(object sender, EventArgs e)
         {
             //initilizes the book viewer for a new book and sets up the page navigation
-            current = new BookViewer(DesignerCanvas, this, new Book());
+            Book b = new Book();
+            b.SetAsStarterBook();
+            current = new BookViewer(DesignerCanvas, this, b);
             lblTotalPages.Content = "/ " + current.CurrentBook.Pages.Count.ToString();
             tbxPageIndex.Text = (current.ViewIndex + 1).ToString();
         }

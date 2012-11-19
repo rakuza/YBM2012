@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
@@ -95,13 +96,21 @@ namespace YBMForms
                 ContentControl cc = new ContentControl();
                 Image picture = new Image();
                 picture.IsHitTestVisible = true;
-                MemImage image = new MemImage(new Uri(OFD.FileName));
-                picture.Source = image.Image;
+                byte[] file = File.ReadAllBytes(new Uri(OFD.FileName).LocalPath);
+                BitmapImage image = new BitmapImage();
+                using (MemoryStream MS = new MemoryStream(file))
+                {
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = MS;
+                    image.EndInit();
+                }
+                picture.Source = image;
                 picture.Stretch = Stretch.Fill;
                 cc.Content = picture;
                 cc.Style = (Style)FindResource("DesignerItemStyle");
-                cc.Width = image.Image.PixelWidth;
-                cc.Height = image.Image.PixelHeight;
+                cc.Width = image.PixelWidth;
+                cc.Height = image.PixelHeight;
                 cc.Padding = new Thickness(3);
                 cc.MouseDoubleClick += new MouseButtonEventHandler(DoubleClickSelect);
                 cc.ClipToBounds = true;
