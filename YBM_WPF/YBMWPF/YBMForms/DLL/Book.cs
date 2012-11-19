@@ -30,14 +30,14 @@ namespace YBMForms.DLL
             pages = new List<Page>();
             Page[] p = new Page[3];
             p[0] = new Page();
-            p[0].Type = PageType.Title;
+            p[0].PageType = PageType.Title;
             p[0].PageNumber = 0;
             p[1] = new Page();
             p[1].Offset = 10;
             p[1].PageNumber = 1;
             p[2] = new Page();
             p[2].Offset = 20;
-            p[2].Type = PageType.BackPage;
+            p[2].PageType = PageType.BackPage;
             p[2].PageNumber = 2;
             pages.AddRange(p);
             this.pages[0].Offset = 0;
@@ -54,7 +54,6 @@ namespace YBMForms.DLL
         public List<Page> Pages
         {
             get { return pages; }
-            set { pages = value; }
         }
         private string title;
 

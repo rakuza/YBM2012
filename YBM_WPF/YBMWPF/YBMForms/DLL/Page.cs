@@ -10,7 +10,7 @@ namespace YBMForms.DLL
         Title,
         BackPage,
         BlackWhite,
-        Colour
+        Color
 
     }
 
@@ -24,7 +24,7 @@ namespace YBMForms.DLL
         {
             offset = 0;
             length = 10;
-            type = PageType.BlackWhite;
+            pageType = PageType.BlackWhite;
             //given a negitive to show its out of range
             pageNumber = -1;
             children = new List<PageElement>();
@@ -52,12 +52,12 @@ namespace YBMForms.DLL
             set { length = value; }
         }
 
-        private PageType type;
+        private PageType pageType;
 
-        public PageType Type
+        public PageType PageType
         {
-            get { return type; }
-            set { type = value; }
+            get { return pageType; }
+            set { pageType = value; }
         }
 
         private List<PageElement> children;
@@ -65,7 +65,6 @@ namespace YBMForms.DLL
         public List<PageElement> Children
         {
             get { return children; }
-            set { children = value; }
         }
 
     }

@@ -7,29 +7,30 @@ using System.Windows;
 namespace YBMForms
 {
 
+    
 
     static public class PaperSizes
     {
-        public enum PaperSize
+        /// <summary>
+        /// paper size enum
+        /// contains a list of all printible paper sizes
+        /// </summary>
+        public enum Standard
         {
             A4
         }
 
 
-
-        //A4 paper sizes
-        static PaperSizes()
-        {
-            SetType(PaperSize.A4);
-            dpi = 0;
-        }
-
-        public static void SetType(PaperSize s)
+        /// <summary>
+        /// changes the type of paper
+        /// </summary>
+        /// <param name="s">Papersize to set to</param>
+        public static void SetType(Standard s)
         {
             type = s;
             switch (s)
             {
-                case PaperSize.A4:
+                case Standard.A4:
                     
                     bleedWidth = 216;
                     bleedHeight = 303;
@@ -66,9 +67,9 @@ namespace YBMForms
             set { paperHeight = value; }
         } 
 
-        static private PaperSize type;
+        static private Standard type;
 
-        static public PaperSize Type
+        static public Standard Type
         {
             get { return type; }
             set { SetType(value); }
@@ -123,17 +124,22 @@ namespace YBMForms
             set { dpi = value; }
         }
 
-
-        //Read Only Properties
-
-        static public int PixelBleedHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * bleedHeight)); } }
-        static public int PixelBleedWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * bleedWidth)); } }
-        static public int PixelUnsafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeHeight)); } }
-        static public int PixelUnsafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeWidth)); } }
-        static public int PixelSafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeWidth)); } }
-        static public int PixelSafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeHeight)); } }
-        static public int PixelPaperWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * paperWidth)); } }
-        static public int PixelPaperHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * paperHeight)); } }
+        /// <summary>
+        /// Provides a set of pixel sized variables
+        /// 
+        /// read only
+        /// </summary>
+        static internal class Pixel
+        {
+            static public int BleedHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * bleedHeight)); } }
+            static public int BleedWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * bleedWidth)); } }
+            static public int UnsafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeHeight)); } }
+            static public int UnsafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * unsafeWidth)); } }
+            static public int SafeWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeWidth)); } }
+            static public int SafeHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * safeHeight)); } }
+            static public int PaperWidth { get { return (int)Math.Ceiling(dpi * (0.03937301 * paperWidth)); } }
+            static public int PaperHeight { get { return (int)Math.Ceiling(dpi * (0.03937301 * paperHeight)); } }
+        }
 
 
 

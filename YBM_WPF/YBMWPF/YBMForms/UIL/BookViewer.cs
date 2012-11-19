@@ -62,7 +62,7 @@ namespace YBMForms.UIL
 
         public void OpenBook(string filelocation)
         {
-            BookReader br = new BookReader(filelocation, designerCanvas, host);
+            BookReader br = new BookReader(filelocation);
             Book openedBook = br.ReadBook();
             currentbook = openedBook;
             SetNewViewIndex(0);
@@ -95,7 +95,7 @@ namespace YBMForms.UIL
         private void SavePage()
         {
             PageSaver ps = new PageSaver(designerCanvas);
-            currentbook.Pages[viewIndex].Children = ps.SaveCanvas();
+            currentbook.Pages[viewIndex].Children.AddRange(ps.SaveCanvas());
         }
 
 
@@ -111,21 +111,21 @@ namespace YBMForms.UIL
 
                 cc.Height = PE.Height;
                 cc.Width = PE.Width;
-                if (PE.Type == "System.Windows.Controls.RichTextBox")
+                if (PE.ControlType == "System.Windows.Controls.RichTextBox")
                 {
                     GenerateTextBox(PE, cc);
                 }
-                else if (PE.Type == "System.Windows.Controls.Image")
+                else if (PE.ControlType == "System.Windows.Controls.Image")
                 {
                     GenerateImage(PE, cc);
                 }
-                else if (PE.Type == "System.Windows.Shapes.Ellipse")
+                else if (PE.ControlType == "System.Windows.Shapes.Ellipse")
                 {
                     Ellipse e = new Ellipse();
                     e.Fill = new BrushConverter().ConvertFromString(PE.Child.Brush) as SolidColorBrush;
                     cc.Content = e;
                 }
-                else if (PE.Type == "System.Windows.Shapes.Rectangle")
+                else if (PE.ControlType == "System.Windows.Shapes.Rectangle")
                 {
                     Rectangle r = new Rectangle();
                     r.Fill = new BrushConverter().ConvertFromString(PE.Child.Brush) as SolidColorBrush;
@@ -134,7 +134,7 @@ namespace YBMForms.UIL
 
 
 
-                if (!string.IsNullOrWhiteSpace(PE.Type))
+                if (!string.IsNullOrWhiteSpace(PE.ControlType))
                 {
                     designerCanvas.Children.Add(cc);
                 }
@@ -143,7 +143,7 @@ namespace YBMForms.UIL
             designerCanvas.InvalidateVisual();
         }
 
-        private ContentControl FormContentControl(PageElement PE)
+        static private ContentControl FormContentControl(PageElement PE)
         {
             ContentControl cc = new ContentControl();
             cc.IsHitTestVisible = true;
@@ -154,7 +154,7 @@ namespace YBMForms.UIL
             cc.RenderTransform = new RotateTransform(PE.Rotation);
             Canvas.SetLeft(cc, PE.Left);
             Canvas.SetTop(cc, PE.Top);
-            Canvas.SetZIndex(cc, PE.Zindex);
+            Canvas.SetZIndex(cc, PE.ZIndex);
             return cc;
         }
 

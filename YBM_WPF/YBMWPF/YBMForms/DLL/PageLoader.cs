@@ -7,14 +7,11 @@ using System.Windows.Documents;
 
 namespace YBMForms.DLL
 {
-    internal class PageLoader
+    internal class PageLoader : YamlToType
     {
 
-        private Canvas canvas;
-
-        internal PageLoader(Canvas c)
+        internal PageLoader()
         {
-            canvas = c;
             HeaderOffset = 0;
         }
 
@@ -95,8 +92,8 @@ namespace YBMForms.DLL
                                 break;
 
                             case "type":
-                                PE.Type = GetString(buffer);
-                                if (PE.Type == "System.Windows.Controls.Image")
+                                PE.ControlType = GetString(buffer);
+                                if (PE.ControlType == "System.Windows.Controls.Image")
                                     nodes++;
                                 break;
 
@@ -109,7 +106,7 @@ namespace YBMForms.DLL
                                 break;
 
                             case "zindex":
-                                PE.Zindex = Getint(buffer);
+                                PE.ZIndex = Getint(buffer);
                                 break;
 
                             case "rotation":
@@ -167,40 +164,5 @@ namespace YBMForms.DLL
 
         }
 
-        #region string converters
-        static internal double GetDouble(string s)
-        {
-            string number = s.Substring(s.IndexOf(':') + 1);
-            return double.Parse(number);
-        }
-
-        static internal int Getint(string s)
-        {
-            string number = s.Substring(s.IndexOf(':') + 1);
-            return int.Parse(number);
-        }
-
-        static internal string GetString(string s)
-        {
-            string line = s.Substring(s.IndexOf(':') + 1);
-            return line;
-        }
-
-        static internal string GetParam(string s)
-        {
-
-            string param = s.Remove(s.IndexOf(':'));
-            param = param.Replace(":", "");
-            param = param.TrimStart();
-            return param;
-        }
-
-        static internal DateTime GetDate(string s)
-        {
-            DateTime temp = DateTime.Parse(s.Substring(s.IndexOf(':') + 1));
-            return temp;
-        }
-
-        #endregion
     }
 }

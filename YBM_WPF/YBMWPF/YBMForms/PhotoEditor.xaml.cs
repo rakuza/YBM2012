@@ -123,5 +123,15 @@ namespace YBMForms
             ApplyImage((BitmapSource)cbm);
             CropContainer.Children.Remove(selection);
         }
+
+        /// <summary>
+        /// Exit Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -12,7 +12,6 @@ using YBMForms.UIL;
 
 namespace YBMForms
 {
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -24,14 +23,13 @@ namespace YBMForms
         public MainWindow()
         {
             InitializeComponent();
-
+            //a split off from the constructor to ease the size
+            PaperSizeConstructor();
             //sets the zoom to a resonible level
             zoom = 1.8M;
             double temp = Math.Pow(10, (double)zoom);
             //sets up the sizes for the zoom box
             UpdateZoomControls(temp);
-            //a split off from the constructor to ease the size
-            PaperSizeConstructor();
         }
 
         /// <summary>
@@ -42,19 +40,20 @@ namespace YBMForms
         /// <param name="temp"></param>
         private void PaperSizeConstructor()
         {
+            PaperSizes.Type = PaperSizes.Standard.A4;
             PaperSizes.Dpi = 96;
-            DesignerCanvas.Height = PaperSizes.PixelPaperHeight;
-            DesignerCanvas.Width = PaperSizes.PixelPaperWidth;
-            backgroundPaper.Width = PaperSizes.PixelPaperWidth;
-            backgroundPaper.Height = PaperSizes.PixelPaperHeight;
-            borderBleed.Width = PaperSizes.PixelBleedWidth;
-            borderBleed.Height = PaperSizes.PixelBleedHeight;
+            DesignerCanvas.Height = PaperSizes.Pixel.PaperHeight;
+            DesignerCanvas.Width = PaperSizes.Pixel.PaperWidth;
+            backgroundPaper.Width = PaperSizes.Pixel.PaperWidth;
+            backgroundPaper.Height = PaperSizes.Pixel.PaperHeight;
+            borderBleed.Width = PaperSizes.Pixel.BleedWidth;
+            borderBleed.Height = PaperSizes.Pixel.BleedHeight;
             Canvas.SetZIndex(borderBleed, 0);
-            borderUnsafe.Width = PaperSizes.PixelUnsafeWidth;
-            borderUnsafe.Height = PaperSizes.PixelUnsafeHeight;
+            borderUnsafe.Width = PaperSizes.Pixel.UnsafeWidth;
+            borderUnsafe.Height = PaperSizes.Pixel.UnsafeHeight;
             Canvas.SetZIndex(borderUnsafe, 1);
-            bordersafe.Width = PaperSizes.PixelSafeWidth;
-            bordersafe.Height = PaperSizes.PixelSafeHeight;
+            bordersafe.Width = PaperSizes.Pixel.SafeWidth;
+            bordersafe.Height = PaperSizes.Pixel.SafeHeight;
             Canvas.SetZIndex(borderUnsafe, 2);
         }
 
@@ -207,8 +206,8 @@ namespace YBMForms
             //sets the text as the percentage with percentage formatting
             tbxZoom.Text = temp.ToString("p");
             //updates the zoom box
-            DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
-            DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
+            DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.Pixel.BleedWidth);
+            DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.Pixel.BleedHeight);
         }
 
         /// <summary>
@@ -262,8 +261,8 @@ namespace YBMForms
                 tbxZoom.Text = (temp).ToString("p");
 
                 //chanes the dimensions of the zoom box
-                DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.PixelBleedWidth);
-                DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.PixelBleedHeight);
+                DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.Pixel.BleedWidth);
+                DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.Pixel.BleedHeight);
             }
             else
             {
@@ -494,6 +493,7 @@ namespace YBMForms
         /// <param name="e"></param>
         private void Window_Initialized_1(object sender, EventArgs e)
         {
+
             //initilizes the book viewer for a new book and sets up the page navigation
             Book b = new Book();
             b.SetAsStarterBook();

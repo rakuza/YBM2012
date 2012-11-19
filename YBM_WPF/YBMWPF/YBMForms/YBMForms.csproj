@@ -41,7 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -94,12 +94,12 @@
     <Compile Include="DLL\Book.cs" />
     <Compile Include="DLL\BookReader.cs" />
     <Compile Include="DLL\BookSaver.cs" />
-    <Compile Include="DLL\FileStreamOut.cs" />
-    <Compile Include="DLL\LineReader.cs" />
+    <Compile Include="DLL\IOExentensions.cs" />
     <Compile Include="DLL\Page.cs" />
     <Compile Include="DLL\PageElement.cs" />
     <Compile Include="DLL\PageLoader.cs" />
     <Compile Include="DLL\PageSaver.cs" />
+    <Compile Include="DLL\YamlToType.cs" />
     <Compile Include="FontStyle.xaml.cs">
       <DependentUpon>FontStyle.xaml</DependentUpon>
     </Compile>

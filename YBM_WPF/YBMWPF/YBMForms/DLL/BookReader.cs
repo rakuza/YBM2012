@@ -13,18 +13,13 @@ namespace YBMForms.DLL
         /// <param name="fileLocation">The Path of the file</param>
         /// <param name="c">The Main canvas for the mainwindowform</param>
         /// <param name="h">The mainwindow its self</param>
-        public BookReader(string fileLocation, Canvas c, MainWindow h)
-            : base(c)
+        public BookReader(string fileLocation)
         {
             fileLoc = fileLocation;
-            designerCanvas = c;
-            host = h;
         }
 
         //global vars
         private Book newBook;
-        private MainWindow host;
-        private Canvas designerCanvas;
         private string fileLoc;
 
         /// <summary>
@@ -35,10 +30,11 @@ namespace YBMForms.DLL
         {
             //adds in a new blank book 
             newBook = new Book();
+            int Offset = 0 ;
             //opens the file at the location provided
             using (FileStream fs = File.Open(fileLoc, FileMode.Open))
             {
-
+                
                 string headerLog = "";
                 LineReader lr = new LineReader(fs);
                 Page p = new Page();
@@ -95,7 +91,7 @@ namespace YBMForms.DLL
 
                         case "pagetype":
                             //parses the enum value
-                            p.Type = (PageType)Enum.Parse(typeof(PageType), GetString(buffer));
+                            p.PageType = (PageType)Enum.Parse(typeof(PageType), GetString(buffer));
                             break;
 
                         case "indexend":
@@ -130,7 +126,7 @@ namespace YBMForms.DLL
             for (int i = 0; i < newBook.Pages.Count; i++)
             {
                 newBook.Pages[i].PageNumber = i;
-                newBook.Pages[i].Children = ReadPage(fileLoc, newBook.Pages[i].Length, newBook.Pages[i].Offset);
+                newBook.Pages[i].Children.AddRange(ReadPage(fileLoc, newBook.Pages[i].Length, newBook.Pages[i].Offset+Offset));
             }
             return newBook;
         }

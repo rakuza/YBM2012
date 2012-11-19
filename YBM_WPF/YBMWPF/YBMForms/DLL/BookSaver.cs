@@ -28,7 +28,7 @@ namespace YBMForms.DLL
         private void RealignPage(int viewIndex)
         {
             //saves all the controls on the currently open canvas
-            book.Pages[viewIndex].Children = SaveCanvas();
+            book.Pages[viewIndex].Children.AddRange(SaveCanvas());
             //loop through each page of the book
             for (int i = 0; i < book.Pages.Count; i++)
             {
@@ -61,16 +61,18 @@ namespace YBMForms.DLL
             byte[] header = WriteHeader();
 
             //opens a filestream
-            FileStream NewBook = new FileStream(fileloc, FileMode.Create);
-
-            //writes the contents of the header
-            NewBook.Write(header, 0, header.Length);
-
-            //looks through each page writing the bytes of the page
-            foreach (Page p in book.Pages)
+            using (FileStream NewBook = new FileStream(fileloc, FileMode.Create))
             {
-                byte[] pageBytes = SavePageElements(p.Children);
-                NewBook.Write(pageBytes, 0, pageBytes.Length);
+
+                //writes the contents of the header
+                NewBook.Write(header, 0, header.Length);
+
+                //looks through each page writing the bytes of the page
+                foreach (Page p in book.Pages)
+                {
+                    byte[] pageBytes = SavePageElements(p.Children);
+                    NewBook.Write(pageBytes, 0, pageBytes.Length);
+                }
             }
         }
 
@@ -95,7 +97,7 @@ namespace YBMForms.DLL
                     mso.WriteLine("page:");
                     mso.WriteLine("offset:" + p.Offset);
                     mso.WriteLine("length:" + p.Length);
-                    mso.WriteLine("pagetype:" + p.Type);
+                    mso.WriteLine("pagetype:" + p.PageType);
                 }
                 mso.WriteLine("indexend:");
                 //writes all the bytes to memory

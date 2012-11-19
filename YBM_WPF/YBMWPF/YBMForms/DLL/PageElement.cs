@@ -13,10 +13,10 @@ namespace YBMForms.DLL
             Height = 0;
             Width = 0;
             Child = new ChildElement();
-            Type = "";
+            ControlType = "";
             Left = 0;
             Top = 0;
-            Zindex = 0;
+            ZIndex = 0;
             Rotation = 0;
 
         }
@@ -24,29 +24,29 @@ namespace YBMForms.DLL
         public double Height { get; set; }
         public double Width { get; set; }
         public ChildElement Child { get; set; }
-        public string Type { get; set; }
+        public string ControlType { get; set; }
         public double Left { get; set; }
         public double Top { get; set; }
-        public int Zindex { get; set; }
+        public int ZIndex { get; set; }
         public double Rotation { get; set; }
 
 
         /// <summary>
         /// wrote a quick method which compares the object with its self
         /// </summary>
-        /// <param name="PE">the page element</param>
+        /// <param name="pe">the page element</param>
         /// <returns>if it was equal or not</returns>
-        public bool Equals(PageElement PE)
+        public bool Equals(PageElement pe)
         {
             if (
-                this.Height == PE.Height &&
-                this.Left == PE.Left &&
-                this.Top == PE.Top &&
-                this.Type == PE.Type &&
-                this.Width == PE.Width &&
-                this.Zindex == PE.Zindex &&
-                this.Rotation == PE.Rotation &&
-                this.Child.Equals(PE.Child)
+                this.Height == pe.Height &&
+                this.Left == pe.Left &&
+                this.Top == pe.Top &&
+                this.ControlType == pe.ControlType &&
+                this.Width == pe.Width &&
+                this.ZIndex == pe.ZIndex &&
+                this.Rotation == pe.Rotation &&
+                this.Child.Equals(pe.Child)
                 )
             {
                 return true;
@@ -86,19 +86,19 @@ namespace YBMForms.DLL
             /// <summary>
             /// a class for determining if it is equal with its self
             /// </summary>
-            /// <param name="CE">the childern elements</param>
+            /// <param name="ce">the childern elements</param>
             /// <returns>if it was true or not</returns>
-            public bool Equals(ChildElement CE)
+            public bool Equals(ChildElement ce)
             {
 
                 if (
-                    this.Brush == CE.Brush &&
-                    this.Document == CE.Document &&
-                    this.Fill == CE.Fill &&
-                    this.BackgroundColor == CE.BackgroundColor &&
-                    this.BorderThickness == CE.BorderThickness &&
-                    this.BorderColor == CE.BorderColor &&
-                    this.Image == CE.Image
+                    this.Brush == ce.Brush &&
+                    this.Document == ce.Document &&
+                    this.Fill == ce.Fill &&
+                    this.BackgroundColor == ce.BackgroundColor &&
+                    this.BorderThickness == ce.BorderThickness &&
+                    this.BorderColor == ce.BorderColor &&
+                    this.Image == ce.Image
 
                     )
                 {

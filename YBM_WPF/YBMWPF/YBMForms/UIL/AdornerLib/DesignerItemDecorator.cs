@@ -41,7 +41,6 @@ namespace YBMForms.UIL.AdornerLib
                 if (adornerLayer != null)
                 {
                     ContentControl designerItem = this.DataContext as ContentControl;
-                    Canvas canvas = VisualTreeHelper.GetParent(designerItem) as Canvas;
                     this.adnorner = new ResizeRotateAdorner(designerItem);
                     adornerLayer.Add(this.adnorner);
 

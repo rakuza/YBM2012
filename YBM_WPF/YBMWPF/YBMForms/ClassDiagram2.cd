@@ -1,42 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="YBMForms.DLL.BookReader">
-    <Position X="1.5" Y="4.25" Width="1.5" />
+  <Class Name="YBMForms.DLL.BookReader" Collapsed="true">
+    <Position X="2.75" Y="3" Width="1.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAgAAAAAAAigAAAgAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAigAAAggAA=</HashCode>
       <FileName>DLL\BookReader.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YBMForms.DLL.BookSaver" Collapsed="true">
-    <Position X="8" Y="0.5" Width="1.5" />
+    <Position X="4.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAACAAAQAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>DLL\BookSaver.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="YBMForms.DLL.FileStreamOut">
-    <Position X="8" Y="3" Width="1.5" />
+  <Class Name="YBMForms.DLL.FileStreamOut" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>DLL\FileStreamOut.cs</FileName>
+      <FileName>DLL\IOExentensions.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YBMForms.DLL.LineReader" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="1.25" Y="1" Width="1.5" />
+    <Position X="8.75" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAIAAAACAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>DLL\LineReader.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="YBMForms.DLL.MemImage" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAEAAAABAAAAAAAAAAQAA=</HashCode>
-      <FileName>DLL\MemImage.cs</FileName>
+      <HashCode>AABAAAAAACAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DLL\IOExentensions.cs</FileName>
+      <NewMemberFileName>DLL\LineReader.cs</NewMemberFileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
@@ -59,25 +52,57 @@
       <FileName>DLL\PageElement.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="YBMForms.DLL.PageLoader">
-    <Position X="5.25" Y="4.25" Width="1.5" />
+  <Class Name="YBMForms.DLL.PageLoader" Collapsed="true">
+    <Position X="2.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAgAAAAAAAAAAAABAACAAAAgAAAACAAAAgAgAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAACAAAAgAAAA=</HashCode>
       <FileName>DLL\PageLoader.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YBMForms.DLL.PageSaver" Collapsed="true">
-    <Position X="8" Y="1.75" Width="1.5" />
+    <Position X="4.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAEAAAAAAAAAAAgAAACAABAAAAABA=</HashCode>
+      <FileName>DLL\PageSaver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.DLL.YamlToType" Collapsed="true">
+    <Position X="2.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAgAAEAAAAAAAAABAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DLL\YamlToType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.PaperSizes">
+    <Position X="10.5" Y="1.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
     <NestedTypes>
-      <Class Name="YBMForms.DLL.PageSaver.MemorystreamOut" Collapsed="true">
+      <Enum Name="YBMForms.PaperSizes.Standard" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>DLL\PageSaver.cs</NewMemberFileName>
+          <NewMemberFileName>PaperSizes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Class Name="YBMForms.PaperSizes.Pixel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PaperSizes.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAEAEAAAAAAAAAAAgAAACAABAAAAABA=</HashCode>
-      <FileName>DLL\PageSaver.cs</FileName>
+      <HashCode>AAAABAAQAEAAEAEAAkAhAAIAIAAhAAAQIUQAQAAEAAQ=</HashCode>
+      <FileName>PaperSizes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YBMForms.DLL.MemorystreamOut" Collapsed="true">
+    <Position X="8.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DLL\IOExentensions.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

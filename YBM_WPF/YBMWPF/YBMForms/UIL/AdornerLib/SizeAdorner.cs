@@ -9,7 +9,6 @@ namespace YBMForms.UIL.AdornerLib
     {
         private SizeChrome chrome;
         private VisualCollection visuals;
-        private ContentControl designerItem;
 
         protected override int VisualChildrenCount
         {
@@ -23,7 +22,6 @@ namespace YBMForms.UIL.AdornerLib
             : base(designerItem)
         {
             this.SnapsToDevicePixels = true;
-            this.designerItem = designerItem;
             this.chrome = new SizeChrome();
             this.chrome.DataContext = designerItem;
             this.visuals = new VisualCollection(this);

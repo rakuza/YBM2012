@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows;
-using System.Windows.Shapes;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.Converters;
+using System.Windows.Shapes;
 
 namespace YBMForms.DLL
 {
@@ -19,26 +14,19 @@ namespace YBMForms.DLL
     {
         private Canvas page;
 
+        /// <summary>
+        /// main constructor
+        /// </summary>
+        /// <param name="c">host canvas</param>
         internal PageSaver(Canvas c)
         {
             page = c;
         }
 
-        internal class MemorystreamOut : MemoryStream
-        {
-            internal MemorystreamOut()
-            {
-
-            }
-
-            internal void WriteLine(string s)
-            {
-                Write(UnicodeEncoding.Unicode.GetBytes(s + "\r\n"), 0, UnicodeEncoding.Unicode.GetByteCount(s + "\r\n"));
-            }
-        }
-
-        
-
+        /// <summary>
+        /// this is the mastersave controls method
+        /// </summary>
+        /// <returns>returns a list of all controls on the main form</returns>
         internal List<PageElement> SaveCanvas()
         {
             List<PageElement> elements = new List<PageElement>();
@@ -48,11 +36,11 @@ namespace YBMForms.DLL
                 PageElement PE = new PageElement();
                 SaveContentController(cc, PE);
 
-                if (PE.Type == "System.Windows.Controls.RichTextBox")
+                if (PE.ControlType == "System.Windows.Controls.RichTextBox")
                     SaveTextBox(cc, PE);
-                else if (PE.Type == "System.Windows.Controls.Image")
+                else if (PE.ControlType == "System.Windows.Controls.Image")
                     SaveImage(cc, PE);
-                else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle")
+                else if (PE.ControlType == "System.Windows.Shapes.Ellipse" || PE.ControlType == "System.Windows.Shapes.Rectangle")
                 {
                     Shape s = cc.Content as Shape;
                     PE.Child.Brush = s.Fill.ToString();
@@ -63,14 +51,22 @@ namespace YBMForms.DLL
             return elements;
         }
 
+
+        /// <summary>
+        /// saves a image control
+        /// </summary>
+        /// <param name="cc">parent content controll</param>
+        /// <param name="PE">target page element</param>
         private static void SaveImage(ContentControl cc, PageElement PE)
         {
             Image i = cc.Content as Image;
             PE.Child.Fill = i.Stretch.ToString();
+            //create a new memory stream and pngbitmapencoder for obtaining the bitmap
             PngBitmapEncoder png = new PngBitmapEncoder();
-            using (MemoryStream ME = new MemoryStream())
+            using (MemoryStream ms = new MemoryStream())
             {
                 var imagesource = i.Source;
+                //if the image was cropped treat it slightly differently
                 if (i.Source is CroppedBitmap)
                 {
                     png.Frames.Add(BitmapFrame.Create(imagesource as CroppedBitmap));
@@ -79,45 +75,59 @@ namespace YBMForms.DLL
                 {
                     png.Frames.Add(BitmapFrame.Create(imagesource as BitmapImage));
                 }
-                
-                png.Save(ME);
-                ME.Flush();
-                var stream = ME;
-                byte[] img = new byte[stream.Length];
-                stream.Position = 0;
-                stream.Read(img, 0, img.Length);
-                PE.Child.Image = img;
+                //save the png and flush the stream
+                png.Save(ms);
+                ms.Flush();
+                //save the stream to a byte[];
+                PE.Child.Image = ms.ToArray();
             }
         }
 
+        /// <summary>
+        /// saves a rich text box
+        /// </summary>
+        /// <param name="cc">content control parent</param>
+        /// <param name="PE">target page element</param>
         private static void SaveTextBox(ContentControl cc, PageElement PE)
         {
             PE.Child.BorderColor = ((Control)cc.Content).BorderBrush.ToString();
             PE.Child.BorderThickness = ((Control)cc.Content).BorderThickness;
             RichTextBox rtb = cc.Content as RichTextBox;
+            //start a new text range
             TextRange content = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            //open a memory stream 
             using (MemoryStream ME = new MemoryStream())
             {
+                //saves the richtextbox document to the memory stream as an rtf
                 content.Save(ME, DataFormats.Rtf);
                 StreamReader sr = new StreamReader(ME);
 
+                //reset memory stream position
                 ME.Position = 0;
+                //read in contents of the streamreader
                 PE.Child.Document = sr.ReadToEnd();
                 PE.Child.BackgroundColor = rtb.Background.ToString();
             }
         }
 
+        /// <summary>
+        /// Saves the content controller
+        /// 
+        /// </summary>
+        /// <param name="cc">content control</param>
+        /// <param name="PE">page element</param>
         private static void SaveContentController(ContentControl cc, PageElement PE)
         {
             PE.Width = cc.Width;
             PE.Height = cc.Height;
             PE.Left = Canvas.GetLeft(cc);
             PE.Top = Canvas.GetTop(cc);
-            PE.Zindex = Canvas.GetZIndex(cc);
+            PE.ZIndex = Canvas.GetZIndex(cc);
             string sc = cc.RenderTransform.GetType().ToString();
+            //if the control has been rotated then save it
             if (sc == new RotateTransform().GetType().ToString())
                 PE.Rotation = ((RotateTransform)cc.RenderTransform).Angle;
-            PE.Type = cc.Content.GetType().ToString();
+            PE.ControlType = cc.Content.GetType().ToString();
         }
 
 
@@ -130,30 +140,34 @@ namespace YBMForms.DLL
         static internal byte[] SavePageElements(List<PageElement> page)
         {
             byte[] buffer;
+            //open memorystream to write data into memory for conversion
             using (MemorystreamOut mso = new MemorystreamOut())
             {
                 mso.WriteLine("node:" + page.Count);
+                //loop through each element
                 foreach (PageElement PE in page)
                 {
+                    //write out content control
                     mso.WriteLine("cc:");
                     mso.WriteLine(" width:" + PE.Width);
                     mso.WriteLine(" height:" + PE.Height);
                     mso.WriteLine(" top:" + PE.Top);
                     mso.WriteLine(" left:" + PE.Left);
-                    mso.WriteLine(" zindex:" + PE.Zindex);
+                    mso.WriteLine(" zindex:" + PE.ZIndex);
 
                     mso.WriteLine(" bordercolor:" + PE.Child.BorderColor);
                     mso.WriteLine(" borderthickness:" + PE.Child.BorderThickness);
                     mso.WriteLine(" rotation:" + PE.Rotation);
+                    //write out child control info
                     mso.WriteLine(" child:");
-                    mso.WriteLine("  type:" + PE.Type);
+                    mso.WriteLine("  type:" + PE.ControlType);
 
-                    if (PE.Type == "System.Windows.Controls.RichTextBox")
+                    if (PE.ControlType == "System.Windows.Controls.RichTextBox")
                     {
                         mso.WriteLine("  rtf:" + PE.Child.Document);
                         mso.WriteLine(" background:" + PE.Child.BackgroundColor);
                     }
-                    else if (PE.Type == "System.Windows.Controls.Image")
+                    else if (PE.ControlType == "System.Windows.Controls.Image")
                     {
 
                         mso.WriteLine("  img:" + PE.Child.Image.Length);
@@ -163,12 +177,12 @@ namespace YBMForms.DLL
                         mso.WriteLine("\r\n" + "  fill:" + PE.Child.Fill);
 
                     }
-                    else if (PE.Type == "System.Windows.Shapes.Ellipse" || PE.Type == "System.Windows.Shapes.Rectangle")
+                    else if (PE.ControlType == "System.Windows.Shapes.Ellipse" || PE.ControlType == "System.Windows.Shapes.Rectangle")
                     {
                         mso.WriteLine("  brush:" + PE.Child.Brush);
                     }
                 }
-
+                //flush and save the data
                 mso.Flush();
                 buffer = mso.ToArray();
                 return buffer;
