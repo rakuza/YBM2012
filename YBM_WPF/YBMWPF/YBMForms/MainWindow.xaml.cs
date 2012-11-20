@@ -128,6 +128,7 @@ namespace YBMForms
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "YearBookMaker Document (*.ybm) | *.ybm";
             if ((bool)sfd.ShowDialog())
                 current.SaveBook(new Uri(sfd.FileName).LocalPath);
         }
@@ -156,7 +157,8 @@ namespace YBMForms
         private void Load_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.ShowDialog();
+            ofd.Filter = "YearBookMaker Document (*.ybm) | *.ybm";
+            if ((bool)ofd.ShowDialog())
             current.OpenBook(new Uri(ofd.FileName).LocalPath);
         }
 
@@ -465,7 +467,7 @@ namespace YBMForms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        private void AdvancedFontClick(object sender, RoutedEventArgs e)
         {
             //opens up the advanced formatting form with the selected text selection
             FontStyleForm fs = new FontStyleForm(new RichTextBox().Selection);
@@ -514,8 +516,14 @@ namespace YBMForms
             Font_Dialogue_Click(sender, e);
         }
 
+        /// <summary>
+        /// Button Click for publishing a file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WebPublish_Click_1(object sender, RoutedEventArgs e)
         {
+            //legacey code for making the view folder work
             System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
             System.Windows.Forms.DialogResult dr = fbd.ShowDialog();
             if (dr.ToString() == "OK")
@@ -524,6 +532,17 @@ namespace YBMForms
             }
         }
 
+        private void new_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void acknowlegements(object sender, RoutedEventArgs e)
+        {
+            //opps totally forgot who to reference for this
+            MessageBox.Show("thanks to all the provides of the icons","Thanks");
+        }
 
     }
 }

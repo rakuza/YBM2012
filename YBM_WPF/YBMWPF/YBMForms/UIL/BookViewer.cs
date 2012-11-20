@@ -45,6 +45,9 @@ namespace YBMForms.UIL
 
         private int viewIndex;
 
+        /// <summary>
+        /// Re renders the page on change
+        /// </summary>
         public int ViewIndex
         {
             get { return viewIndex; }
@@ -59,12 +62,20 @@ namespace YBMForms.UIL
             }
         }
 
+        /// <summary>
+        /// Changes the page with out saving any pages
+        /// </summary>
+        /// <param name="index">view index to set to</param>
         public void SetNewViewIndex(int index)
         {
             viewIndex = index;
             RenderPage(designerCanvas);
         }
 
+        /// <summary>
+        /// Opens a new book
+        /// </summary>
+        /// <param name="filelocation">location of the new book</param>
         public void OpenBook(string filelocation)
         {
             BookReader br = new BookReader(filelocation);
@@ -73,12 +84,22 @@ namespace YBMForms.UIL
             SetNewViewIndex(0);
         }
 
+        /// <summary>
+        /// Saves the book
+        /// </summary>
+        /// <param name="filelocation">location of the new book</param>
         public void SaveBook(string filelocation)
         {
             BookSaver bs = new BookSaver(designerCanvas, currentbook);
             bs.SaveBook(filelocation, viewIndex);
         }
 
+        /// <summary>
+        /// Deletes a page from the year book
+        /// except the first and last page
+        /// 
+        /// ... in theory
+        /// </summary>
         public void DeletePage()
         {
             designerCanvas.Children.RemoveRange(0, designerCanvas.Children.Count);
@@ -86,6 +107,9 @@ namespace YBMForms.UIL
             SetNewViewIndex(viewIndex--);
         }
 
+        /// <summary>
+        /// Adds a new page in before the last page
+        /// </summary>
         public void NewPage()
         {
             DLL.Page p = new DLL.Page();
@@ -96,7 +120,7 @@ namespace YBMForms.UIL
         }
 
 
-
+        //saves the contents of a page
         private void SavePage()
         {
             PageSaver ps = new PageSaver(designerCanvas);
@@ -105,6 +129,10 @@ namespace YBMForms.UIL
 
 
         #region Render
+        /// <summary>
+        /// Renders the contents of the target canvas
+        /// </summary>
+        /// <param name="Canvas">target canvas</param>
         private void RenderPage(Canvas Canvas)
         {
 
@@ -145,9 +173,15 @@ namespace YBMForms.UIL
                 }
 
             }
+            //re-renders the page
             Canvas.InvalidateVisual();
         }
 
+        /// <summary>
+        /// creates a content control
+        /// </summary>
+        /// <param name="PE"></param>
+        /// <returns></returns>
         static private ContentControl FormContentControl(PageElement PE)
         {
             ContentControl cc = new ContentControl();
@@ -163,6 +197,11 @@ namespace YBMForms.UIL
             return cc;
         }
 
+        /// <summary>
+        /// creates an image
+        /// </summary>
+        /// <param name="PE"></param>
+        /// <param name="cc"></param>
         private static void GenerateImage(PageElement PE, ContentControl cc)
         {
             Image i = new Image();
@@ -182,7 +221,11 @@ namespace YBMForms.UIL
             cc.Content = i;
 
         }
-
+        /// <summary>
+        /// creates a rich textbox
+        /// </summary>
+        /// <param name="PE"></param>
+        /// <param name="cc"></param>
         private static void GenerateTextBox(PageElement PE, ContentControl cc)
         {
             RichTextBox rtb = new RichTextBox();

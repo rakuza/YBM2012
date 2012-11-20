@@ -21,6 +21,11 @@ namespace YBMForms
 {
     partial class MainWindow
     {
+        /// <summary>
+        /// creates a new control depending on which butter was pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SpawnControl(object sender, RoutedEventArgs e)
         {
             Control c = sender as Control;
@@ -50,6 +55,9 @@ namespace YBMForms
             }
         }
 
+        /// <summary>
+        /// creates a new rich textbox
+        /// </summary>
         private void CreateTextBox()
         {
             ContentControl cc = new ContentControl();
@@ -68,6 +76,7 @@ namespace YBMForms
             Canvas.SetTop(cc, 0);
         }
 
+        //creates a new rect
         private void CreateRect()
         {
             ContentControl cc = new ContentControl();
@@ -86,10 +95,13 @@ namespace YBMForms
             Canvas.SetTop(cc, 0);
         }
 
+        /// <summary>
+        /// creates a new picture box
+        /// </summary>
         private void CreatePictureBox()
         {
             OpenFileDialog OFD = new OpenFileDialog();
-            OFD.Filter = "JPEG Image File (*.jpg) |*.jpg;|PNG Image FIle (*.png) |*.png;|GIF Image File(*.gif) |*.gif;|All Files (*.*) |*.*";
+            OFD.Filter = "JPEG Image File (*.jpg) |*.jpg;|PNG Image FIle (*.png) |*.png;|GIF Image File(*.gif) |*.gif;|All Files (*.*) |*.*;|Images (*.jpg,*.gif,*.png) | *.jpg *.gif *.png";
             if ((bool)OFD.ShowDialog())
             {
 
@@ -121,6 +133,9 @@ namespace YBMForms
 
         }
 
+        /// <summary>
+        /// creates a new elipse
+        /// </summary>
         private void CreateElipse()
         {
             ContentControl cc = new ContentControl();

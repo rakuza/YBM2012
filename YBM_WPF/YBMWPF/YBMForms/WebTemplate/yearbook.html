@@ -88,7 +88,7 @@
         function GetPage() {
             document.getElementById("debug").innerHTML += viewindex.toString() + "<br />";
             jumper.target.value = viewindex.toString();
-            document.getElementById("img").innerHTML = "src/" + viewindex + ".png";
+            document.getElementById("img").src = "src/" + viewindex + ".png";
         }
 
         function initialise() {

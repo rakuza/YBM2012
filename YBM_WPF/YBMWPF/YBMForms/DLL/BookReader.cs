@@ -51,7 +51,6 @@ namespace YBMForms.DLL
                     //gets the action from the buffer
                     string action = GetParam(buffer);
 
-
                     switch (action)
                     {
 

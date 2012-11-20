@@ -108,6 +108,10 @@ namespace YBMForms
             }
         }
 
+        /// <summary>
+        /// Grabs the control with foxus
+        /// </summary>
+        /// <returns></returns>
         private RichTextBox SeekFocus()
         {
             RichTextBox rtb = new RichTextBox(); ;
@@ -115,7 +119,7 @@ namespace YBMForms
             foreach (ContentControl cc in DesignerCanvas.Children)
             {
                 UIElement u = cc.Content as UIElement;
-                if (u.GetType().ToString() == "System.Windows.Controls.RichTextBox" && u.IsFocused)
+                if (u is RichTextBox && u.IsFocused)
                 {
 
                     rtb = cc.Content as RichTextBox;

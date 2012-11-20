@@ -40,6 +40,7 @@ namespace YBMForms
         public PhotoEditor(BitmapSource s)
         {
             InitializeComponent();
+            img = s;
             ApplyImage(s);
         }
 

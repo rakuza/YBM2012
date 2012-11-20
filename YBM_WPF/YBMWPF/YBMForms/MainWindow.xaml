@@ -62,15 +62,15 @@
             <MenuItem Header="File">
 
 
-                <MenuItem Header="New" ToolTip="New Book">
+                <MenuItem Header="New" ToolTip="New Book" Click="new_Click">
                     <MenuItem.Icon>
-                        <Image Height="16" Width="16"  Source="/Resources/icons/application_osx_add.png" />
+                        <Image Height="16" Width="16"  Source="/Resources/icons/book_addresses_add.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="New Page" ToolTip="New Page">
+                <MenuItem Header="New Page" ToolTip="New Page" Click="NewPageClick">
                     <MenuItem.Icon>
-                        <Image Height="16" Width="16"  Source="/Resources/icons/application_osx_add.png" />
+                        <Image Height="16" Width="16"  Source="/Resources/icons/bullet_sparkle.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
@@ -87,6 +87,20 @@
                 </MenuItem>
 
                 <Separator/>
+                
+                <MenuItem Header="Print" Click="Print_Click">
+                    <MenuItem.Icon>
+                        <Image Height="16" Width="16"  Source="/Resources/icons/printer_color.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Publish" Click="WebPublish_Click_1">
+                    <MenuItem.Icon>
+                        <Image Height="16" Width="16"  Source="/Resources/icons/box_world.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                
+                <Separator/>
 
                 <MenuItem Header="Exit" Click="Exit_Click" ToolTip="Exit">
                     <MenuItem.Icon>
@@ -102,7 +116,7 @@
 
 
             <MenuItem Header="Format Text">
-                <MenuItem Header="Advanced" ToolTip="Advanced Formatter" Click="MenuItem_Click_1"/>
+                <MenuItem Header="Advanced" ToolTip="Advanced Formatter" Click="AdvancedFontClick"/>
                 <Separator/>
                 <MenuItem Header="Bold"/>
                 <MenuItem Header="Italic"/>
@@ -127,19 +141,20 @@
 
                 <MenuItem Header="Open Teaching Resources">
                     <MenuItem.Icon>
-                        <Image Height="16" Width="16"  Source="/Resources/icons/application_osx_add.png" />
+                        <Button FontFamily="Webdings" Content="s" FontWeight="Bold" Foreground="DarkBlue" Width="29" />
+                        
                     </MenuItem.Icon>
                 </MenuItem>
 
                 <MenuItem Header="Open Student Help Document">
                     <MenuItem.Icon>
-                        <Image Height="16" Width="16"  Source="/Resources/icons/application_osx_add.png" />
+                        <Button Content="s" FontFamily="Webdings" FontWeight="Bold" Foreground="DarkRed" Width="29" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Acknowledgements">
+                <MenuItem Header="Acknowledgements" Click="acknowlegements">
                     <MenuItem.Icon>
-                        <Image Height="16" Width="16"  Source="/Resources/icons/application_osx_add.png" />
+                        <Image Height="16" Width="16"  Source="/Resources/icons/star_gold.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
@@ -153,9 +168,13 @@
         <!-- start of tool bar pannel -->
         <ToolBarTray DockPanel.Dock="Top" Background="#FFECECEC" Height="58" Focusable="False">
             <ToolBar x:Name="FileAlias">
-                <Button Name="new">
-                    <Image Height="16" Width="16"  Source="/Resources/icons/application_osx_add.png" />
+                <Button Name="new" ToolTip="New Book" Click="new_Click">
+                    <Image Height="16" Width="16"  Source="/Resources/icons/book_addresses_add.png" />
                     </Button>
+
+                <Button Name="newPage" ToolTip="Add New Page" Click="NewPageClick">
+                    <Image Height="16" Width="16"  Source="/Resources/icons/bullet_sparkle.png" />
+                </Button>
 
                 <Button Name="Save" Click="Save_Click">
                         <Image Height="16" Width="16"  Source="/Resources/icons/disk_black.png" />
@@ -169,9 +188,11 @@
                     <Image Height="16" Width="16"  Source="/Resources/icons/printer_color.png"  />
                 </Button>
                 
-                <Button Name="WebPublish" Click="WebPublish_Click_1">
-                    Publish
+                <Button Name="WebPublish" Click="WebPublish_Click_1" ToolTip="Publish For Web">
+                    <Image Height="16" Width="16"  Source="/Resources/icons/box_world.png" />
                 </Button>
+
+                <Button Content="s" FontFamily="Webdings" FontWeight="Bold" Foreground="DarkRed" Width="29" ToolTip="Help" />
             </ToolBar>
 
             <ToolBar x:Name="tbrText">
@@ -199,11 +220,6 @@
                 <c:ColorPicker  x:Name="color" VerticalAlignment="Center" ShowRecentColors="True" IsManipulationEnabled="True" ShowStandardColors="False"  />
                 <TextBox MinWidth="30"></TextBox>
                 <Button Content="Advanced" Click="Button_Click_1" />
-            </ToolBar>
-
-            <ToolBar Name="HelpAlias">
-                <Button FontFamily="Webdings" Content="s" FontWeight="Bold" Foreground="DarkBlue" Width="29" />
-                <Button Content="s" FontFamily="Webdings" FontWeight="Bold" Foreground="DarkRed" Width="29" />
             </ToolBar>
             
             <ToolBar x:Name="NewControls">
