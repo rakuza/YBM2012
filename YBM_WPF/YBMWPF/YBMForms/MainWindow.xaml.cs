@@ -130,7 +130,11 @@ namespace YBMForms
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "YearBookMaker Document (*.ybm) | *.ybm";
             if ((bool)sfd.ShowDialog())
+            {
                 current.SaveBook(new Uri(sfd.FileName).LocalPath);
+                statuspanel.Background = Brushes.LightBlue;
+                lbxstatus.Content = sfd.SafeFileName +" Saved at: " + DateTime.Now.ToShortTimeString();
+            }
         }
 
         /// <summary>
@@ -145,7 +149,10 @@ namespace YBMForms
             PrintDialog pd = new PrintDialog();
             if (pd.ShowDialog() == true)
             //prints the canvas
-            { pd.PrintVisual(DesignerCanvas, "my canvas"); }
+            { pd.PrintVisual(DesignerCanvas, "my canvas");
+            statuspanel.Background = Brushes.LightBlue;
+            lbxstatus.Content = "Printed at: " + DateTime.Now.ToShortTimeString();
+            }
         }
 
         /// <summary>
@@ -159,7 +166,11 @@ namespace YBMForms
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "YearBookMaker Document (*.ybm) | *.ybm";
             if ((bool)ofd.ShowDialog())
-            current.OpenBook(new Uri(ofd.FileName).LocalPath);
+            {
+                current.OpenBook(new Uri(ofd.FileName).LocalPath);
+                statuspanel.Background = Brushes.LightBlue;
+                lbxstatus.Content = ofd.SafeFileName+"Loaded";
+            }
         }
 
 
@@ -534,15 +545,15 @@ namespace YBMForms
 
         private void new_Click(object sender, RoutedEventArgs e)
         {
-
+            statuspanel.Background = Brushes.LightGoldenrodYellow;
+            lbxstatus.Content = "New Yearbook Created";
         }
 
 
         private void acknowlegements(object sender, RoutedEventArgs e)
         {
             //opps totally forgot who to reference for this
-            MessageBox.Show("thanks to all the provides of the icons","Thanks");
+            MessageBox.Show("Thanks to all the provides of the icons","Thanks");
         }
-
     }
 }

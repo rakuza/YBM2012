@@ -135,46 +135,56 @@ namespace YBMForms.UIL
         /// <param name="Canvas">target canvas</param>
         private void RenderPage(Canvas Canvas)
         {
-
-            Canvas.Children.RemoveRange(0, Canvas.Children.Count);
-            foreach (PageElement PE in this.CurrentBook.Pages[viewIndex].Children)
+            try
             {
-                ContentControl cc = FormContentControl(PE);
-
-
-                cc.Height = PE.Height;
-                cc.Width = PE.Width;
-                if (PE.ControlType == "System.Windows.Controls.RichTextBox")
+                Canvas.Children.RemoveRange(0, Canvas.Children.Count);
+                foreach (PageElement PE in this.CurrentBook.Pages[viewIndex].Children)
                 {
-                    GenerateTextBox(PE, cc);
-                }
-                else if (PE.ControlType == "System.Windows.Controls.Image")
-                {
-                    GenerateImage(PE, cc);
-                }
-                else if (PE.ControlType == "System.Windows.Shapes.Ellipse")
-                {
-                    Ellipse e = new Ellipse();
-                    e.Fill = new BrushConverter().ConvertFromString(PE.Child.Brush) as SolidColorBrush;
-                    cc.Content = e;
-                }
-                else if (PE.ControlType == "System.Windows.Shapes.Rectangle")
-                {
-                    Rectangle r = new Rectangle();
-                    r.Fill = new BrushConverter().ConvertFromString(PE.Child.Brush) as SolidColorBrush;
-                    cc.Content = r;
-                }
+                    ContentControl cc = FormContentControl(PE);
+
+
+                    cc.Height = PE.Height;
+                    cc.Width = PE.Width;
+                    if (PE.ControlType == "System.Windows.Controls.RichTextBox")
+                    {
+                        GenerateTextBox(PE, cc);
+                    }
+                    else if (PE.ControlType == "System.Windows.Controls.Image")
+                    {
+                        GenerateImage(PE, cc);
+                    }
+                    else if (PE.ControlType == "System.Windows.Shapes.Ellipse")
+                    {
+                        Ellipse e = new Ellipse();
+                        e.Fill = new BrushConverter().ConvertFromString(PE.Child.Brush) as SolidColorBrush;
+                        cc.Content = e;
+                    }
+                    else if (PE.ControlType == "System.Windows.Shapes.Rectangle")
+                    {
+                        Rectangle r = new Rectangle();
+                        r.Fill = new BrushConverter().ConvertFromString(PE.Child.Brush) as SolidColorBrush;
+                        cc.Content = r;
+                    }
 
 
 
-                if (!string.IsNullOrWhiteSpace(PE.ControlType))
-                {
-                    Canvas.Children.Add(cc);
-                }
+                    if (!string.IsNullOrWhiteSpace(PE.ControlType))
+                    {
+                        Canvas.Children.Add(cc);
+                    }
 
+                }
+                //re-renders the page
+                Canvas.InvalidateVisual();
             }
-            //re-renders the page
-            Canvas.InvalidateVisual();
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    host.statuspanel.Background = Brushes.LightCoral;
+                    host.lbxstatus.Content = "Error: Page Doesnt Exist";
+                }
+            }
         }
 
         /// <summary>
