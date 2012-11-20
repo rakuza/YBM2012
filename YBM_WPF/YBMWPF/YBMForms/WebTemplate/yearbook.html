@@ -1,0 +1,128 @@
+<html>
+<head>
+    <title>Yearbook Viewer</title>
+    <script src="js/jquery-1.8.2.js"></script>
+    <style type="text/css">
+        body
+        {
+            background-color:azure;
+            margin:0%;
+            
+        }
+
+        .center
+        {
+            text-align:center;
+        }
+
+        div.viewer 
+        {
+			margin-left:18%;
+			width:65%;
+            background-color:white;
+            border: black solid;
+        }
+
+        div.width
+        {
+            width: 100%;
+        }
+		
+		#img
+		{
+		max-width:60%;
+		}
+		
+		.media
+		{
+		width:40%;
+		margin-left:30%;
+		}
+
+        input, #totalPages
+        {
+            vertical-align:central;
+        }
+		
+
+        table .viewer .controller .container
+        {
+            width:100%;
+        }
+		
+		a
+		{
+		font-size:40px;
+        font-weight:bolder;
+        color:darkgray;
+        text-decoration:none;
+		}
+    </style>
+    <script>
+        var viewindex = 1;
+
+        function PreviousPage() {
+            if (viewindex > 1) {
+                viewindex--;
+                GetPage();
+            }
+        }
+
+
+        function NextPage() {
+            var MaxPage = document.getElementById("totalPages").innerHTML;
+            if (viewindex < MaxPage) {
+                viewindex++;
+                GetPage();
+            }
+        }
+
+        function JumpPage(target) {
+            var MaxPage = document.getElementById("totalPages").innerHTML;
+            if (target <= MaxPage || target >= 0) {
+                viewindex = target;
+                GetPage();
+            }
+        }
+
+        function GetPage() {
+            document.getElementById("debug").innerHTML += viewindex.toString() + "<br />";
+            jumper.target.value = viewindex.toString();
+            document.getElementById("img").innerHTML = "src/" + viewindex + ".png";
+        }
+
+        function initialise() {
+            /*$.ajax("init.txt").done(function (msg) {
+                document.getElementById("totalPages").innerHTML = msg;
+            })
+            Dont Run when on local machine nothing will happen
+            */
+        }
+    </script>
+</head>
+<body onload="javascript:initialise()" class="center">
+    <span id="debug">test</span>
+    <div class="viewer center">
+        <div class="width">
+            <img src="src/1.png" id="img"/>
+        </div>
+        <div class="width">
+        <table class="center media" >
+            <tr>
+                <td>
+                    <a href="javascript:PreviousPage();">&lt;</a>
+                </td>
+                <td>
+                    <form action="javascript:JumpPage(jumper.target.value)" name="jumper">
+                    <input name="target" type="text" value="1"/> / <span id="totalPages" >3</span>
+                    </form>
+                </td>
+                <td>
+                   <a href="javascript:NextPage();">&gt;</a>
+                </td>
+            </tr>
+        </table>
+            </div>
+    </div>
+</body>
+</html>

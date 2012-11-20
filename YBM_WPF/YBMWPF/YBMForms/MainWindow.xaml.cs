@@ -9,6 +9,8 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using YBMForms.DLL;
 using YBMForms.UIL;
+using System.IO;
+using System.Windows.Markup;
 
 namespace YBMForms
 {
@@ -40,20 +42,20 @@ namespace YBMForms
         /// <param name="temp"></param>
         private void PaperSizeConstructor()
         {
-            PaperSizes.Type = PaperSizes.Standard.A4;
-            PaperSizes.Dpi = 96;
-            DesignerCanvas.Height = PaperSizes.Pixel.PaperHeight;
-            DesignerCanvas.Width = PaperSizes.Pixel.PaperWidth;
-            backgroundPaper.Width = PaperSizes.Pixel.PaperWidth;
-            backgroundPaper.Height = PaperSizes.Pixel.PaperHeight;
-            borderBleed.Width = PaperSizes.Pixel.BleedWidth;
-            borderBleed.Height = PaperSizes.Pixel.BleedHeight;
+            PaperSize.Type = PaperSize.Standard.A4;
+            PaperSize.Dpi = 96;
+            DesignerCanvas.Height = PaperSize.Pixel.PaperHeight;
+            DesignerCanvas.Width = PaperSize.Pixel.PaperWidth;
+            backgroundPaper.Width = PaperSize.Pixel.PaperWidth;
+            backgroundPaper.Height = PaperSize.Pixel.PaperHeight;
+            borderBleed.Width = PaperSize.Pixel.BleedWidth;
+            borderBleed.Height = PaperSize.Pixel.BleedHeight;
             Canvas.SetZIndex(borderBleed, 0);
-            borderUnsafe.Width = PaperSizes.Pixel.UnsafeWidth;
-            borderUnsafe.Height = PaperSizes.Pixel.UnsafeHeight;
+            borderUnsafe.Width = PaperSize.Pixel.UnsafeWidth;
+            borderUnsafe.Height = PaperSize.Pixel.UnsafeHeight;
             Canvas.SetZIndex(borderUnsafe, 1);
-            bordersafe.Width = PaperSizes.Pixel.SafeWidth;
-            bordersafe.Height = PaperSizes.Pixel.SafeHeight;
+            bordersafe.Width = PaperSize.Pixel.SafeWidth;
+            bordersafe.Height = PaperSize.Pixel.SafeHeight;
             Canvas.SetZIndex(borderUnsafe, 2);
         }
 
@@ -206,8 +208,8 @@ namespace YBMForms
             //sets the text as the percentage with percentage formatting
             tbxZoom.Text = temp.ToString("p");
             //updates the zoom box
-            DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.Pixel.BleedWidth);
-            DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.Pixel.BleedHeight);
+            DesignerCanvasZoomBox.Width = (int)(temp * PaperSize.Pixel.BleedWidth);
+            DesignerCanvasZoomBox.Height = (int)(temp * PaperSize.Pixel.BleedHeight);
         }
 
         /// <summary>
@@ -261,8 +263,8 @@ namespace YBMForms
                 tbxZoom.Text = (temp).ToString("p");
 
                 //chanes the dimensions of the zoom box
-                DesignerCanvasZoomBox.Width = (int)(temp * PaperSizes.Pixel.BleedWidth);
-                DesignerCanvasZoomBox.Height = (int)(temp * PaperSizes.Pixel.BleedHeight);
+                DesignerCanvasZoomBox.Width = (int)(temp * PaperSize.Pixel.BleedWidth);
+                DesignerCanvasZoomBox.Height = (int)(temp * PaperSize.Pixel.BleedHeight);
             }
             else
             {
@@ -510,6 +512,16 @@ namespace YBMForms
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Font_Dialogue_Click(sender, e);
+        }
+
+        private void WebPublish_Click_1(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult dr = fbd.ShowDialog();
+            if (dr.ToString() == "OK")
+            {
+                WebPublisher.PublishBook(current, fbd.SelectedPath);
+            }
         }
 
 

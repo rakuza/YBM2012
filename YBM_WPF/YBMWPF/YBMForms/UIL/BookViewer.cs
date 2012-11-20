@@ -25,6 +25,11 @@ namespace YBMForms.UIL
         static private MainWindow host;
         static private Canvas designerCanvas;
 
+        public static Canvas DesignerCanvas
+        {
+            get { return BookViewer.designerCanvas; }
+        }
+
         private Book currentbook;
 
         public Book CurrentBook
@@ -49,7 +54,7 @@ namespace YBMForms.UIL
                 {
                     SavePage();
                     viewIndex = value;
-                    RenderPage();
+                    RenderPage(designerCanvas);
                 }
             }
         }
@@ -57,7 +62,7 @@ namespace YBMForms.UIL
         public void SetNewViewIndex(int index)
         {
             viewIndex = index;
-            RenderPage();
+            RenderPage(designerCanvas);
         }
 
         public void OpenBook(string filelocation)
@@ -100,10 +105,10 @@ namespace YBMForms.UIL
 
 
         #region Render
-        private void RenderPage()
+        private void RenderPage(Canvas Canvas)
         {
 
-            designerCanvas.Children.RemoveRange(0, designerCanvas.Children.Count);
+            Canvas.Children.RemoveRange(0, Canvas.Children.Count);
             foreach (PageElement PE in this.CurrentBook.Pages[viewIndex].Children)
             {
                 ContentControl cc = FormContentControl(PE);
@@ -136,11 +141,11 @@ namespace YBMForms.UIL
 
                 if (!string.IsNullOrWhiteSpace(PE.ControlType))
                 {
-                    designerCanvas.Children.Add(cc);
+                    Canvas.Children.Add(cc);
                 }
 
             }
-            designerCanvas.InvalidateVisual();
+            Canvas.InvalidateVisual();
         }
 
         static private ContentControl FormContentControl(PageElement PE)

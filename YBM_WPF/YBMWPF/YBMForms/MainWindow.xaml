@@ -168,7 +168,10 @@
                 <Button Name="Print" Click="Print_Click">
                     <Image Height="16" Width="16"  Source="/Resources/icons/printer_color.png"  />
                 </Button>
-
+                
+                <Button Name="WebPublish" Click="WebPublish_Click_1">
+                    Publish
+                </Button>
             </ToolBar>
 
             <ToolBar x:Name="tbrText">

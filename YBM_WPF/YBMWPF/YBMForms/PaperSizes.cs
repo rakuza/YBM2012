@@ -9,7 +9,7 @@ namespace YBMForms
 
     
 
-    static public class PaperSizes
+    static public class PaperSize
     {
         /// <summary>
         /// paper size enum
@@ -79,48 +79,48 @@ namespace YBMForms
 
         public static int SafeHeight
         {
-            get { return PaperSizes.safeHeight; }
+            get { return PaperSize.safeHeight; }
         }
 
         static private int safeWidth;
 
         public static int SafeWidth
         {
-            get { return PaperSizes.safeWidth; }
+            get { return PaperSize.safeWidth; }
         }
         static private int unsafeWidth;
 
         public static int UnsafeWidth
         {
-            get { return PaperSizes.unsafeWidth; }
+            get { return PaperSize.unsafeWidth; }
         }
 
         static private int unsafeHeight;
 
         public static int UnsafeHeight
         {
-            get { return PaperSizes.unsafeHeight; }
+            get { return PaperSize.unsafeHeight; }
         }
 
         static private int bleedWidth;
 
         public static int BleedWidth
         {
-            get { return PaperSizes.bleedWidth; }
+            get { return PaperSize.bleedWidth; }
         }
 
         static private int bleedHeight;
 
         public static int BleedHeight
         {
-            get { return PaperSizes.bleedHeight; }
+            get { return PaperSize.bleedHeight; }
         }
 
         static private int dpi;
 
         public static int Dpi
         {
-            get { return PaperSizes.dpi; }
+            get { return PaperSize.dpi; }
             set { dpi = value; }
         }
 
