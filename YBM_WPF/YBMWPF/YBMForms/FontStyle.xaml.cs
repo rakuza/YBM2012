@@ -13,10 +13,16 @@ using System.Windows.Shapes;
 using Xceed;
 using Xceed.Wpf;
 using Xceed.Wpf.Toolkit;
+using Xceed.Wpf.Toolkit.Core.Converters;
 using YBMForms.UIL;
 
 namespace YBMForms
 {
+    //Bug:Advance form will strip off any values that have more than one amount
+    //fix:none
+
+
+
     /// <summary>
     /// Interaction logic for FontStyle.xaml
     /// </summary>
@@ -29,6 +35,7 @@ namespace YBMForms
             GetTextProperties(t);
             text = t;
         }
+
 
         private TextSelection text;
 
@@ -85,29 +92,69 @@ namespace YBMForms
             }
         }
 
-        public void Submit(object sender, RoutedEventArgs e)
+        private void Submit(object sender, RoutedEventArgs e)
         {
             text.ClearAllProperties();
             text.ApplyPropertyValue(TextElement.FontFamilyProperty,lblDemo.FontFamily);
             text.ApplyPropertyValue(TextElement.FontSizeProperty, lblDemo.FontSize);
             text.ApplyPropertyValue(Inline.TextDecorationsProperty, ((TextBlock)lblDemo.Content).TextDecorations);
             text.ApplyPropertyValue(TextElement.FontWeightProperty, lblDemo.FontWeight);
-            text.ApplyPropertyValue(TextElement.ForegroundProperty, ((TextBlock)lblDemo.Content).Foreground);
+                text.ApplyPropertyValue(TextElement.ForegroundProperty, ((TextBlock)lblDemo.Content).Foreground);
             this.Close();
         }
 
-        public void GetTextProperties(TextSelection ts)
+        private void GetTextProperties(TextSelection ts)
         {
-            tbxSize.Text  = ts.GetPropertyValue(Inline.FontSizeProperty).ToString();
-            Font.SelectedIndex = Font.Items.IndexOf(ts.GetPropertyValue(Inline.FontFamilyProperty));
+            var size = ts.GetPropertyValue(Inline.FontSizeProperty);
+            if (size != DependencyProperty.UnsetValue)
+            {
+                tbxSize.Text = size.ToString();
+            }
+
+
+            var font = ts.GetPropertyValue(Inline.FontFamilyProperty);
+            if (font != DependencyProperty.UnsetValue)
+            {
+                Font.SelectedIndex = Font.Items.IndexOf(font);
+            }
 
             var bold = ts.GetPropertyValue(Inline.FontWeightProperty);
-            if(bold is DependencyProperty)
-            if ((FontWeight)bold == FontWeights.Bold)
+            if (bold != DependencyProperty.UnsetValue)
             {
-                chkBold.IsChecked = true;
+                if ((FontWeight)bold == FontWeights.Bold)
+                {
+                    chkBold.IsChecked = true;
+                }
             }
-           
+
+            var td = ts.GetPropertyValue(Inline.TextDecorationsProperty);
+            if (td != DependencyProperty.UnsetValue && td is TextDecorationCollection)
+            {
+                foreach (TextDecoration tdec in (TextDecorationCollection)td)
+                {
+                    if (tdec == TextDecorations.Strikethrough[0])
+                        chkStrikeThrough.IsChecked = true;
+                    if (tdec == TextDecorations.Underline[0])
+                        chkUnderLine.IsChecked = true;
+                }
+                
+            }
+
+            var italic = ts.GetPropertyValue(Inline.FontStyleProperty);
+            if (italic != DependencyProperty.UnsetValue)
+            {
+                if ((FontStyle)italic == FontStyles.Italic)
+                {
+                    chkItalic.IsChecked = true;
+                }
+            }
+
+            var colorValue = ts.GetPropertyValue(Inline.ForegroundProperty);
+            if (colorValue != DependencyProperty.UnsetValue)
+            {
+                SolidColorBrush b = (SolidColorBrush)colorValue;
+                color.SelectedColor = b.Color;
+            }          
         }
 
         public void Exit(object sender, RoutedEventArgs e)

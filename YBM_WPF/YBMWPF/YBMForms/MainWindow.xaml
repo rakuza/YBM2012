@@ -217,23 +217,25 @@
                 
                 <Separator />
 
-                <Button Click="Bold_Click">
+                <ToggleButton Click="Bold_Click" Name="btnBold">
                     <Label FontWeight="Bold" FontFamily="Times New Roman" Content="B"/>
-                </Button>
-                <Button Click="Italic_Click">
+                </ToggleButton>
+                <ToggleButton Click="Italic_Click" Name="btnItalic">
                     <Label FontWeight="Bold" FontStyle="Italic" FontFamily="Times New Roman" Content="I"/>
-                </Button>
-                <Button Click="Underline_Click">
+                </ToggleButton>
+                <ToggleButton Click="Underline_Click" Name="btnUnderLine">
                     <Label FontWeight="Bold" FontFamily="Times New Roman">
                         <TextBlock><Underline><Run Text="U"/></Underline></TextBlock>
                     </Label>
-                </Button>
+                </ToggleButton>
                 <ComboBox Grid.Row="1" Grid.Column="1" x:Name="Font" 
         			VerticalAlignment="Center" Height="24" IsSynchronizedWithCurrentItem="True"
         			ItemsSource="{x:Static Fonts.SystemFontFamilies}" SelectionChanged="Font_SelectionChanged_1"/>
                 <c:ColorPicker  x:Name="color" VerticalAlignment="Center" ShowRecentColors="True" IsManipulationEnabled="True" ShowStandardColors="False"  />
-                <TextBox MinWidth="30"></TextBox>
-                <Button Content="Advanced" Click="Button_Click_1" />
+                <TextBox Name="fontsize" MinWidth="30"></TextBox>
+                <Button  Click="Button_Click_1" ToolTip="Advanced Text Formatting">
+                    <Image Height="16" Width="16" Source="/Resources/icons/text_complete.png" />
+                </Button>
             </ToolBar>
             
             <ToolBar x:Name="NewControls">

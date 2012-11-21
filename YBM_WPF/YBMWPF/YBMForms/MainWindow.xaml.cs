@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Win32;
@@ -116,7 +117,70 @@ namespace YBMForms
 
         }
 
+        private void GetTextProperties(TextSelection ts)
+        {
+            var size = ts.GetPropertyValue(Inline.FontSizeProperty);
+            if (size != DependencyProperty.UnsetValue)
+            {
+                fontsize.Text = size.ToString();
+            }
 
+
+            var font = ts.GetPropertyValue(Inline.FontFamilyProperty);
+            if (font != DependencyProperty.UnsetValue)
+            {
+                Font.SelectedIndex = Font.Items.IndexOf(font);
+            }
+
+            var bold = ts.GetPropertyValue(Inline.FontWeightProperty);
+            if (bold != DependencyProperty.UnsetValue)
+            {
+                if ((FontWeight)bold == FontWeights.Bold)
+                {
+                    btnBold.IsChecked = true;
+                }
+                else
+                {
+                    btnBold.IsChecked = false;
+                }
+            }
+
+            var td = ts.GetPropertyValue(Inline.TextDecorationsProperty);
+            if (td != DependencyProperty.UnsetValue && td is TextDecorationCollection)
+            {
+                foreach (TextDecoration tdec in (TextDecorationCollection)td)
+                {
+
+                        if (tdec == TextDecorations.Underline[0])
+                        btnUnderLine.IsChecked = true;
+                        else
+                            btnUnderLine.IsChecked = false ;
+                }
+
+            }
+            else
+                btnUnderLine.IsChecked = false;
+
+            var italic = ts.GetPropertyValue(Inline.FontStyleProperty);
+            if (italic != DependencyProperty.UnsetValue)
+            {
+                if ((FontStyle)italic == FontStyles.Italic)
+                {
+                    btnItalic.IsChecked = true;
+                }
+                else
+                {
+                    btnItalic.IsChecked = false;
+                }
+            }
+
+            var colorValue = ts.GetPropertyValue(Inline.ForegroundProperty);
+            if (colorValue != DependencyProperty.UnsetValue)
+            {
+                SolidColorBrush b = (SolidColorBrush)colorValue;
+                color.SelectedColor = b.Color;
+            }    
+        }
 
         /// <summary>
         /// Save book method
@@ -554,6 +618,11 @@ namespace YBMForms
         {
             //opps totally forgot who to reference for this
             MessageBox.Show("Thanks to all the provides of the icons","Thanks");
+        }
+
+        private void TextSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            GetTextProperties(((RichTextBox)sender).Selection);
         }
     }
 }

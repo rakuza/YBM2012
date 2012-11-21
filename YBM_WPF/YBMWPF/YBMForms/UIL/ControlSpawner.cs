@@ -70,6 +70,7 @@ namespace YBMForms
             cc.Height = 300;
             cc.Padding = new Thickness(3);
             cc.MouseDoubleClick += new MouseButtonEventHandler(DoubleClickSelect);
+            rtb.SelectionChanged += new RoutedEventHandler(TextSelectionChanged);
             cc.ClipToBounds = true;
             DesignerCanvas.Children.Add(cc);
             Canvas.SetLeft(cc, 0);
