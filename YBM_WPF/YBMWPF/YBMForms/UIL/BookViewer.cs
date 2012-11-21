@@ -102,9 +102,16 @@ namespace YBMForms.UIL
         /// </summary>
         public void DeletePage()
         {
-            designerCanvas.Children.RemoveRange(0, designerCanvas.Children.Count);
-            this.currentbook.Pages.Remove(this.currentbook.Pages[viewIndex]);
-            SetNewViewIndex(viewIndex--);
+            if (viewIndex != this.currentbook.Pages.Count - 1)
+            {
+                designerCanvas.Children.Clear();
+                this.currentbook.Pages.Remove(this.currentbook.Pages[viewIndex]);
+                SetNewViewIndex(viewIndex--);
+            }
+            else
+            {
+                designerCanvas.Children.Clear();
+            }
         }
 
         /// <summary>
@@ -112,6 +119,7 @@ namespace YBMForms.UIL
         /// </summary>
         public void NewPage()
         {
+            SavePage();
             DLL.Page p = new DLL.Page();
             p.PageNumber = this.currentbook.Pages.Count - 1;
             this.currentbook.Pages[this.currentbook.Pages.Count -1].PageNumber++;

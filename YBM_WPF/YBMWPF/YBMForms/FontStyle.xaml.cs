@@ -26,6 +26,7 @@ namespace YBMForms
         {
             
             InitializeComponent();
+            GetTextProperties(t);
             text = t;
         }
 
@@ -93,6 +94,20 @@ namespace YBMForms
             text.ApplyPropertyValue(TextElement.FontWeightProperty, lblDemo.FontWeight);
             text.ApplyPropertyValue(TextElement.ForegroundProperty, ((TextBlock)lblDemo.Content).Foreground);
             this.Close();
+        }
+
+        public void GetTextProperties(TextSelection ts)
+        {
+            tbxSize.Text  = ts.GetPropertyValue(Inline.FontSizeProperty).ToString();
+            Font.SelectedIndex = Font.Items.IndexOf(ts.GetPropertyValue(Inline.FontFamilyProperty));
+
+            var bold = ts.GetPropertyValue(Inline.FontWeightProperty);
+            if(bold is DependencyProperty)
+            if ((FontWeight)bold == FontWeights.Bold)
+            {
+                chkBold.IsChecked = true;
+            }
+           
         }
 
         public void Exit(object sender, RoutedEventArgs e)
