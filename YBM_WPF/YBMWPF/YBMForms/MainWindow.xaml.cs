@@ -694,5 +694,10 @@ namespace YBMForms
                     rtb.Selection.ApplyPropertyValue(Inline.FontSizeProperty, fontSize);
             }
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\chm\Yearbook Maker Help.chm");
+        }
     }
 }

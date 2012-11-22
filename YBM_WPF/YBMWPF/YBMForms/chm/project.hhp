@@ -1,0 +1,82 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=C:\Users\0950182\Documents\HelpNDoc\Output\chm\Yearbook Maker Help.chm
+Contents file=toc.hhc
+Default Window=Main
+Default topic=Systemrequirements.html
+Display compile progress=No
+Index file=
+Auto Index=No
+Full-text search=Yes
+Language=0x0409
+Title=Yearbook Maker Help
+Error log file=project.log
+[WINDOWS]
+Main="Yearbook Maker Help","toc.hhc","","Systemrequirements.html","Systemrequirements.html","","","","",0x61520,200,0x304E,[-1,-1,-1,-1],0xB0000,,,0,0,0,0
+[FILES]
+systemrequirements.html
+selectingitems.html
+resizing.html
+rotating.html
+changingthelayers.html
+croppingyourphoto.html
+changingthecolourofyourshape.html
+gettingstarted.html
+addtext.html
+addashape.html
+addimage.html
+openayearbook.html
+finishingyouryearbook.html
+printing.html
+publishingforinternet.html
+saving.html
+addingtextformating.html
+bolditalicorunderline.html
+color.html
+font.html
+fontsize.html
+advanced.html
+navigation.html
+addpage.html
+deletepage.html
+quickchanging.html
+changingthezoom.html
+css\base.css
+css\ielte8.css
+css\reset.css
+img\arrow_left.png
+img\arrow_right.png
+img\arrow_up.png
+img\footer-bg.png
+img\header-bg.png
+js\chmRelative.js
+[ALIAS]
+systemrequirements=systemrequirements.html
+selectingitems=selectingitems.html
+resizing=resizing.html
+rotating=rotating.html
+changingthelayers=changingthelayers.html
+croppingyourphoto=croppingyourphoto.html
+changingthecolourofyourshape=changingthecolourofyourshape.html
+gettingstarted=gettingstarted.html
+addtext=addtext.html
+addashape=addashape.html
+addimage=addimage.html
+openayearbook=openayearbook.html
+finishingyouryearbook=finishingyouryearbook.html
+printing=printing.html
+publishingforinternet=publishingforinternet.html
+saving=saving.html
+addingtextformating=addingtextformating.html
+bolditalicorunderline=bolditalicorunderline.html
+color=color.html
+font=font.html
+fontsize=fontsize.html
+advanced=advanced.html
+navigation=navigation.html
+addpage=addpage.html
+deletepage=deletepage.html
+quickchanging=quickchanging.html
+changingthezoom=changingthezoom.html
+[MAP]
+#include ContextNb.h
