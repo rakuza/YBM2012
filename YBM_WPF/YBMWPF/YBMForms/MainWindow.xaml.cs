@@ -65,6 +65,7 @@ namespace YBMForms
         private UIElement LastUIElement;
         private static BookViewer current;
         private decimal zoom;
+        private bool justdetecting = false;
 
         /// <summary>
         /// DoubleClick Event Handler
@@ -180,6 +181,7 @@ namespace YBMForms
                 SolidColorBrush b = (SolidColorBrush)colorValue;
                 color.SelectedColor = b.Color;
             }    
+
         }
 
         /// <summary>
@@ -210,6 +212,8 @@ namespace YBMForms
         /// <param name="e"></param>
         private void Print_Click(object sender, RoutedEventArgs e)
         {
+
+            SetBackGroundInvisible();
             PrintDialog pd = new PrintDialog();
             if (pd.ShowDialog() == true)
             //prints the canvas
@@ -217,6 +221,24 @@ namespace YBMForms
             statuspanel.Background = Brushes.LightBlue;
             lbxstatus.Content = "Printed at: " + DateTime.Now.ToShortTimeString();
             }
+            SetBackGroundVisible();
+
+        }
+
+            public void SetBackGroundVisible()
+        {
+            borderBleed.Visibility = Visibility.Visible;
+            borderUnsafe.Visibility = Visibility.Visible;
+            bordersafe.Visibility = Visibility.Visible;
+            borderBleed.Visibility = Visibility.Visible;
+        }
+
+        public void SetBackGroundInvisible()
+        {
+            borderBleed.Visibility = Visibility.Hidden;
+            borderUnsafe.Visibility = Visibility.Hidden;
+            bordersafe.Visibility = Visibility.Hidden;
+            borderBleed.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -603,7 +625,7 @@ namespace YBMForms
             System.Windows.Forms.DialogResult dr = fbd.ShowDialog();
             if (dr.ToString() == "OK")
             {
-                WebPublisher.PublishBook(current, fbd.SelectedPath);
+                WebPublisher.PublishBook(current, fbd.SelectedPath,this);
             }
         }
 
@@ -620,9 +642,57 @@ namespace YBMForms
             MessageBox.Show("Thanks to all the provides of the icons","Thanks");
         }
 
+        /// <summary>
+        /// Text the properties of the selected text
+        /// and prevents any changing of other font
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextSelectionChanged(object sender, RoutedEventArgs e)
         {
+            justdetecting = true;
             GetTextProperties(((RichTextBox)sender).Selection);
+            justdetecting = false;
+        }
+
+        /// <summary>
+        /// Changes the color of the text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FontColorChange(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        {
+            //checks if the color is just being detected rather than changed
+            if (!justdetecting)
+            {
+                //gets the selected richtextbox
+                RichTextBox rtb = SeekFocus();
+                //sets the brush as a solid color brush and changes it to the new value
+                SolidColorBrush b = new SolidColorBrush(e.NewValue);
+                rtb.Selection.ApplyPropertyValue(Inline.ForegroundProperty, b);
+            }
+        }
+
+        private void EnterdownChangeFontSize(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                RichTextBox rtb = SeekFocus();
+                double fontSize;
+                if (double.TryParse(fontsize.Text, out fontSize))
+                    rtb.Selection.ApplyPropertyValue(Inline.FontSizeProperty, fontSize);
+            }
+        }
+
+        private void fontsizetextchanged(object sender, RoutedEventArgs e)
+        {
+            if (!justdetecting)
+            {
+                RichTextBox rtb = SeekFocus();
+                double fontSize;
+                if (double.TryParse(fontsize.Text, out fontSize))
+                    rtb.Selection.ApplyPropertyValue(Inline.FontSizeProperty, fontSize);
+            }
         }
     }
 }

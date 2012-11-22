@@ -14,10 +14,12 @@ namespace YBMForms.DLL
         /// </summary>
         /// <param name="bv">the current bookviewer</param>
         /// <param name="folderloc">the folder where the page is being saved</param>
-        static public void PublishBook(BookViewer bv, string folderloc)
+        static public void PublishBook(BookViewer bv, string folderloc, MainWindow h)
         {
+            h.SetBackGroundInvisible();
             CopyPreSetFiles(folderloc);
             RenderPages(bv, folderloc);
+            h.SetBackGroundVisible();
         }
 
 
