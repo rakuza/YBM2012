@@ -97,7 +97,7 @@
     <Compile Include="DLL\Book.cs" />
     <Compile Include="DLL\BookReader.cs" />
     <Compile Include="DLL\BookSaver.cs" />
-    <Compile Include="DLL\IOExentensions.cs" />
+    <Compile Include="DLL\IOExtensions.cs" />
     <Compile Include="DLL\Page.cs" />
     <Compile Include="DLL\PageElement.cs" />
     <Compile Include="DLL\PageLoader.cs" />
