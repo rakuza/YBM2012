@@ -86,22 +86,20 @@
         }
 
         function GetPage() {
-            document.getElementById("debug").innerHTML += viewindex.toString() + "<br />";
             jumper.target.value = viewindex.toString();
             document.getElementById("img").src = "src/" + viewindex + ".png";
         }
 
         function initialise() {
-            /*$.ajax("init.txt").done(function (msg) {
+            $.ajax("init.txt").done(function (msg) {
                 document.getElementById("totalPages").innerHTML = msg;
             })
-            Dont Run when on local machine nothing will happen
-            */
+            //Dont Run when on local machine nothing will happen
+            
         }
     </script>
 </head>
 <body onload="javascript:initialise()" class="center">
-    <span id="debug">test</span>
     <div class="viewer center">
         <div class="width">
             <img src="src/1.png" id="img"/>

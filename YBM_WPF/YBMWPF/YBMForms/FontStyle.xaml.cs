@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Xceed;
-using Xceed.Wpf;
-using Xceed.Wpf.Toolkit;
-using Xceed.Wpf.Toolkit.Core.Converters;
 using YBMForms.UIL;
 
 namespace YBMForms
@@ -30,7 +19,7 @@ namespace YBMForms
     {
         public FontStyleForm(TextSelection t)
         {
-            
+
             InitializeComponent();
             GetTextProperties(t);
             text = t;
@@ -95,11 +84,11 @@ namespace YBMForms
         private void Submit(object sender, RoutedEventArgs e)
         {
             text.ClearAllProperties();
-            text.ApplyPropertyValue(TextElement.FontFamilyProperty,lblDemo.FontFamily);
+            text.ApplyPropertyValue(TextElement.FontFamilyProperty, lblDemo.FontFamily);
             text.ApplyPropertyValue(TextElement.FontSizeProperty, lblDemo.FontSize);
             text.ApplyPropertyValue(Inline.TextDecorationsProperty, ((TextBlock)lblDemo.Content).TextDecorations);
             text.ApplyPropertyValue(TextElement.FontWeightProperty, lblDemo.FontWeight);
-                text.ApplyPropertyValue(TextElement.ForegroundProperty, ((TextBlock)lblDemo.Content).Foreground);
+            text.ApplyPropertyValue(TextElement.ForegroundProperty, ((TextBlock)lblDemo.Content).Foreground);
             this.Close();
         }
 
@@ -137,7 +126,7 @@ namespace YBMForms
                     if (tdec == TextDecorations.Underline[0])
                         chkUnderLine.IsChecked = true;
                 }
-                
+
             }
 
             var italic = ts.GetPropertyValue(Inline.FontStyleProperty);
@@ -154,15 +143,15 @@ namespace YBMForms
             {
                 SolidColorBrush b = (SolidColorBrush)colorValue;
                 color.SelectedColor = b.Color;
-            }          
+            }
         }
 
         public void Exit(object sender, RoutedEventArgs e)
         {
-            
+
             this.Close();
         }
 
-        
+
     }
 }
